@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Browse Shipping &amp; Supply Chain calculators and online tools on Toolbox.">
+  <link rel="canonical" href="https://www.toolboxapp.cc/categories/shipping-supply-chain/">
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+  <title>Shipping &amp; Supply Chain Tools | Toolbox</title>
+  <style>
+    :root{color-scheme:dark;--bg:#000;--panel:#0a0a0a;--panel-hover:#121212;--border:#292929;--strong:#4a4a4a;--text:#fff;--muted:#909090}
+    *{box-sizing:border-box}html,body{margin:0;min-height:100%;background:var(--bg);color:var(--text);font-family:Inter,ui-sans-serif,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}button,input{font:inherit}
+    .topbar{position:fixed;inset:0 0 auto 0;height:72px;display:flex;align-items:center;justify-content:flex-end;padding:0 24px;z-index:10;pointer-events:none}.apps-wrap{position:relative;pointer-events:auto}.apps-button{width:44px;height:44px;display:grid;place-items:center;border:0;border-radius:50%;background:transparent;cursor:pointer}.apps-button:hover,.apps-button:focus-visible{background:#111;outline:none}.dots{width:20px;height:20px;display:grid;grid-template-columns:repeat(3,4px);grid-template-rows:repeat(3,4px);gap:4px}.dots span{width:4px;height:4px;border-radius:50%;background:#fff}
+    .apps-menu{position:absolute;top:52px;right:0;width:270px;padding:12px;border:1px solid var(--border);border-radius:18px;background:rgba(10,10,10,.98);box-shadow:0 20px 60px rgba(0,0,0,.55);opacity:0;visibility:hidden;transform:translateY(-8px);transition:.18s ease;max-height:calc(100vh - 76px);overflow-y:auto}.apps-menu.open{opacity:1;visibility:visible;transform:translateY(0)}.category-grid{display:flex;flex-direction:column;gap:6px}.category-link{display:flex;align-items:center;min-height:42px;padding:0 14px;color:#fff;text-decoration:none;font-size:13px;line-height:1.3;border-radius:12px;background:#111}.category-link:hover,.category-link:focus-visible,.category-link[aria-current="page"]{background:#1c1c1c;outline:none}
+    .page{width:min(980px,calc(100% - 40px));min-height:calc(100vh - 80px);margin:0 auto;padding:118px 0 80px}.brand{display:block;width:max-content;margin:0 auto;color:#fff;text-decoration:none;text-align:center;font-size:clamp(50px,8vw,76px);font-weight:500;letter-spacing:-.065em;line-height:.95}.category-name{margin:16px 0 34px;text-align:center;color:#b3b3b3;font-size:clamp(17px,2.4vw,23px);font-weight:500;letter-spacing:-.02em}
+    .search-shell{position:relative;width:min(720px,100%);margin:0 auto 42px}.search-input{width:100%;height:64px;padding:0 58px 0 24px;border:1px solid var(--strong);border-radius:999px;background:#090909;color:#fff;font-size:17px;outline:none}.search-input:focus{border-color:#747474;background:#0d0d0d;box-shadow:0 0 0 4px rgba(255,255,255,.035)}.search-input::placeholder{color:#777}.clear-button{position:absolute;top:50%;right:14px;width:36px;height:36px;display:none;place-items:center;transform:translateY(-50%);border:0;border-radius:50%;background:transparent;color:#aaa;font-size:25px;cursor:pointer}.clear-button.visible{display:grid}.clear-button:hover{background:#181818;color:#fff}
+    .tools-heading{display:flex;align-items:center;justify-content:flex-end;margin:0 0 10px}.count{color:var(--muted);font-size:12px}.tool-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:7px}.tool-card{min-height:58px;display:flex;align-items:center;justify-content:space-between;gap:14px;padding:11px 16px;border:1px solid #1f1f1f;border-radius:11px;background:var(--panel);color:#fff;text-decoration:none;transition:background .16s ease,border-color .16s ease,transform .16s ease}.tool-card:hover,.tool-card:focus-visible{background:var(--panel-hover);border-color:#3b3b3b;transform:translateY(-1px);outline:none}.tool-title{font-size:14px;font-weight:600;line-height:1.3}.arrow{color:#888;font-size:17px}.empty{padding:46px 24px;border:1px solid #1f1f1f;border-radius:16px;background:#080808;color:var(--muted);text-align:center}.hidden{display:none!important}
+    .site-footer{padding:0 20px 28px;text-align:center}.footer-links{display:flex;justify-content:center;flex-wrap:wrap;gap:10px 18px}.footer-links a{color:#737373;text-decoration:none;font-size:12px}.footer-links a:hover{color:#fff}
+    @media(max-width:700px){.topbar{padding:0 14px}.page{width:min(100% - 28px,980px);padding-top:102px}.category-name{margin-bottom:28px}.search-shell{margin-bottom:28px}.search-input{height:58px;font-size:16px}.tool-grid{grid-template-columns:1fr}.tool-card{min-height:54px;padding:10px 14px}}
+  </style>
+</head>
+<body>
+  <header class="topbar">
+    <div class="apps-wrap">
+      <button class="apps-button" id="appsButton" type="button" aria-label="Browse categories" aria-expanded="false" aria-controls="appsMenu"><span class="dots" aria-hidden="true"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></button>
+      <div class="apps-menu" id="appsMenu"><nav class="category-grid" aria-label="Tool categories"><a class="category-link" href="/categories/money-investing/">Money &amp; Investing</a>
+          <a class="category-link" href="/categories/taxes-insurance-benefits/">Taxes, Insurance &amp; Benefits</a>
+          <a class="category-link" href="/categories/business-operations/">Business &amp; Operations</a>
+          <a class="category-link" href="/categories/startups-digital-business/">Startups &amp; Digital Business</a>
+          <a class="category-link" href="/categories/sales-marketing-audience/">Sales, Marketing &amp; Audience</a>
+          <a class="category-link" href="/categories/online-selling-retail/">Online Selling &amp; Retail</a>
+          <a class="category-link" href="/categories/jobs-pay-workforce/">Jobs, Pay &amp; Workforce</a>
+          <a class="category-link" href="/categories/time-productivity/">Time &amp; Productivity</a>
+          <a class="category-link" href="/categories/property-construction/">Property &amp; Construction</a>
+          <a class="category-link" href="/categories/manufacturing-production/">Manufacturing &amp; Production</a>
+          <a class="category-link" href="/categories/shipping-supply-chain/">Shipping &amp; Supply Chain</a>
+          <a class="category-link" href="/categories/health-body-fitness/">Health, Body &amp; Fitness</a>
+          <a class="category-link" href="/categories/food-cooking-hospitality/">Food, Cooking &amp; Hospitality</a>
+          <a class="category-link" href="/categories/home-everyday-life/">Home &amp; Everyday Life</a>
+          <a class="category-link" href="/categories/learning-grades/">Learning &amp; Grades</a>
+          <a class="category-link" href="/categories/science-math-engineering/">Science, Math &amp; Engineering</a>
+          <a class="category-link" href="/categories/ai-data-technology/">AI, Data &amp; Technology</a>
+          <a class="category-link" href="/categories/energy-sustainability/">Energy &amp; Sustainability</a>
+          <a class="category-link" href="/categories/farming-animals-pets/">Farming, Animals &amp; Pets</a>
+          <a class="category-link" href="/categories/travel-events-recreation/">Travel, Events &amp; Recreation</a>
+          <a class="category-link" href="/categories/legal-safety-compliance/">Legal, Safety &amp; Compliance</a></nav></div>
+    </div>
+  </header>
+  <main class="page">
+    <a class="brand" href="/">toolbox</a>
+    <div class="category-name">Shipping &amp; Supply Chain</div>
+    <div class="search-shell">
+      <input class="search-input" id="toolSearch" type="search" placeholder="Search Shipping &amp; Supply Chain tools..." autocomplete="off" aria-label="Search Shipping &amp; Supply Chain tools">
+      <button class="clear-button" id="clearButton" type="button" aria-label="Clear search">×</button>
+    </div>
+    <section aria-label="Shipping &amp; Supply Chain tools">
+      <div class="tools-heading"><span class="count" id="resultCount"></span></div>
+      <div class="tool-grid" id="toolGrid"></div>
+      <div class="empty hidden" id="emptyState"></div>
+    </section>
+  </main>
+  <footer class="site-footer"><nav class="footer-links" aria-label="Site information"><a href="/about/">About</a><a href="/contact/">Contact</a><a href="/privacy-policy/">Privacy Policy</a><a href="/terms-of-use/">Terms of Use</a><a href="/disclaimer/">Disclaimer</a></nav></footer>
+  <script>
+    const tools=[];
+    const searchInput=document.getElementById("toolSearch"),clearButton=document.getElementById("clearButton"),toolGrid=document.getElementById("toolGrid"),emptyState=document.getElementById("emptyState"),resultCount=document.getElementById("resultCount"),appsButton=document.getElementById("appsButton"),appsMenu=document.getElementById("appsMenu");
+    const escapeHtml=value=>value.replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#039;"})[c]);
+    function render(){const query=searchInput.value.trim().toLowerCase(),matches=tools.filter(tool=>tool.name.toLowerCase().includes(query));clearButton.classList.toggle("visible",query.length>0);toolGrid.innerHTML=matches.map(tool=>'<a class="tool-card" href="'+tool.url+'"><span class="tool-title">'+escapeHtml(tool.name)+'</span><span class="arrow" aria-hidden="true">→</span></a>').join("");const hasTools=tools.length>0,hasMatches=matches.length>0;toolGrid.classList.toggle("hidden",!hasMatches);emptyState.classList.toggle("hidden",hasMatches);emptyState.textContent=hasTools?"No matching tools found.":"Tools for this category will be added soon.";resultCount.textContent=hasTools?(matches.length+' tool'+(matches.length===1?'':'s')):"0 tools"}
+    searchInput.addEventListener("input",render);clearButton.addEventListener("click",()=>{searchInput.value="";render();searchInput.focus()});appsButton.addEventListener("click",()=>{const open=appsMenu.classList.toggle("open");appsButton.setAttribute("aria-expanded",String(open))});document.addEventListener("click",event=>{if(!event.target.closest(".apps-wrap")){appsMenu.classList.remove("open");appsButton.setAttribute("aria-expanded","false")}});document.addEventListener("keydown",event=>{if(event.key==="Escape"){appsMenu.classList.remove("open");appsButton.setAttribute("aria-expanded","false")}});document.querySelector('.category-link[href="/categories/shipping-supply-chain/"]')?.setAttribute("aria-current","page");render();
+  </script>
+</body>
+</html>
