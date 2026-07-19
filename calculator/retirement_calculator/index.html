@@ -1,0 +1,828 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Use this retirement calculator to estimate key money outcomes, compare assumptions, and review practical planning details in your browser." />
+  <link rel="canonical" href="https://www.toolboxapp.cc/retirement_calculator/" />
+  <title>Retirement Calculator | Toolbox</title>
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="Retirement Calculator | Toolbox">
+  <meta name="twitter:description" content="Estimate how much your retirement account could hold at your planned retirement age. Enter today’s balance, ongoing monthly saving, and a return assumption to compare the future nominal balance with its value in today’s purchasing power.">
+  <meta property="og:site_name" content="toolbox" />
+  <meta property="og:title" content="Retirement Calculator | Toolbox" />
+  <meta property="og:description" content="Estimate how much your retirement account could hold at your planned retirement age. Enter today’s balance, ongoing monthly saving, and a return assumption to compare the future nominal balance with its value in today’s purchasing power." />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://www.toolboxapp.cc/retirement_calculator/" />
+  <script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://www.toolboxapp.cc/"},{"@type":"ListItem","position":2,"name":"Money & Investing","item":"https://www.toolboxapp.cc/categories/money-investing/"},{"@type":"ListItem","position":3,"name":"Retirement Calculator","item":"https://www.toolboxapp.cc/retirement_calculator/"}]},{"@type":"WebApplication","name":"Retirement Calculator","url":"https://www.toolboxapp.cc/retirement_calculator/","applicationCategory":"FinanceApplication","operatingSystem":"Any","isAccessibleForFree":true}]}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"How does increasing my monthly retirement contribution change the projection?","acceptedAnswer":{"@type":"Answer","text":"Each additional contribution earns returns for the months remaining, so earlier increases generally have more impact than the same increase made close to retirement."}},{"@type":"Question","name":"Why is the inflation-adjusted retirement balance lower?","acceptedAnswer":{"@type":"Answer","text":"It expresses the future balance in today’s purchasing power, accounting for the assumed rise in prices over the saving period."}},{"@type":"Question","name":"Can I enter a retirement age below my current age?","acceptedAnswer":{"@type":"Answer","text":"No. The retirement age must be greater than the current age because the projection needs a positive investment period."}},{"@type":"Question","name":"Does this retirement estimate include taxes or account fees?","acceptedAnswer":{"@type":"Answer","text":"No. Enter a return assumption that is net of expected fees, and separately consider the taxes that may apply to withdrawals."}},{"@type":"Question","name":"Should I use an average market return for every year?","acceptedAnswer":{"@type":"Answer","text":"The calculator uses one constant annual rate for a planning estimate; real annual returns vary and sequence risk is not represented."}}]}</script>
+
+  <style>
+    :root {
+      color-scheme: dark;
+      --bg: #000;
+      --panel: #0a0a0a;
+      --panel-hover: #111;
+      --border: #292929;
+      --border-strong: #454545;
+      --text: #fff;
+      --muted: #8d8d8d;
+      --soft: #bdbdbd;
+      --danger: #ff7d7d;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      background: var(--bg);
+      color: var(--text);
+      font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    button,
+    input,
+    select {
+      font: inherit;
+    }
+
+    a {
+      color: inherit;
+    }
+
+    .site-header {
+      position: sticky;
+      top: 0;
+      z-index: 30;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: 70px;
+      padding: 0 24px;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+      background: rgba(0, 0, 0, 0.88);
+      backdrop-filter: blur(18px);
+    }
+
+    .brand {
+      color: #fff;
+      text-decoration: none;
+      font-size: 24px;
+      font-weight: 600;
+      letter-spacing: -0.05em;
+    }
+
+    .apps-wrap {
+      position: relative;
+    }
+
+    .apps-button {
+      width: 44px;
+      height: 44px;
+      display: grid;
+      place-items: center;
+      border: 0;
+      border-radius: 50%;
+      background: transparent;
+      cursor: pointer;
+      transition: background 0.18s ease;
+    }
+
+    .apps-button:hover,
+    .apps-button:focus-visible {
+      background: #111;
+      outline: none;
+    }
+
+    .dots {
+      width: 20px;
+      height: 20px;
+      display: grid;
+      grid-template-columns: repeat(3, 4px);
+      grid-template-rows: repeat(3, 4px);
+      gap: 4px;
+    }
+
+    .dots span {
+      width: 4px;
+      height: 4px;
+      border-radius: 50%;
+      background: #fff;
+    }
+
+    .apps-menu {
+      position: absolute;
+      top: 52px;
+      right: 0;
+      width: min(310px, calc(100vw - 32px));
+      max-height: calc(100vh - 84px);
+      overflow-y: auto;
+      padding: 10px;
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      background: rgba(10, 10, 10, 0.98);
+      box-shadow: 0 22px 60px rgba(0, 0, 0, 0.6);
+      opacity: 0;
+      visibility: hidden;
+      transform: translateY(-8px);
+      transition: 0.18s ease;
+    }
+
+    .apps-menu.open {
+      opacity: 1;
+      visibility: visible;
+      transform: translateY(0);
+    }
+
+    .category-list {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+
+    .category-link {
+      min-height: 42px;
+      display: flex;
+      align-items: center;
+      padding: 0 14px;
+      border-radius: 10px;
+      color: #fff;
+      text-decoration: none;
+      font-size: 14px;
+      transition: background 0.16s ease;
+    }
+
+    .category-link:hover,
+    .category-link:focus-visible {
+      background: #181818;
+      outline: none;
+    }
+
+    .page {
+      width: min(1080px, calc(100% - 32px));
+      margin: 0 auto;
+      padding: 64px 0 90px;
+    }
+
+    .breadcrumb {
+      margin-bottom: 22px;
+      color: #737373;
+      font-size: 13px;
+    }
+
+    .breadcrumb a {
+      color: #9b9b9b;
+      text-decoration: none;
+    }
+
+    .breadcrumb a:hover {
+      color: #fff;
+    }
+
+    .page-title {
+      margin: 0;
+      font-size: clamp(36px, 6vw, 62px);
+      line-height: 1;
+      letter-spacing: -0.055em;
+      font-weight: 600;
+    }
+
+    .intro {
+      max-width: 680px;
+      margin: 18px 0 0;
+      color: var(--muted);
+      font-size: 16px;
+      line-height: 1.7;
+    }
+
+    .calculator {
+      display: grid;
+      grid-template-columns:minmax(0, 1fr) minmax(320px, 0.82fr);
+      gap: 18px;
+      margin-top: 46px;
+      align-items: stretch;
+    }
+
+    .calculator-left {
+      display:grid;
+      gap:18px;
+      align-content:start;
+    }
+
+    .panel {
+      border: 1px solid var(--border);
+      border-radius: 22px;
+      background: var(--panel);
+    }
+
+    .input-panel {
+      padding: 28px;
+    }
+
+    .panel-title {
+      margin: 0 0 24px;
+      font-size: 18px;
+      font-weight: 600;
+      letter-spacing: -0.02em;
+    }
+
+    .field-grid {
+      display: grid;
+      gap: 18px;
+    }
+
+    .field {
+      display: grid;
+      gap: 9px;
+    }
+
+    .field label {
+      color: var(--soft);
+      font-size: 13px;
+      font-weight: 500;
+    }
+
+    .input-wrap {
+      position: relative;
+    }
+
+    .input-control {
+      width: 100%;
+      height: 56px;
+      padding: 0 52px 0 16px;
+      border: 1px solid var(--border-strong);
+      border-radius: 13px;
+      background: #050505;
+      color: #fff;
+      outline: none;
+      transition: border-color 0.16s ease, box-shadow 0.16s ease;
+    }
+
+    .input-control:focus {
+      border-color: #777;
+      box-shadow: 0 0 0 4px rgba(255,255,255,0.035);
+    }
+
+    .suffix {
+      position: absolute;
+      top: 50%;
+      right: 16px;
+      transform: translateY(-50%);
+      color: #767676;
+      font-size: 13px;
+      pointer-events: none;
+    }
+
+    .actions {
+      display: flex;
+      gap: 10px;
+      margin-top: 24px;
+    }
+
+    .button {
+      min-height: 50px;
+      padding: 0 20px;
+      border-radius: 12px;
+      cursor: pointer;
+      transition: background 0.16s ease, border-color 0.16s ease, transform 0.16s ease;
+    }
+
+    .button:active {
+      transform: translateY(1px);
+    }
+
+    .button-primary {
+      flex: 1;
+      border: 1px solid #fff;
+      background:#242424;
+      color:#fff;
+      font-weight: 700;
+    }
+
+    .button-primary:hover {
+      background:#3a3a3a;
+      border-color:#4a4a4a;
+    }
+
+    .button-secondary {
+      border: 1px solid var(--border-strong);
+      background: transparent;
+      color: #fff;
+    }
+
+    .button-secondary:hover {
+      background: #151515;
+    }
+
+    .error {
+      min-height: 20px;
+      margin: 13px 0 0;
+      color: var(--danger);
+      font-size: 13px;
+    }
+
+
+    .ad-panel {
+      min-height:140px;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      padding:18px;
+      border:1px dashed #3b3b3b;
+      border-radius:22px;
+      background:#111;
+      color:#686868;
+      text-align:center;
+      font-size:12px;
+      letter-spacing:0.08em;
+      text-transform:uppercase;
+    }
+
+    .ad-slot {
+      width:100%;
+      min-height:104px;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+    }
+
+    .result-panel {
+      min-height: 100%;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      padding: 28px;
+      background:#242424;
+      color:#fff;
+    }
+
+    .result-eyebrow {
+      color:#a0a0a0;
+      font-size: 13px;
+      font-weight: 600;
+    }
+
+    .main-result {
+      margin: 18px 0 4px;
+      font-size: clamp(42px, 7vw, 70px);
+      line-height: 1;
+      letter-spacing: -0.06em;
+      font-weight: 700;
+      overflow-wrap: anywhere;
+    }
+
+    .result-label {
+      color:#9b9b9b;
+      font-size: 14px;
+    }
+
+    .result-breakdown {
+      display: grid;
+      gap: 0;
+      margin-top: 34px;
+      border-top:1px solid #353535;
+    }
+
+    .result-row {
+      display: flex;
+      justify-content: space-between;
+      gap: 20px;
+      padding: 15px 0;
+      border-bottom:1px solid #353535;
+      font-size: 14px;
+    }
+
+    .result-row span:first-child {
+      color:#9b9b9b;
+    }
+
+    .result-row strong {
+      text-align: right;
+    }
+
+    .details {
+      display: grid;
+      gap: 10px;
+      margin-top: 22px;
+    }
+
+    .accordion {
+      overflow: hidden;
+      border: 1px solid var(--border);
+      border-radius: 15px;
+      background: #080808;
+    }
+
+    .accordion-button {
+      width: 100%;
+      min-height: 62px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 20px;
+      padding: 0 20px;
+      border: 0;
+      background: transparent;
+      color: #fff;
+      text-align: left;
+      cursor: pointer;
+    }
+
+    .accordion-button:hover {
+      background: #101010;
+    }
+
+    .accordion-title {
+      font-size: 15px;
+      font-weight: 600;
+    }
+
+    .accordion-icon {
+      color: #777;
+      font-size: 22px;
+      transition: transform 0.18s ease;
+    }
+
+    .accordion.open .accordion-icon {
+      transform: rotate(45deg);
+    }
+
+    .accordion-content {
+      max-height: 0;
+      overflow: hidden;
+      color: #aaa;
+      line-height: 1.75;
+      transition: max-height 0.25s ease;
+    }
+
+    .accordion-content-inner {
+      padding: 0 20px 22px;
+    }
+
+    .accordion-content p {
+      margin: 0 0 12px;
+    }
+
+    .accordion-content p:last-child {
+      margin-bottom: 0;
+    }
+
+    .formula {
+      display: block;
+      padding: 16px;
+      border: 1px solid #242424;
+      border-radius: 12px;
+      background: #030303;
+      color: #fff;
+      font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+      overflow-x: auto;
+    }
+
+    .faq-item + .faq-item {
+      margin-top: 18px;
+    }
+
+    .faq-question {
+      margin: 0 0 6px;
+      color: #fff;
+      font-size: 15px;
+    }
+
+    .related-tools {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 10px;
+    }
+
+    .related-link {
+      min-height: 54px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 14px;
+      padding: 0 16px;
+      border: 1px solid #242424;
+      border-radius: 12px;
+      color: #fff;
+      text-decoration: none;
+      background: #050505;
+    }
+
+    .related-link:hover {
+      background: #111;
+    }
+
+    .site-footer {
+      width: min(1080px, calc(100% - 32px));
+      margin: 0 auto;
+      padding: 26px 0 42px;
+      border-top: 1px solid #171717;
+      color: #686868;
+      font-size: 12px;
+    }
+
+    @media (max-width: 780px) {
+      .site-header {
+        height: 64px;
+        padding: 0 16px;
+      }
+
+      .page {
+        padding-top: 42px;
+      }
+
+      .calculator {
+        grid-template-columns: 1fr;
+      }
+
+  
+    .ad-panel {
+      min-height:140px;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      padding:18px;
+      border:1px dashed #3b3b3b;
+      border-radius:22px;
+      background:#111;
+      color:#686868;
+      text-align:center;
+      font-size:12px;
+      letter-spacing:0.08em;
+      text-transform:uppercase;
+    }
+
+    .ad-slot {
+      width:100%;
+      min-height:104px;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+    }
+
+    .result-panel {
+        min-height: 390px;
+      }
+    }
+
+    @media (max-width: 520px) {
+      .page {
+        width: min(100% - 24px, 1080px);
+        padding-bottom: 60px;
+      }
+
+      .input-panel,
+  
+    .ad-panel {
+      min-height:140px;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      padding:18px;
+      border:1px dashed #3b3b3b;
+      border-radius:22px;
+      background:#111;
+      color:#686868;
+      text-align:center;
+      font-size:12px;
+      letter-spacing:0.08em;
+      text-transform:uppercase;
+    }
+
+    .ad-slot {
+      width:100%;
+      min-height:104px;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+    }
+
+    .result-panel {
+        padding: 22px;
+        border-radius: 18px;
+      }
+
+      .actions {
+        flex-direction: column;
+      }
+
+      .button-secondary {
+        width: 100%;
+      }
+
+      .related-tools {
+        grid-template-columns: 1fr;
+      }
+
+      .main-result {
+        font-size: 48px;
+      }
+    }
+  .intro{max-width:none}.calculator{display:grid;grid-template-columns:1fr 1fr;grid-template-areas:"input input" "ad1 ad2" "result result";gap:18px}.calculator-input{grid-area:input}.field-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.ad-one{grid-area:ad1}.ad-two{grid-area:ad2}.result-panel{grid-area:result;display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:34px;min-height:330px}.result-main{align-self:center}.result-details{align-self:stretch}.result-breakdown{margin-top:0}.field-help{color:#777;font-size:12px;line-height:1.45}@media(max-width:780px){.calculator{grid-template-columns:1fr;grid-template-areas:"input" "ad1" "result" "ad2"}.field-grid{grid-template-columns:1fr}.result-panel{grid-template-columns:1fr;min-height:390px}.result-breakdown{margin-top:28px}}
+  </style>
+</head>
+
+<body>
+  <header class="site-header">
+    <a class="brand" href="/">toolbox</a>
+
+    <div class="apps-wrap">
+      <button
+        class="apps-button"
+        id="appsButton"
+        type="button"
+        aria-label="Open categories"
+        aria-expanded="false"
+        aria-controls="appsMenu"
+      >
+        <span class="dots" aria-hidden="true">
+          <span></span><span></span><span></span>
+          <span></span><span></span><span></span>
+          <span></span><span></span><span></span>
+        </span>
+      </button>
+
+      <div class="apps-menu" id="appsMenu">
+        <nav class="category-list" aria-label="Tool categories">
+          <a class="category-link" href="/categories/money-investing/">Money &amp; Investing</a>
+          <a class="category-link" href="/categories/taxes-insurance-benefits/">Taxes, Insurance &amp; Benefits</a>
+          <a class="category-link" href="/categories/business-operations/">Business &amp; Operations</a>
+          <a class="category-link" href="/categories/startups-digital-business/">Startups &amp; Digital Business</a>
+          <a class="category-link" href="/categories/sales-marketing-audience/">Sales, Marketing &amp; Audience</a>
+          <a class="category-link" href="/categories/online-selling-retail/">Online Selling &amp; Retail</a>
+          <a class="category-link" href="/categories/jobs-pay-workforce/">Jobs, Pay &amp; Workforce</a>
+          <a class="category-link" href="/categories/time-productivity/">Time &amp; Productivity</a>
+          <a class="category-link" href="/categories/property-construction/">Property &amp; Construction</a>
+          <a class="category-link" href="/categories/manufacturing-production/">Manufacturing &amp; Production</a>
+          <a class="category-link" href="/categories/shipping-supply-chain/">Shipping &amp; Supply Chain</a>
+          <a class="category-link" href="/categories/health-body-fitness/">Health, Body &amp; Fitness</a>
+          <a class="category-link" href="/categories/food-cooking-hospitality/">Food, Cooking &amp; Hospitality</a>
+          <a class="category-link" href="/categories/home-everyday-life/">Home &amp; Everyday Life</a>
+          <a class="category-link" href="/categories/learning-grades/">Learning &amp; Grades</a>
+          <a class="category-link" href="/categories/science-math-engineering/">Science, Math &amp; Engineering</a>
+          <a class="category-link" href="/categories/ai-data-technology/">AI, Data &amp; Technology</a>
+          <a class="category-link" href="/categories/energy-sustainability/">Energy &amp; Sustainability</a>
+          <a class="category-link" href="/categories/farming-animals-pets/">Farming, Animals &amp; Pets</a>
+          <a class="category-link" href="/categories/travel-events-recreation/">Travel, Events &amp; Recreation</a>
+          <a class="category-link" href="/categories/legal-safety-compliance/">Legal, Safety &amp; Compliance</a>
+        </nav>
+      </div>
+    </div>
+  </header>
+
+  <main class="page">
+    <div class="breadcrumb">
+      <a href="/">Home</a> / <a href="/categories/money-investing/">Money & Investing</a> / Retirement Calculator
+    </div>
+
+    <h1 class="page-title">Retirement Calculator</h1>
+    <p class="intro">
+      Estimate how much your retirement account could hold at your planned retirement age. Enter today’s balance, ongoing monthly saving, and a return assumption to compare the future nominal balance with its value in today’s purchasing power.
+    </p>
+
+    <section class="calculator" aria-label="Retirement Calculator">
+      <div class="panel input-panel calculator-input"><h2 class="panel-title">Planning assumptions</h2><div class="field-grid"><div class="field"><label for="currentAge">Current age</label><div class="input-wrap"><input class="input-control" id="currentAge" type="number" value="35" min="18" max="90" step="1" inputmode="decimal"><span class="suffix">years</span></div></div><div class="field"><label for="retireAge">Planned retirement age</label><div class="input-wrap"><input class="input-control" id="retireAge" type="number" value="65" min="19" max="100" step="1" inputmode="decimal"><span class="suffix">years</span></div></div><div class="field"><label for="currentSavings">Current retirement savings</label><div class="input-wrap"><input class="input-control" id="currentSavings" type="number" value="120000" min="0" max="100000000" step="1000" inputmode="decimal"><span class="suffix">$</span></div></div><div class="field"><label for="monthlyContribution">Monthly contribution</label><div class="input-wrap"><input class="input-control" id="monthlyContribution" type="number" value="1200" min="0" max="1000000" step="50" inputmode="decimal"><span class="suffix">$</span></div></div><div class="field"><label for="annualReturn">Expected annual return</label><div class="input-wrap"><input class="input-control" id="annualReturn" type="number" value="6.5" min="-20" max="30" step="0.1" inputmode="decimal"><span class="suffix">%</span></div></div><div class="field"><label for="inflation">Expected inflation</label><div class="input-wrap"><input class="input-control" id="inflation" type="number" value="2.5" min="0" max="15" step="0.1" inputmode="decimal"><span class="suffix">%</span></div></div></div><div class="actions"><button class="button button-secondary" id="resetButton" type="button">Reset</button></div><p class="error" id="errorMessage" role="alert"></p></div>
+      <aside class="ad-panel ad-one" aria-label="Advertisement"><div class="ad-slot">Advertisement</div></aside>
+      <aside class="ad-panel ad-two" aria-label="Advertisement"><div class="ad-slot">Advertisement</div></aside>
+      <div class="panel result-panel"><div class="result-main"><div class="result-eyebrow">Result</div><div class="main-result" id="mainResult">—</div><div class="result-label" id="resultLabel">Projected retirement balance</div></div><div class="result-details" aria-live="polite"><div class="result-breakdown"><div class="result-row"><span>Years invested</span><strong id="yearsOut">—</strong></div><div class="result-row"><span>Total contributed</span><strong id="contribOut">—</strong></div><div class="result-row"><span>Investment growth</span><strong id="growthOut">—</strong></div><div class="result-row"><span>Value in today’s dollars</span><strong id="realOut">—</strong></div></div></div></div>
+    </section>
+
+    <section class="details" aria-label="Calculator information">
+      <article class="accordion">
+        <button class="accordion-button" type="button" aria-expanded="false">
+          <span class="accordion-title">How to use</span>
+          <span class="accordion-icon" aria-hidden="true">+</span>
+        </button>
+        <div class="accordion-content">
+          <div class="accordion-content-inner">
+            <ol><li>Enter your current age and intended retirement age.</li><li>Add the balance already invested and the amount you expect to contribute each month.</li><li>Use long-term return and inflation assumptions that fit your portfolio.</li><li>Review both the future balance and its inflation-adjusted equivalent.</li></ol>
+          </div>
+        </div>
+      </article>
+
+      <article class="accordion">
+        <button class="accordion-button" type="button" aria-expanded="false">
+          <span class="accordion-title">Formula</span>
+          <span class="accordion-icon" aria-hidden="true">+</span>
+        </button>
+        <div class="accordion-content">
+          <div class="accordion-content-inner">
+            <p class="formula">FV = P(1 + r/12)<sup>12t</sup> + PMT × ((1 + r/12)<sup>12t</sup> − 1) ÷ (r/12)</p><p>The real-value estimate divides the future value by (1 + inflation)<sup>t</sup>.</p>
+            <h3>What the result means</h3>
+            <p>The headline is the projected account value at retirement before taxes. The real-value line translates that amount into today’s purchasing power, which is usually more useful for planning expenses.</p>
+            <p>Returns are modeled at a steady rate. Actual markets, contribution timing, taxes, and account fees will change the outcome.</p>
+          </div>
+        </div>
+      </article>
+
+      <article class="accordion">
+        <button class="accordion-button" type="button" aria-expanded="false">
+          <span class="accordion-title">Example calculation</span>
+          <span class="accordion-icon" aria-hidden="true">+</span>
+        </button>
+        <div class="accordion-content">
+          <div class="accordion-content-inner">
+            <p>At age 35, starting with $120,000 and adding $1,200 monthly until age 65 at 6.5%, the projected balance is about $2.17 million. With 2.5% inflation, that is roughly $1.03 million in today’s dollars.</p>
+          </div>
+        </div>
+      </article>
+
+      <article class="accordion">
+        <button class="accordion-button" type="button" aria-expanded="false">
+          <span class="accordion-title">FAQ</span>
+          <span class="accordion-icon" aria-hidden="true">+</span>
+        </button>
+        <div class="accordion-content">
+          <div class="accordion-content-inner">
+            <div class="faq-item"><h3 class="faq-question">How does increasing my monthly retirement contribution change the projection?</h3><p>Each additional contribution earns returns for the months remaining, so earlier increases generally have more impact than the same increase made close to retirement.</p></div><div class="faq-item"><h3 class="faq-question">Why is the inflation-adjusted retirement balance lower?</h3><p>It expresses the future balance in today’s purchasing power, accounting for the assumed rise in prices over the saving period.</p></div><div class="faq-item"><h3 class="faq-question">Can I enter a retirement age below my current age?</h3><p>No. The retirement age must be greater than the current age because the projection needs a positive investment period.</p></div><div class="faq-item"><h3 class="faq-question">Does this retirement estimate include taxes or account fees?</h3><p>No. Enter a return assumption that is net of expected fees, and separately consider the taxes that may apply to withdrawals.</p></div><div class="faq-item"><h3 class="faq-question">Should I use an average market return for every year?</h3><p>The calculator uses one constant annual rate for a planning estimate; real annual returns vary and sequence risk is not represented.</p></div>
+          </div>
+        </div>
+      </article>
+
+      <article class="accordion">
+        <button class="accordion-button" type="button" aria-expanded="false">
+          <span class="accordion-title">Related tools</span>
+          <span class="accordion-icon" aria-hidden="true">+</span>
+        </button>
+        <div class="accordion-content">
+          <div class="accordion-content-inner">
+            <div class="related-tools"><a class="related-link" href="/fire_number_calculator/"><span>FIRE Number Calculator</span><span aria-hidden="true">→</span></a><a class="related-link" href="/coast_fire_calculator/"><span>Coast FIRE Calculator</span><span aria-hidden="true">→</span></a><a class="related-link" href="/lean_fire_calculator/"><span>Lean FIRE Calculator</span><span aria-hidden="true">→</span></a><a class="related-link" href="/fat_fire_calculator/"><span>Fat FIRE Calculator</span><span aria-hidden="true">→</span></a></div>
+          </div>
+        </div>
+      </article>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    © 2026 toolbox. Estimates are for general planning only. · <a href="/about/">About</a> · <a href="/contact/">Contact</a> · <a href="/privacy-policy/">Privacy</a> · <a href="/terms-of-use/">Terms</a>
+  </footer>
+
+  <script>
+    const appsButton = document.getElementById("appsButton");
+    const appsMenu = document.getElementById("appsMenu");
+
+    const resetButton = document.getElementById("resetButton");
+    const errorMessage = document.getElementById("errorMessage");
+    const byId = id => document.getElementById(id);
+    const finite = value => Number.isFinite(Number(value));
+    const formatNumber = (value, digits = 2) => Number(value).toLocaleString("en-US", { maximumFractionDigits: digits });
+    const formatMoney = (value, currency = "USD", digits = 2) => new Intl.NumberFormat("en-US", { style: "currency", currency, maximumFractionDigits: digits }).format(value);
+    const formatPercent = (value, digits = 2) => `${Number(value).toFixed(digits)}%`;
+    const setText = (id, value) => { const node = byId(id); if (node) node.textContent = value; };
+    const showError = message => { errorMessage.textContent = message; };
+    const clearError = () => { errorMessage.textContent = ""; document.querySelectorAll('[aria-invalid="true"]').forEach(node => node.setAttribute("aria-invalid", "false")); };
+    const invalidate = (id, message) => { const node = byId(id); if (node) node.setAttribute("aria-invalid", "true"); showError(message); return false; };
+
+    function calculate(){clearError();const a=+byId('currentAge').value,b=+byId('retireAge').value,p=+byId('currentSavings').value,m=+byId('monthlyContribution').value,ar=+byId('annualReturn').value/100,inf=+byId('inflation').value/100;if(![a,b,p,m,ar,inf].every(Number.isFinite))return invalidate('currentAge','Enter valid numbers in every field.');if(b<=a)return invalidate('retireAge','Retirement age must be greater than current age.');if(p<0||m<0)return invalidate('currentSavings','Savings and contributions cannot be negative.');const years=b-a,n=years*12,r=ar/12;const fvP=p*Math.pow(1+r,n);const fvM=Math.abs(r)<1e-10?m*n:m*(Math.pow(1+r,n)-1)/r;const fv=fvP+fvM,total=p+m*n,real=fv/Math.pow(1+inf,years);setText('mainResult',formatMoney(fv,'USD',0));setText('yearsOut',years+' years');setText('contribOut',formatMoney(total,'USD',0));setText('growthOut',formatMoney(fv-total,'USD',0));setText('realOut',formatMoney(real,'USD',0));}
+
+    resetButton.addEventListener("click", () => {
+      document.querySelectorAll(".input-control").forEach(input => { if (input.tagName === "SELECT") { const preferred = [...input.options].find(option => option.defaultSelected); input.value = preferred ? preferred.value : input.options[0].value; } else { input.value = input.defaultValue; } });
+      clearError();
+      calculate();
+    });
+    let autoTimer;
+    document.querySelectorAll(".input-control").forEach(input => {
+      input.addEventListener("input", () => {
+        clearTimeout(autoTimer);
+        autoTimer = setTimeout(calculate, 200);
+      });
+      input.addEventListener("change", calculate);
+    });
+
+
+    appsButton.addEventListener("click", () => {
+      const isOpen = appsMenu.classList.toggle("open");
+      appsButton.setAttribute("aria-expanded", String(isOpen));
+    });
+
+    document.addEventListener("click", event => {
+      if (!event.target.closest(".apps-wrap")) {
+        appsMenu.classList.remove("open");
+        appsButton.setAttribute("aria-expanded", "false");
+      }
+    });
+
+    document.querySelectorAll(".accordion-button").forEach(button => {
+      button.addEventListener("click", () => {
+        const accordion = button.closest(".accordion");
+        const content = accordion.querySelector(".accordion-content");
+        const isOpen = accordion.classList.toggle("open");
+
+        button.setAttribute("aria-expanded", String(isOpen));
+        content.style.maxHeight = isOpen ? content.scrollHeight + "px" : "0px";
+      });
+    });
+
+    calculate();
+  </script>
+</body>
+</html>
