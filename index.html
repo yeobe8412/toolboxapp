@@ -306,6 +306,64 @@
       text-align:right;
     }
 
+    .favorites {
+      display: none;
+      width: 100%;
+      max-width: 680px;
+      margin-top: 28px;
+      text-align: left;
+    }
+
+    .favorites.visible { display: block; }
+
+    .favorites-heading {
+      margin: 0 0 12px;
+      color: #f2f2f2;
+      font-size: 14px;
+      font-weight: 600;
+    }
+
+    .favorites-list {
+      display: grid;
+      gap: 8px;
+    }
+
+    .favorite-card {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 14px;
+      min-width: 0;
+      padding: 14px 16px;
+      border: 1px solid #242424;
+      border-radius: 13px;
+      background: #111;
+      color: #f5f5f5;
+      text-decoration: none;
+      transition: border-color .16s ease, background .16s ease;
+    }
+
+    .favorite-card:hover,
+    .favorite-card:focus-visible {
+      border-color: #555;
+      background: #171717;
+      outline: none;
+    }
+
+    .favorite-name {
+      overflow: hidden;
+      font-size: 14px;
+      font-weight: 600;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+
+    .favorite-star {
+      flex: 0 0 auto;
+      color: #ffd34e;
+      font-size: 18px;
+    }
+
     .site-footer {
       position: fixed;
       inset: auto 0 0;
@@ -438,6 +496,11 @@
       </div>
 
       <div class="results" id="results" aria-live="polite"></div>
+
+      <section class="favorites" id="favorites" aria-labelledby="favoritesHeading">
+        <h2 class="favorites-heading" id="favoritesHeading">My Favorites</h2>
+        <div class="favorites-list" id="favoritesList"></div>
+      </section>
     </section>
   </main>
 
@@ -511,6 +574,9 @@
     const hero = document.getElementById("hero");
     const appsButton = document.getElementById("appsButton");
     const appsMenu = document.getElementById("appsMenu");
+    const favorites = document.getElementById("favorites");
+    const favoritesList = document.getElementById("favoritesList");
+    const FAVORITES_KEY = "toolboxapp-favorites-v1";
 
     let activeIndex = -1;
     let currentMatches = [];
@@ -539,6 +605,26 @@
       return safeName.replace(expression, "<mark>$1</mark>");
     }
 
+    function readFavorites() {
+      try {
+        const saved = JSON.parse(localStorage.getItem(FAVORITES_KEY) || "[]");
+        return Array.isArray(saved) ? saved : [];
+      } catch (error) {
+        return [];
+      }
+    }
+
+    function renderFavorites() {
+      const saved = readFavorites();
+      favorites.classList.toggle("visible", saved.length > 0 && !normalize(searchInput.value));
+      favoritesList.innerHTML = saved.map(tool => `
+        <a class="favorite-card" href="${escapeHtml(tool.url)}">
+          <span class="favorite-name">${escapeHtml(tool.name)}</span>
+          <span class="favorite-star" aria-hidden="true">★</span>
+        </a>
+      `).join("");
+    }
+
     function updateActiveResult() {
       const resultLinks = [...results.querySelectorAll(".result-link")];
 
@@ -562,6 +648,7 @@
 
       clearButton.classList.toggle("visible", hasQuery);
       hero.classList.toggle("searching", hasQuery);
+      renderFavorites();
       activeIndex = -1;
 
       if (!hasQuery) {
@@ -668,6 +755,8 @@
     });
 
     searchInput.focus();
+    renderFavorites();
+    window.addEventListener("storage", renderFavorites);
   </script>
 </body>
 </html>
