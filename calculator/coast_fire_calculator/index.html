@@ -241,11 +241,11 @@
       position: relative;
       display: flex;
       align-items: center;
-      justify-content: center;
+      justify-content: flex-start;
     }
 
     .title-row .page-title {
-      padding: 0 48px;
+      padding-right: 48px;
     }
 
     .favorite-button {
@@ -256,8 +256,7 @@
       height: 42px;
       padding: 0;
       place-items: center;
-      border: 1px solid var(--border);
-      border-radius: 50%;
+      border: 0;
       background: transparent;
       color: #858585;
       cursor: pointer;
@@ -268,14 +267,12 @@
 
     .favorite-button:hover,
     .favorite-button:focus-visible {
-      border-color: #666;
       color: #fff;
       outline: none;
     }
 
     .favorite-button.active {
-      border-color: #6b5a16;
-      background: rgba(255, 211, 78, .08);
+      background: transparent;
       color: #ffd34e;
     }
 
