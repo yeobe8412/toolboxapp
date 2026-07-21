@@ -668,7 +668,7 @@
       const saved = readFavorites();
       favorites.classList.toggle("visible", saved.length > 0 && !normalize(searchInput.value));
       favoritesList.innerHTML = saved.map(tool => `
-        <a class="favorite-card" href="${escapeHtml(tool.url)}">
+        <a class="favorite-card" href="calculator/${escapeHtml(tool.url)}">
           <span class="favorite-name">${escapeHtml(tool.name)}</span>
           <span class="favorite-star" aria-hidden="true">★</span>
         </a>
@@ -721,7 +721,7 @@
       const list = currentMatches.map((tool, index) => `
         <a
           class="result-link"
-          href="${tool.url}"
+          href="calculator/${tool.url}"
           role="option"
           aria-selected="false"
           data-index="${index}"
