@@ -82,96 +82,6 @@
     <loc>https://www.toolboxapp.cc/categories/travel-events-recreation/</loc>
   </url>
   <url>
-    <loc>https://www.toolboxapp.cc/calculator/retirement_calculator/</loc>
-  </url>
-  <url>
-    <loc>https://www.toolboxapp.cc/calculator/fire_number_calculator/</loc>
-  </url>
-  <url>
-    <loc>https://www.toolboxapp.cc/calculator/coast_fire_calculator/</loc>
-  </url>
-  <url>
-    <loc>https://www.toolboxapp.cc/calculator/lean_fire_calculator/</loc>
-  </url>
-  <url>
-    <loc>https://www.toolboxapp.cc/calculator/fat_fire_calculator/</loc>
-  </url>
-  <url>
-    <loc>https://www.toolboxapp.cc/calculator/safe_withdrawal_rate_estimator/</loc>
-  </url>
-  <url>
-    <loc>https://www.toolboxapp.cc/calculator/savings_rate_estimator/</loc>
-  </url>
-  <url>
-    <loc>https://www.toolboxapp.cc/calculator/compound_interest_calculator/</loc>
-  </url>
-  <url>
-    <loc>https://www.toolboxapp.cc/calculator/investment_growth_calculator/</loc>
-  </url>
-  <url>
-    <loc>https://www.toolboxapp.cc/calculator/etf_dividend_calculator/</loc>
-  </url>
-  <url>
-    <loc>https://www.toolboxapp.cc/calculator/monthly_dividend_goal_calculator/</loc>
-  </url>
-  <url>
-    <loc>https://www.toolboxapp.cc/calculator/dividend_yield_calculator/</loc>
-  </url>
-  <url>
-    <loc>https://www.toolboxapp.cc/calculator/dividend_reinvestment_calculator/</loc>
-  </url>
-  <url>
-    <loc>https://www.toolboxapp.cc/calculator/rule_of_72_calculator/</loc>
-  </url>
-  <url>
-    <loc>https://www.toolboxapp.cc/calculator/stock_average_cost_estimator/</loc>
-  </url>
-  <url>
-    <loc>https://www.toolboxapp.cc/calculator/net_worth_calculator/</loc>
-  </url>
-  <url>
-    <loc>https://www.toolboxapp.cc/calculator/mortgage_calculator/</loc>
-  </url>
-  <url>
-    <loc>https://www.toolboxapp.cc/calculator/loan_calculator/</loc>
-  </url>
-  <url>
-    <loc>https://www.toolboxapp.cc/calculator/emergency_fund_calculator/</loc>
-  </url>
-  <url>
-    <loc>https://www.toolboxapp.cc/calculator/compound_annual_growth_rate_estimator/</loc>
-  </url>
-  <url>
-    <loc>https://www.toolboxapp.cc/calculator/rent_vs_buy_calculator/</loc>
-  </url>
-  <url>
-    <loc>https://www.toolboxapp.cc/calculator/house_affordability_estimator/</loc>
-  </url>
-  <url>
-    <loc>https://www.toolboxapp.cc/calculator/savings_goal_calculator/</loc>
-  </url>
-  <url>
-    <loc>https://www.toolboxapp.cc/calculator/future_value_estimator/</loc>
-  </url>
-  <url>
-    <loc>https://www.toolboxapp.cc/calculator/budget_planner/</loc>
-  </url>
-  <url>
-    <loc>https://www.toolboxapp.cc/calculator/rental_yield_calculator/</loc>
-  </url>
-  <url>
-    <loc>https://www.toolboxapp.cc/calculator/real_estate_return_on_investment_calculator/</loc>
-  </url>
-  <url>
-    <loc>https://www.toolboxapp.cc/calculator/investment_fee_estimator/</loc>
-  </url>
-  <url>
-    <loc>https://www.toolboxapp.cc/calculator/lump_sum_vs_dca_calculator/</loc>
-  </url>
-  <url>
-    <loc>https://www.toolboxapp.cc/calculator/millionaire_calculator/</loc>
-  </url>
-  <url>
     <loc>https://www.toolboxapp.cc/calculator/a_b_testing_sample_size_estimator/</loc>
   </url>
   <url>
@@ -313,6 +223,9 @@
     <loc>https://www.toolboxapp.cc/calculator/break_even_point_calculator/</loc>
   </url>
   <url>
+    <loc>https://www.toolboxapp.cc/calculator/budget_planner/</loc>
+  </url>
+  <url>
     <loc>https://www.toolboxapp.cc/calculator/budget_rule_50_30_20_calculator/</loc>
   </url>
   <url>
@@ -373,10 +286,19 @@
     <loc>https://www.toolboxapp.cc/calculator/coast_fi_progress_calculator/</loc>
   </url>
   <url>
+    <loc>https://www.toolboxapp.cc/calculator/coast_fire_calculator/</loc>
+  </url>
+  <url>
     <loc>https://www.toolboxapp.cc/calculator/commission_pay_calculator/</loc>
   </url>
   <url>
     <loc>https://www.toolboxapp.cc/calculator/community_growth_calculator/</loc>
+  </url>
+  <url>
+    <loc>https://www.toolboxapp.cc/calculator/compound_annual_growth_rate_estimator/</loc>
+  </url>
+  <url>
+    <loc>https://www.toolboxapp.cc/calculator/compound_interest_calculator/</loc>
   </url>
   <url>
     <loc>https://www.toolboxapp.cc/calculator/compound_interest_with_fees_calculator/</loc>
@@ -505,7 +427,13 @@
     <loc>https://www.toolboxapp.cc/calculator/discount_calculator/</loc>
   </url>
   <url>
+    <loc>https://www.toolboxapp.cc/calculator/dividend_reinvestment_calculator/</loc>
+  </url>
+  <url>
     <loc>https://www.toolboxapp.cc/calculator/dividend_tax_impact_estimator/</loc>
+  </url>
+  <url>
+    <loc>https://www.toolboxapp.cc/calculator/dividend_yield_calculator/</loc>
   </url>
   <url>
     <loc>https://www.toolboxapp.cc/calculator/dollar_cost_averaging_calculator/</loc>
@@ -523,10 +451,82 @@
     <loc>https://www.toolboxapp.cc/calculator/ebitda_calculator/</loc>
   </url>
   <url>
+    <loc>https://www.toolboxapp.cc/calculator/ecommerce_conversion_rate_estimator/</loc>
+  </url>
+  <url>
+    <loc>https://www.toolboxapp.cc/calculator/eisenhower_matrix_calculator/</loc>
+  </url>
+  <url>
+    <loc>https://www.toolboxapp.cc/calculator/email_click_rate_estimator/</loc>
+  </url>
+  <url>
+    <loc>https://www.toolboxapp.cc/calculator/email_open_rate_estimator/</loc>
+  </url>
+  <url>
+    <loc>https://www.toolboxapp.cc/calculator/emergency_fund_calculator/</loc>
+  </url>
+  <url>
+    <loc>https://www.toolboxapp.cc/calculator/emergency_fund_months_calculator/</loc>
+  </url>
+  <url>
     <loc>https://www.toolboxapp.cc/calculator/employee_cost_estimator/</loc>
   </url>
   <url>
+    <loc>https://www.toolboxapp.cc/calculator/etf_dividend_calculator/</loc>
+  </url>
+  <url>
+    <loc>https://www.toolboxapp.cc/calculator/etf_fee_comparison_calculator/</loc>
+  </url>
+  <url>
+    <loc>https://www.toolboxapp.cc/calculator/etsy_fee_estimator/</loc>
+  </url>
+  <url>
+    <loc>https://www.toolboxapp.cc/calculator/exam_average_calculator/</loc>
+  </url>
+  <url>
+    <loc>https://www.toolboxapp.cc/calculator/expansion_revenue_estimator/</loc>
+  </url>
+  <url>
+    <loc>https://www.toolboxapp.cc/calculator/expense_forecast_estimator/</loc>
+  </url>
+  <url>
+    <loc>https://www.toolboxapp.cc/calculator/expense_ratio_impact_estimator/</loc>
+  </url>
+  <url>
+    <loc>https://www.toolboxapp.cc/calculator/facebook_engagement_rate_estimator/</loc>
+  </url>
+  <url>
+    <loc>https://www.toolboxapp.cc/calculator/fat_fire_calculator/</loc>
+  </url>
+  <url>
+    <loc>https://www.toolboxapp.cc/calculator/fat_intake_calculator/</loc>
+  </url>
+  <url>
+    <loc>https://www.toolboxapp.cc/calculator/financial_freedom_date_calculator/</loc>
+  </url>
+  <url>
     <loc>https://www.toolboxapp.cc/calculator/financial_independence_calculator/</loc>
+  </url>
+  <url>
+    <loc>https://www.toolboxapp.cc/calculator/fire_number_calculator/</loc>
+  </url>
+  <url>
+    <loc>https://www.toolboxapp.cc/calculator/fixed_cost_estimator/</loc>
+  </url>
+  <url>
+    <loc>https://www.toolboxapp.cc/calculator/flashcard_review_calculator/</loc>
+  </url>
+  <url>
+    <loc>https://www.toolboxapp.cc/calculator/flow_time_estimator/</loc>
+  </url>
+  <url>
+    <loc>https://www.toolboxapp.cc/calculator/focus_time_estimator/</loc>
+  </url>
+  <url>
+    <loc>https://www.toolboxapp.cc/calculator/follower_growth_calculator/</loc>
+  </url>
+  <url>
+    <loc>https://www.toolboxapp.cc/calculator/free_shipping_threshold_calculator/</loc>
   </url>
   <url>
     <loc>https://www.toolboxapp.cc/calculator/freedom_number_calculator/</loc>
@@ -547,13 +547,100 @@
     <loc>https://www.toolboxapp.cc/calculator/freelancer_utilization_rate_estimator/</loc>
   </url>
   <url>
+    <loc>https://www.toolboxapp.cc/calculator/funnel_conversion_calculator/</loc>
+  </url>
+  <url>
+    <loc>https://www.toolboxapp.cc/calculator/future_value_estimator/</loc>
+  </url>
+  <url>
+    <loc>https://www.toolboxapp.cc/calculator/google_ads_budget_planner/</loc>
+  </url>
+  <url>
+    <loc>https://www.toolboxapp.cc/calculator/google_ads_campaign_calculator/</loc>
+  </url>
+  <url>
+    <loc>https://www.toolboxapp.cc/calculator/google_ads_conversion_calculator/</loc>
+  </url>
+  <url>
+    <loc>https://www.toolboxapp.cc/calculator/google_ads_cpa_calculator/</loc>
+  </url>
+  <url>
+    <loc>https://www.toolboxapp.cc/calculator/google_ads_cpc_calculator/</loc>
+  </url>
+  <url>
+    <loc>https://www.toolboxapp.cc/calculator/google_ads_cpm_calculator/</loc>
+  </url>
+  <url>
+    <loc>https://www.toolboxapp.cc/calculator/google_ads_ctr_calculator/</loc>
+  </url>
+  <url>
+    <loc>https://www.toolboxapp.cc/calculator/google_ads_email_calculator/</loc>
+  </url>
+  <url>
+    <loc>https://www.toolboxapp.cc/calculator/google_ads_funnel_calculator/</loc>
+  </url>
+  <url>
+    <loc>https://www.toolboxapp.cc/calculator/google_ads_impression_calculator/</loc>
+  </url>
+  <url>
+    <loc>https://www.toolboxapp.cc/calculator/google_ads_lead_calculator/</loc>
+  </url>
+  <url>
+    <loc>https://www.toolboxapp.cc/calculator/google_ads_reach_calculator/</loc>
+  </url>
+  <url>
+    <loc>https://www.toolboxapp.cc/calculator/google_ads_return_on_ad_spend_calculator/</loc>
+  </url>
+  <url>
+    <loc>https://www.toolboxapp.cc/calculator/google_ads_return_on_investment_calculator/</loc>
+  </url>
+  <url>
+    <loc>https://www.toolboxapp.cc/calculator/grade_improvement_calculator/</loc>
+  </url>
+  <url>
     <loc>https://www.toolboxapp.cc/calculator/gross_margin_estimator/</loc>
+  </url>
+  <url>
+    <loc>https://www.toolboxapp.cc/calculator/gross_pay_calculator/</loc>
+  </url>
+  <url>
+    <loc>https://www.toolboxapp.cc/calculator/gross_revenue_retention_calculator/</loc>
+  </url>
+  <url>
+    <loc>https://www.toolboxapp.cc/calculator/habit_streak_calculator/</loc>
+  </url>
+  <url>
+    <loc>https://www.toolboxapp.cc/calculator/heart_rate_zone_calculator/</loc>
+  </url>
+  <url>
+    <loc>https://www.toolboxapp.cc/calculator/holiday_pay_calculator/</loc>
+  </url>
+  <url>
+    <loc>https://www.toolboxapp.cc/calculator/homework_completion_calculator/</loc>
   </url>
   <url>
     <loc>https://www.toolboxapp.cc/calculator/hourly_to_salary_calculator/</loc>
   </url>
   <url>
+    <loc>https://www.toolboxapp.cc/calculator/hourly_wage_calculator/</loc>
+  </url>
+  <url>
+    <loc>https://www.toolboxapp.cc/calculator/house_affordability_estimator/</loc>
+  </url>
+  <url>
+    <loc>https://www.toolboxapp.cc/calculator/hydration_calculator/</loc>
+  </url>
+  <url>
+    <loc>https://www.toolboxapp.cc/calculator/ideal_weight_estimator/</loc>
+  </url>
+  <url>
+    <loc>https://www.toolboxapp.cc/calculator/impression_calculator/</loc>
+  </url>
+  <url>
     <loc>https://www.toolboxapp.cc/calculator/inflation_adjusted_return_calculator/</loc>
+  </url>
+  <url>
+    <loc>https://www.toolboxapp.cc/calculator/inflation_calculator/</loc>
   </url>
   <url>
     <loc>https://www.toolboxapp.cc/calculator/influencer_rate_estimator/</loc>
@@ -562,10 +649,31 @@
     <loc>https://www.toolboxapp.cc/calculator/influencer_return_on_investment_calculator/</loc>
   </url>
   <url>
+    <loc>https://www.toolboxapp.cc/calculator/instagram_content_calculator/</loc>
+  </url>
+  <url>
+    <loc>https://www.toolboxapp.cc/calculator/instagram_cpm_calculator/</loc>
+  </url>
+  <url>
+    <loc>https://www.toolboxapp.cc/calculator/instagram_earnings_estimator/</loc>
+  </url>
+  <url>
+    <loc>https://www.toolboxapp.cc/calculator/instagram_engagement_calculator/</loc>
+  </url>
+  <url>
     <loc>https://www.toolboxapp.cc/calculator/instagram_engagement_rate_estimator/</loc>
   </url>
   <url>
+    <loc>https://www.toolboxapp.cc/calculator/instagram_follower_calculator/</loc>
+  </url>
+  <url>
     <loc>https://www.toolboxapp.cc/calculator/instagram_growth_calculator/</loc>
+  </url>
+  <url>
+    <loc>https://www.toolboxapp.cc/calculator/instagram_impression_calculator/</loc>
+  </url>
+  <url>
+    <loc>https://www.toolboxapp.cc/calculator/instagram_post_calculator/</loc>
   </url>
   <url>
     <loc>https://www.toolboxapp.cc/calculator/instagram_posting_consistency_calculator/</loc>
@@ -574,22 +682,187 @@
     <loc>https://www.toolboxapp.cc/calculator/instagram_reach_calculator/</loc>
   </url>
   <url>
+    <loc>https://www.toolboxapp.cc/calculator/instagram_reel_earnings_estimator/</loc>
+  </url>
+  <url>
+    <loc>https://www.toolboxapp.cc/calculator/instagram_return_on_investment_calculator/</loc>
+  </url>
+  <url>
+    <loc>https://www.toolboxapp.cc/calculator/instagram_rpm_calculator/</loc>
+  </url>
+  <url>
     <loc>https://www.toolboxapp.cc/calculator/instagram_sponsorship_calculator/</loc>
+  </url>
+  <url>
+    <loc>https://www.toolboxapp.cc/calculator/inventory_days_calculator/</loc>
+  </url>
+  <url>
+    <loc>https://www.toolboxapp.cc/calculator/inventory_reorder_point_calculator/</loc>
   </url>
   <url>
     <loc>https://www.toolboxapp.cc/calculator/inventory_turnover_calculator/</loc>
   </url>
   <url>
+    <loc>https://www.toolboxapp.cc/calculator/investment_contribution_calculator/</loc>
+  </url>
+  <url>
+    <loc>https://www.toolboxapp.cc/calculator/investment_fee_estimator/</loc>
+  </url>
+  <url>
+    <loc>https://www.toolboxapp.cc/calculator/investment_growth_calculator/</loc>
+  </url>
+  <url>
+    <loc>https://www.toolboxapp.cc/calculator/investment_return_calculator/</loc>
+  </url>
+  <url>
+    <loc>https://www.toolboxapp.cc/calculator/landing_page_conversion_calculator/</loc>
+  </url>
+  <url>
+    <loc>https://www.toolboxapp.cc/calculator/lead_conversion_calculator/</loc>
+  </url>
+  <url>
     <loc>https://www.toolboxapp.cc/calculator/lead_value_estimator/</loc>
   </url>
   <url>
+    <loc>https://www.toolboxapp.cc/calculator/lean_fire_calculator/</loc>
+  </url>
+  <url>
+    <loc>https://www.toolboxapp.cc/calculator/lesson_plan_time_estimator/</loc>
+  </url>
+  <url>
+    <loc>https://www.toolboxapp.cc/calculator/linkedin_engagement_rate_estimator/</loc>
+  </url>
+  <url>
+    <loc>https://www.toolboxapp.cc/calculator/livestream_revenue_estimator/</loc>
+  </url>
+  <url>
+    <loc>https://www.toolboxapp.cc/calculator/loan_calculator/</loc>
+  </url>
+  <url>
+    <loc>https://www.toolboxapp.cc/calculator/loan_comparison_calculator/</loc>
+  </url>
+  <url>
+    <loc>https://www.toolboxapp.cc/calculator/logo_churn_calculator/</loc>
+  </url>
+  <url>
+    <loc>https://www.toolboxapp.cc/calculator/ltv_cac_ratio_calculator/</loc>
+  </url>
+  <url>
+    <loc>https://www.toolboxapp.cc/calculator/ltv_calculator/</loc>
+  </url>
+  <url>
+    <loc>https://www.toolboxapp.cc/calculator/lump_sum_vs_dca_calculator/</loc>
+  </url>
+  <url>
+    <loc>https://www.toolboxapp.cc/calculator/macro_calculator/</loc>
+  </url>
+  <url>
+    <loc>https://www.toolboxapp.cc/calculator/magic_number_calculator/</loc>
+  </url>
+  <url>
+    <loc>https://www.toolboxapp.cc/calculator/marketing_budget_planner/</loc>
+  </url>
+  <url>
     <loc>https://www.toolboxapp.cc/calculator/marketing_return_on_investment_calculator/</loc>
+  </url>
+  <url>
+    <loc>https://www.toolboxapp.cc/calculator/marketplace_fee_estimator/</loc>
   </url>
   <url>
     <loc>https://www.toolboxapp.cc/calculator/markup_calculator/</loc>
   </url>
   <url>
     <loc>https://www.toolboxapp.cc/calculator/markup_vs_margin_estimator/</loc>
+  </url>
+  <url>
+    <loc>https://www.toolboxapp.cc/calculator/meal_calorie_calculator/</loc>
+  </url>
+  <url>
+    <loc>https://www.toolboxapp.cc/calculator/meeting_return_on_investment_calculator/</loc>
+  </url>
+  <url>
+    <loc>https://www.toolboxapp.cc/calculator/meta_ads_cpa_calculator/</loc>
+  </url>
+  <url>
+    <loc>https://www.toolboxapp.cc/calculator/meta_ads_cpc_calculator/</loc>
+  </url>
+  <url>
+    <loc>https://www.toolboxapp.cc/calculator/meta_ads_cpm_calculator/</loc>
+  </url>
+  <url>
+    <loc>https://www.toolboxapp.cc/calculator/meta_ads_ctr_calculator/</loc>
+  </url>
+  <url>
+    <loc>https://www.toolboxapp.cc/calculator/meta_ads_return_on_ad_spend_calculator/</loc>
+  </url>
+  <url>
+    <loc>https://www.toolboxapp.cc/calculator/meta_ads_return_on_investment_calculator/</loc>
+  </url>
+  <url>
+    <loc>https://www.toolboxapp.cc/calculator/millionaire_calculator/</loc>
+  </url>
+  <url>
+    <loc>https://www.toolboxapp.cc/calculator/monthly_benefit_calculator/</loc>
+  </url>
+  <url>
+    <loc>https://www.toolboxapp.cc/calculator/monthly_bonus_calculator/</loc>
+  </url>
+  <url>
+    <loc>https://www.toolboxapp.cc/calculator/monthly_cash_flow_calculator/</loc>
+  </url>
+  <url>
+    <loc>https://www.toolboxapp.cc/calculator/monthly_commission_calculator/</loc>
+  </url>
+  <url>
+    <loc>https://www.toolboxapp.cc/calculator/monthly_debt_calculator/</loc>
+  </url>
+  <url>
+    <loc>https://www.toolboxapp.cc/calculator/monthly_deduction_calculator/</loc>
+  </url>
+  <url>
+    <loc>https://www.toolboxapp.cc/calculator/monthly_dividend_goal_calculator/</loc>
+  </url>
+  <url>
+    <loc>https://www.toolboxapp.cc/calculator/monthly_expense_calculator/</loc>
+  </url>
+  <url>
+    <loc>https://www.toolboxapp.cc/calculator/monthly_fee_estimator/</loc>
+  </url>
+  <url>
+    <loc>https://www.toolboxapp.cc/calculator/monthly_goal_calculator/</loc>
+  </url>
+  <url>
+    <loc>https://www.toolboxapp.cc/calculator/monthly_gross_pay_calculator/</loc>
+  </url>
+  <url>
+    <loc>https://www.toolboxapp.cc/calculator/monthly_income_calculator/</loc>
+  </url>
+  <url>
+    <loc>https://www.toolboxapp.cc/calculator/monthly_investment_calculator/</loc>
+  </url>
+  <url>
+    <loc>https://www.toolboxapp.cc/calculator/monthly_leave_calculator/</loc>
+  </url>
+  <url>
+    <loc>https://www.toolboxapp.cc/calculator/monthly_net_pay_calculator/</loc>
+  </url>
+  <url>
+    <loc>https://www.toolboxapp.cc/calculator/monthly_overtime_calculator/</loc>
+  </url>
+  <url>
+    <loc>https://www.toolboxapp.cc/calculator/monthly_pay_calculator/</loc>
+  </url>
+  <url>
+    <loc>https://www.toolboxapp.cc/calculator/monthly_raise_calculator/</loc>
+  </url>
+  <url>
+    <loc>https://www.toolboxapp.cc/calculator/monthly_ratio_calculator/</loc>
+  </url>
+  <url>
+    <loc>https://www.toolboxapp.cc/calculator/mortgage_calculator/</loc>
+  </url>
+  <url>
+    <loc>https://www.toolboxapp.cc/calculator/net_worth_calculator/</loc>
   </url>
   <url>
     <loc>https://www.toolboxapp.cc/calculator/net_worth_growth_calculator/</loc>
@@ -616,6 +889,18 @@
     <loc>https://www.toolboxapp.cc/calculator/profit_margin_estimator/</loc>
   </url>
   <url>
+    <loc>https://www.toolboxapp.cc/calculator/real_estate_return_on_investment_calculator/</loc>
+  </url>
+  <url>
+    <loc>https://www.toolboxapp.cc/calculator/rent_vs_buy_calculator/</loc>
+  </url>
+  <url>
+    <loc>https://www.toolboxapp.cc/calculator/rental_yield_calculator/</loc>
+  </url>
+  <url>
+    <loc>https://www.toolboxapp.cc/calculator/retirement_calculator/</loc>
+  </url>
+  <url>
     <loc>https://www.toolboxapp.cc/calculator/retirement_spending_calculator/</loc>
   </url>
   <url>
@@ -625,10 +910,22 @@
     <loc>https://www.toolboxapp.cc/calculator/revenue_growth_calculator/</loc>
   </url>
   <url>
+    <loc>https://www.toolboxapp.cc/calculator/rule_of_72_calculator/</loc>
+  </url>
+  <url>
+    <loc>https://www.toolboxapp.cc/calculator/safe_withdrawal_rate_estimator/</loc>
+  </url>
+  <url>
     <loc>https://www.toolboxapp.cc/calculator/salary_to_hourly_calculator/</loc>
   </url>
   <url>
     <loc>https://www.toolboxapp.cc/calculator/sales_commission_calculator/</loc>
+  </url>
+  <url>
+    <loc>https://www.toolboxapp.cc/calculator/savings_goal_calculator/</loc>
+  </url>
+  <url>
+    <loc>https://www.toolboxapp.cc/calculator/savings_rate_estimator/</loc>
   </url>
   <url>
     <loc>https://www.toolboxapp.cc/calculator/savings_rate_plus_calculator/</loc>
@@ -641,6 +938,9 @@
   </url>
   <url>
     <loc>https://www.toolboxapp.cc/calculator/startup_burn_rate_estimator/</loc>
+  </url>
+  <url>
+    <loc>https://www.toolboxapp.cc/calculator/stock_average_cost_estimator/</loc>
   </url>
   <url>
     <loc>https://www.toolboxapp.cc/calculator/tiktok_earnings_estimator/</loc>
