@@ -1,0 +1,68 @@
+/* Shared calculator layout contract. Keep page-specific colors and logic inline. */
+@media (min-width: 781px) {
+  .calculator {
+    display: grid !important;
+    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+    grid-template-areas:
+      "input input"
+      "ad-one ad-two"
+      "result result" !important;
+    gap: 18px !important;
+    align-items: stretch !important;
+  }
+
+  .calculator > .input-panel {
+    grid-area: input !important;
+  }
+
+  .calculator > .ad-one {
+    grid-area: ad-one !important;
+  }
+
+  .calculator > .ad-two {
+    grid-area: ad-two !important;
+  }
+
+  .calculator > .result-panel {
+    grid-area: result !important;
+  }
+
+  .field-grid > .field > label {
+    display: flex;
+    align-items: flex-end;
+    min-height: 42px;
+  }
+}
+
+@media (max-width: 780px) {
+  .calculator {
+    display: grid !important;
+    grid-template-columns: minmax(0, 1fr) !important;
+    grid-template-areas:
+      "input"
+      "ad-one"
+      "result"
+      "ad-two" !important;
+    gap: 18px !important;
+  }
+
+  .calculator > .input-panel {
+    grid-area: input !important;
+  }
+
+  .calculator > .ad-one {
+    grid-area: ad-one !important;
+  }
+
+  .calculator > .ad-two {
+    grid-area: ad-two !important;
+  }
+
+  .calculator > .result-panel {
+    grid-area: result !important;
+  }
+
+  .field-grid > .field > label {
+    min-height: 0;
+  }
+}
