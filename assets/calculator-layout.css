@@ -9,28 +9,75 @@
       "result result" !important;
     gap: 18px !important;
     align-items: stretch !important;
+    min-width: 0 !important;
   }
 
   .calculator > .input-panel {
     grid-area: input !important;
+    min-width: 0 !important;
   }
 
   .calculator > .ad-one {
     grid-area: ad-one !important;
+    min-width: 0 !important;
   }
 
   .calculator > .ad-two {
     grid-area: ad-two !important;
+    min-width: 0 !important;
   }
 
   .calculator > .result-panel {
     grid-area: result !important;
+    min-width: 0 !important;
+  }
+
+  /*
+   * Use flex instead of grid on desktop so accidental template text nodes do not
+   * become anonymous grid cells and shift the real input fields out of alignment.
+   */
+  .field-grid {
+    display: flex !important;
+    flex-wrap: wrap !important;
+    gap: 18px !important;
+    min-width: 0 !important;
+    font-size: 0 !important;
+  }
+
+  .field-grid > .field {
+    flex: 0 1 calc(50% - 9px) !important;
+    width: calc(50% - 9px) !important;
+    max-width: calc(50% - 9px) !important;
+    min-width: 0 !important;
+    font-size: 16px !important;
   }
 
   .field-grid > .field > label {
     display: flex;
     align-items: flex-end;
     min-height: 42px;
+  }
+
+  .field-grid .input-wrap,
+  .field-grid .input-control,
+  .result-layout,
+  .result-main,
+  .result-details,
+  .result-breakdown,
+  .result-row {
+    min-width: 0 !important;
+    max-width: 100% !important;
+  }
+
+  .field-grid .input-control {
+    width: 100% !important;
+  }
+
+  .result-row span,
+  .result-row strong,
+  .main-result {
+    min-width: 0 !important;
+    overflow-wrap: anywhere !important;
   }
 }
 
@@ -44,6 +91,7 @@
       "result"
       "ad-two" !important;
     gap: 18px !important;
+    min-width: 0 !important;
   }
 
   .calculator > .input-panel {
@@ -60,6 +108,18 @@
 
   .calculator > .result-panel {
     grid-area: result !important;
+  }
+
+  .field-grid {
+    display: grid !important;
+    grid-template-columns: minmax(0, 1fr) !important;
+    font-size: inherit !important;
+  }
+
+  .field-grid > .field {
+    width: auto !important;
+    max-width: 100% !important;
+    min-width: 0 !important;
   }
 
   .field-grid > .field > label {
