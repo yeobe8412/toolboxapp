@@ -33,22 +33,25 @@
   }
 
   /*
-   * Use flex instead of grid on desktop so accidental template text nodes do not
-   * become anonymous grid cells and shift the real input fields out of alignment.
+   * Desktop inputs use a wrapped two-column flex layout without flex gap.
+   * This prevents accidental template text nodes from adding a phantom gap
+   * while keeping every real input field aligned to the same two columns.
    */
   .field-grid {
     display: flex !important;
     flex-wrap: wrap !important;
-    gap: 18px !important;
+    gap: 0 !important;
+    margin: -9px !important;
     min-width: 0 !important;
     font-size: 0 !important;
   }
 
   .field-grid > .field {
-    flex: 0 1 calc(50% - 9px) !important;
-    width: calc(50% - 9px) !important;
-    max-width: calc(50% - 9px) !important;
+    flex: 0 0 50% !important;
+    width: 50% !important;
+    max-width: 50% !important;
     min-width: 0 !important;
+    padding: 9px !important;
     font-size: 16px !important;
   }
 
@@ -113,6 +116,8 @@
   .field-grid {
     display: grid !important;
     grid-template-columns: minmax(0, 1fr) !important;
+    gap: 18px !important;
+    margin: 0 !important;
     font-size: inherit !important;
   }
 
@@ -120,6 +125,7 @@
     width: auto !important;
     max-width: 100% !important;
     min-width: 0 !important;
+    padding: 0 !important;
   }
 
   .field-grid > .field > label {
