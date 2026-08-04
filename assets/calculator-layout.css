@@ -1,4 +1,38 @@
 /* Shared calculator layout contract. Keep page-specific colors and logic inline. */
+
+/* Normalize legacy unit-marker class names used by some calculator pages. */
+.input-wrap {
+  position: relative !important;
+}
+
+.input-prefix,
+.input-suffix {
+  position: absolute !important;
+  top: 50% !important;
+  transform: translateY(-50%) !important;
+  color: #767676 !important;
+  font-size: 13px !important;
+  line-height: 1 !important;
+  pointer-events: none !important;
+  z-index: 1 !important;
+}
+
+.input-prefix {
+  left: 16px !important;
+}
+
+.input-suffix {
+  right: 16px !important;
+}
+
+.has-prefix > .input-control {
+  padding-left: 52px !important;
+}
+
+.has-suffix > .input-control {
+  padding-right: 64px !important;
+}
+
 @media (min-width: 781px) {
   .calculator {
     display: grid !important;
@@ -32,11 +66,6 @@
     min-width: 0 !important;
   }
 
-  /*
-   * Desktop inputs use a wrapped two-column flex layout without flex gap.
-   * This prevents accidental template text nodes from adding a phantom gap
-   * while keeping every real input field aligned to the same two columns.
-   */
   .field-grid {
     display: flex !important;
     flex-wrap: wrap !important;
