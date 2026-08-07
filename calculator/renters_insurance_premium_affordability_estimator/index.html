@@ -1,0 +1,1069 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Estimate renters insurance premium affordability by comparing the annual premium with gross annual income and a monthly insurance budget you choose. The." />
+  <link rel="canonical" href="https://www.toolboxapp.cc/calculator/renters_insurance_premium_affordability_estimator/" />
+  <title>Renters Insurance Premium Affordability Estimator | toolbox</title>
+  <meta property="og:site_name" content="toolbox" />
+  <meta property="og:title" content="Renters Insurance Premium Affordability Estimator | toolbox" />
+  <meta property="og:description" content="Estimate renters insurance premium affordability by comparing the annual premium with gross annual income and a monthly insurance budget you choose. The." />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://www.toolboxapp.cc/calculator/renters_insurance_premium_affordability_estimator/" />
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Renters Insurance Premium Affordability Estimator | toolbox" />
+  <meta name="twitter:description" content="Estimate renters insurance premium affordability by comparing the annual premium with gross annual income and a monthly insurance budget you choose. The." />
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+          { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://www.toolboxapp.cc/" },
+          { "@type": "ListItem", "position": 2, "name": "Taxes, Insurance &amp; Benefits", "item": "https://www.toolboxapp.cc/categories/taxes-insurance-benefits/" },
+          { "@type": "ListItem", "position": 3, "name": "Renters Insurance Premium Affordability Estimator", "item": "https://www.toolboxapp.cc/calculator/renters_insurance_premium_affordability_estimator/" }
+        ]
+      },
+      {
+        "@type": "WebApplication",
+        "name": "Renters Insurance Premium Affordability Estimator",
+        "url": "https://www.toolboxapp.cc/calculator/renters_insurance_premium_affordability_estimator/",
+        "description": "Estimate renters insurance premium affordability by comparing the annual premium with gross annual income and a monthly insurance budget you choose. The.",
+        "applicationCategory": "UtilitiesApplication",
+        "operatingSystem": "Any",
+        "browserRequirements": "Requires JavaScript"
+      }
+    ]
+  }
+  </script>
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "Should I compare renters insurance by monthly price or annual price?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Annual price is useful for comparing the full cost without installment timing differences. The calculator also shows a monthly equivalent for budgeting."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Do I include fees in the annual premium?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "If a fee is unavoidable and part of what you will actually pay for the policy, including it gives a more realistic cost comparison."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Is a low percentage of income enough to judge affordability?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Not by itself. Income share is only one measure; the monthly budget field can better reflect your actual cash-flow constraints."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "What if bundling changes the premium on another policy?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "This calculator evaluates only the renters premium you enter. If a bundle creates savings elsewhere, compare total household insurance cost before and after the bundle."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Can two similarly priced renters policies provide different value?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Yes. Limits, deductibles, replacement-cost terms, liability coverage, endorsements, and exclusions can differ materially even when premiums are close."
+      }
+    }
+  ]
+}
+</script>
+
+  <style>
+    :root {
+      color-scheme: dark;
+      --bg: #000;
+      --panel: #0a0a0a;
+      --panel-hover: #111;
+      --border: #292929;
+      --border-strong: #454545;
+      --text: #fff;
+      --muted: #8d8d8d;
+      --soft: #bdbdbd;
+      --danger: #ff7d7d;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      background: var(--bg);
+      color: var(--text);
+      font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    button,
+    input,
+    select {
+      font: inherit;
+    }
+
+    a {
+      color: inherit;
+    }
+
+    .site-header {
+      position: sticky;
+      top: 0;
+      z-index: 30;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: 70px;
+      padding: 0 24px;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+      background: rgba(0, 0, 0, 0.88);
+      backdrop-filter: blur(18px);
+    }
+
+    .brand {
+      color: #fff;
+      text-decoration: none;
+      font-size: 24px;
+      font-weight: 600;
+      letter-spacing: -0.05em;
+    }
+
+    .apps-wrap {
+      position: relative;
+    }
+
+    .apps-button {
+      width: 44px;
+      height: 44px;
+      display: grid;
+      place-items: center;
+      border: 0;
+      border-radius: 50%;
+      background: transparent;
+      cursor: pointer;
+      transition: background 0.18s ease;
+    }
+
+    .apps-button:hover,
+    .apps-button:focus-visible {
+      background: #111;
+      outline: none;
+    }
+
+    .dots {
+      width: 20px;
+      height: 20px;
+      display: grid;
+      grid-template-columns: repeat(3, 4px);
+      grid-template-rows: repeat(3, 4px);
+      gap: 4px;
+    }
+
+    .dots span {
+      width: 4px;
+      height: 4px;
+      border-radius: 50%;
+      background: #fff;
+    }
+
+    .apps-menu {
+      position: absolute;
+      top: 52px;
+      right: 0;
+      width: min(310px, calc(100vw - 32px));
+      max-height: calc(100vh - 84px);
+      overflow-y: auto;
+      padding: 10px;
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      background: rgba(10, 10, 10, 0.98);
+      box-shadow: 0 22px 60px rgba(0, 0, 0, 0.6);
+      opacity: 0;
+      visibility: hidden;
+      transform: translateY(-8px);
+      transition: 0.18s ease;
+    }
+
+    .apps-menu.open {
+      opacity: 1;
+      visibility: visible;
+      transform: translateY(0);
+    }
+
+    .category-list {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+
+    .category-link {
+      min-height: 42px;
+      display: flex;
+      align-items: center;
+      padding: 0 14px;
+      border-radius: 10px;
+      color: #fff;
+      text-decoration: none;
+      font-size: 14px;
+      transition: background 0.16s ease;
+    }
+
+    .category-link:hover,
+    .category-link:focus-visible {
+      background: #181818;
+      outline: none;
+    }
+
+    .page {
+      width: min(1080px, calc(100% - 32px));
+      margin: 0 auto;
+      padding: 64px 0 90px;
+    }
+
+    .breadcrumb {
+      margin-bottom: 22px;
+      color: #737373;
+      font-size: 13px;
+    }
+
+    .breadcrumb a {
+      color: #9b9b9b;
+      text-decoration: none;
+    }
+
+    .breadcrumb a:hover {
+      color: #fff;
+    }
+
+    .page-title {
+      margin: 0;
+      font-size: clamp(36px, 6vw, 62px);
+      line-height: 1;
+      letter-spacing: -0.055em;
+      font-weight: 600;
+    }
+
+    .title-row {
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: flex-start;
+    }
+
+    .title-row .page-title {
+      padding-right: 48px;
+    }
+
+    .favorite-button {
+      position: absolute;
+      right: 0;
+      display: grid;
+      width: 42px;
+      height: 42px;
+      padding: 0;
+      place-items: center;
+      border: 0;
+      background: transparent;
+      color: #858585;
+      cursor: pointer;
+      font-size: 25px;
+      line-height: 1;
+      transition: color .16s ease;
+    }
+
+    .favorite-button:hover,
+    .favorite-button:focus-visible {
+      color: #fff;
+      outline: none;
+    }
+
+    .favorite-button.active {
+      color: #ffd34e;
+    }
+
+    .intro {
+      width: 100%;
+      max-width: none;
+      margin: 18px 0 0;
+      color: var(--muted);
+      font-size: 16px;
+      line-height: 1.7;
+    }
+
+    .noscript-notice {
+      margin: 18px 0 0;
+      padding: 14px 16px;
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      color: var(--soft);
+      background: var(--panel);
+      font-size: 14px;
+      line-height: 1.6;
+    }
+
+    .calculator {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      grid-template-areas:
+        "input input"
+        "ad-one ad-two"
+        "result result";
+      gap: 18px;
+      margin-top: 46px;
+      min-width: 0;
+    }
+
+    .input-panel {
+      grid-area: input;
+    }
+
+    .calculator > *,
+    .field-grid,
+    .field,
+    .input-wrap,
+    .result-panel,
+    .result-breakdown {
+      min-width: 0;
+    }
+
+    .panel {
+      border: 1px solid var(--border);
+      border-radius: 22px;
+      background: var(--panel);
+    }
+
+    .input-panel {
+      padding: 28px;
+    }
+
+    .panel-title {
+      margin: 0 0 24px;
+      font-size: 18px;
+      font-weight: 600;
+      letter-spacing: -0.02em;
+    }
+
+    .field-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 18px;
+    }
+
+    .field {
+      display: grid;
+      gap: 9px;
+    }
+
+    .field label {
+      color: var(--soft);
+      font-size: 13px;
+      font-weight: 500;
+    }
+
+    .input-wrap {
+      position: relative;
+    }
+
+    .input-control {
+      width: 100%;
+      height: 56px;
+      padding: 0 52px 0 16px;
+      border: 1px solid var(--border-strong);
+      border-radius: 13px;
+      background: #050505;
+      color: #fff;
+      outline: none;
+      transition: border-color 0.16s ease, box-shadow 0.16s ease;
+    }
+
+    .input-control:focus {
+      border-color: #777;
+      box-shadow: 0 0 0 4px rgba(255,255,255,0.035);
+    }
+
+    .suffix {
+      position: absolute;
+      top: 50%;
+      right: 16px;
+      transform: translateY(-50%);
+      color: #767676;
+      font-size: 13px;
+      pointer-events: none;
+    }
+
+    .actions {
+      display: flex;
+      gap: 10px;
+      margin-top: 24px;
+    }
+
+    .button {
+      min-height: 50px;
+      padding: 0 20px;
+      border-radius: 12px;
+      cursor: pointer;
+      transition: background 0.16s ease, border-color 0.16s ease, transform 0.16s ease;
+    }
+
+    .button:active {
+      transform: translateY(1px);
+    }
+
+    .button-primary {
+      flex: 1;
+      border: 1px solid #fff;
+      background:#242424;
+      color:#fff;
+      font-weight: 700;
+    }
+
+    .button-primary:hover {
+      background:#3a3a3a;
+      border-color:#4a4a4a;
+    }
+
+    .button-secondary {
+      border: 1px solid var(--border-strong);
+      background: transparent;
+      color: #fff;
+    }
+
+    .button-secondary:hover {
+      background: #151515;
+    }
+
+    .error {
+      min-height: 20px;
+      margin: 13px 0 0;
+      color: var(--danger);
+      font-size: 13px;
+    }
+
+
+    .ad-panel {
+      min-height:140px;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      padding:18px;
+      border:1px dashed #3b3b3b;
+      border-radius:22px;
+      background:#111;
+      color:#686868;
+      text-align:center;
+      font-size:12px;
+      letter-spacing:0.08em;
+      text-transform:uppercase;
+    }
+
+    .ad-one { grid-area: ad-one; }
+    .ad-two { grid-area: ad-two; }
+
+    .ad-slot {
+      width:100%;
+      min-height:104px;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+    }
+
+    .result-panel {
+      grid-area: result;
+      min-height: 360px;
+      padding: 28px;
+      background:#242424;
+      color:#fff;
+    }
+
+    .result-layout {
+      display: grid;
+      grid-template-columns: minmax(0, 1.08fr) minmax(320px, 0.92fr);
+      gap: 40px;
+      align-items: center;
+      min-height: 100%;
+      min-width: 0;
+    }
+
+    .result-main,
+    .result-details {
+      min-width: 0;
+    }
+
+    .result-eyebrow {
+      color:#a0a0a0;
+      font-size: 13px;
+      font-weight: 600;
+    }
+
+    .main-result {
+      margin: 18px 0 4px;
+      font-size: clamp(42px, 7vw, 70px);
+      line-height: 1;
+      letter-spacing: -0.06em;
+      font-weight: 700;
+      overflow-wrap: anywhere;
+    }
+
+    .result-label {
+      color:#9b9b9b;
+      font-size: 14px;
+    }
+
+    .result-breakdown {
+      display: grid;
+      gap: 0;
+      margin-top: 0;
+      border-top:1px solid #353535;
+    }
+
+    .result-row {
+      display: flex;
+      justify-content: space-between;
+      gap: 20px;
+      padding: 15px 0;
+      border-bottom:1px solid #353535;
+      font-size: 14px;
+    }
+
+    .result-row span:first-child {
+      color:#9b9b9b;
+    }
+
+    .result-row strong {
+      text-align: right;
+    }
+
+    .details {
+      display: grid;
+      gap: 10px;
+      margin-top: 22px;
+    }
+
+    .accordion {
+      overflow: hidden;
+      border: 1px solid var(--border);
+      border-radius: 15px;
+      background: #080808;
+    }
+
+    .accordion-button {
+      width: 100%;
+      min-height: 62px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 20px;
+      padding: 0 20px;
+      border: 0;
+      background: transparent;
+      color: #fff;
+      text-align: left;
+      cursor: pointer;
+    }
+
+    .accordion-button:hover {
+      background: #101010;
+    }
+
+    .accordion-title {
+      font-size: 15px;
+      font-weight: 600;
+    }
+
+    .accordion-icon {
+      color: #777;
+      font-size: 22px;
+      transition: transform 0.18s ease;
+    }
+
+    .accordion.open .accordion-icon {
+      transform: rotate(45deg);
+    }
+
+    .accordion-content {
+      max-height: 0;
+      overflow: hidden;
+      color: #aaa;
+      line-height: 1.75;
+      transition: max-height 0.25s ease;
+    }
+
+    .accordion-content-inner {
+      padding: 0 20px 22px;
+    }
+
+    .accordion-content p {
+      margin: 0 0 12px;
+    }
+
+    .accordion-content p:last-child {
+      margin-bottom: 0;
+    }
+
+    .formula {
+      display: block;
+      padding: 16px;
+      border: 1px solid #242424;
+      border-radius: 12px;
+      background: #030303;
+      color: #fff;
+      font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+      overflow-x: auto;
+    }
+
+    .faq-item + .faq-item {
+      margin-top: 18px;
+    }
+
+    .faq-question {
+      margin: 0 0 6px;
+      color: #fff;
+      font-size: 15px;
+    }
+
+    .related-tools {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 10px;
+    }
+
+    .related-link {
+      min-height: 54px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 14px;
+      padding: 0 16px;
+      border: 1px solid #242424;
+      border-radius: 12px;
+      color: #fff;
+      text-decoration: none;
+      background: #050505;
+    }
+
+    .related-link:hover {
+      background: #111;
+    }
+
+    .site-footer {
+      width: min(1080px, calc(100% - 32px));
+      margin: 0 auto;
+      padding: 26px 0 42px;
+      border-top: 1px solid #171717;
+      color: #686868;
+      font-size: 12px;
+    }
+
+    @media (max-width: 780px) {
+      .site-header {
+        height: 64px;
+        padding: 0 16px;
+      }
+
+      .page {
+        padding-top: 42px;
+      }
+
+      .calculator {
+        grid-template-columns: minmax(0, 1fr);
+        grid-template-areas:
+          "input"
+          "ad-one"
+          "result"
+          "ad-two";
+      }
+
+      .input-panel,
+      .field-grid,
+      .field,
+      .input-wrap,
+      .actions,
+      .result-panel {
+        width: 100%;
+        max-width: 100%;
+        min-width: 0;
+      }
+
+      .panel-title,
+      .field,
+      .actions,
+      .error,
+      .result-panel > * {
+        grid-column: 1 / -1;
+        grid-row: auto;
+      }
+
+      .result-panel {
+        min-height: 390px;
+      }
+
+      .field-grid {
+        grid-template-columns: minmax(0, 1fr);
+      }
+
+      .result-layout {
+        grid-template-columns: minmax(0, 1fr);
+        gap: 28px;
+        align-items: start;
+      }
+
+      .result-breakdown {
+        margin-top: 0;
+      }
+    }
+
+    @media (max-width: 520px) {
+      .page {
+        width: calc(100% - 24px);
+        padding-bottom: 60px;
+      }
+
+      .page-title {
+        font-size: clamp(34px, 11vw, 48px);
+        line-height: 1.02;
+        overflow-wrap: anywhere;
+      }
+
+      .input-panel,
+      .result-panel {
+        padding: 22px;
+        border-radius: 18px;
+      }
+
+      .field-grid {
+        grid-template-columns: minmax(0, 1fr) !important;
+      }
+
+      .input-control,
+      select.input-control {
+        width: 100%;
+        max-width: 100%;
+        min-width: 0;
+      }
+
+      .actions {
+        flex-direction: column;
+      }
+
+      .button,
+      .button-secondary {
+        width: 100%;
+        min-width: 0;
+      }
+
+      .result-row {
+        min-width: 0;
+      }
+
+      .result-row span,
+      .result-row strong {
+        min-width: 0;
+        overflow-wrap: anywhere;
+      }
+
+      .related-tools {
+        grid-template-columns: minmax(0, 1fr);
+      }
+
+      .main-result {
+        font-size: 48px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <header class="site-header">
+    <a class="brand" href="/">toolbox</a>
+
+    <div class="apps-wrap">
+      <button
+        class="apps-button"
+        id="appsButton"
+        type="button"
+        aria-label="Open categories"
+        aria-expanded="false"
+        aria-controls="appsMenu"
+      >
+        <span class="dots" aria-hidden="true">
+          <span></span><span></span><span></span>
+          <span></span><span></span><span></span>
+          <span></span><span></span><span></span>
+        </span>
+      </button>
+
+      <div class="apps-menu" id="appsMenu">
+        <nav class="category-list" aria-label="Tool categories">
+          <a class="category-link" href="/categories/money-investing/">Money &amp; Investing</a>
+          <a class="category-link" href="/categories/taxes-insurance-benefits/">Taxes, Insurance &amp; Benefits</a>
+          <a class="category-link" href="/categories/business-operations/">Business &amp; Operations</a>
+          <a class="category-link" href="/categories/startups-digital-business/">Startups &amp; Digital Business</a>
+          <a class="category-link" href="/categories/sales-marketing-audience/">Sales, Marketing &amp; Audience</a>
+          <a class="category-link" href="/categories/online-selling-retail/">Online Selling &amp; Retail</a>
+          <a class="category-link" href="/categories/jobs-pay-workforce/">Jobs, Pay &amp; Workforce</a>
+          <a class="category-link" href="/categories/time-productivity/">Time &amp; Productivity</a>
+          <a class="category-link" href="/categories/property-construction/">Property &amp; Construction</a>
+          <a class="category-link" href="/categories/manufacturing-production/">Manufacturing &amp; Production</a>
+          <a class="category-link" href="/categories/shipping-supply-chain/">Shipping &amp; Supply Chain</a>
+          <a class="category-link" href="/categories/health-body-fitness/">Health, Body &amp; Fitness</a>
+          <a class="category-link" href="/categories/food-cooking-hospitality/">Food, Cooking &amp; Hospitality</a>
+          <a class="category-link" href="/categories/home-everyday-life/">Home &amp; Everyday Life</a>
+          <a class="category-link" href="/categories/learning-grades/">Learning &amp; Grades</a>
+          <a class="category-link" href="/categories/science-math-engineering/">Science, Math &amp; Engineering</a>
+          <a class="category-link" href="/categories/ai-data-technology/">AI, Data &amp; Technology</a>
+          <a class="category-link" href="/categories/energy-sustainability/">Energy &amp; Sustainability</a>
+          <a class="category-link" href="/categories/farming-animals-pets/">Farming, Animals &amp; Pets</a>
+          <a class="category-link" href="/categories/travel-events-recreation/">Travel, Events &amp; Recreation</a>
+          <a class="category-link" href="/categories/legal-safety-compliance/">Legal, Safety &amp; Compliance</a>
+        </nav>
+      </div>
+    </div>
+  </header>
+
+  <main class="page">
+    <div class="breadcrumb">
+      <a href="/">Home</a> / <a href="/categories/taxes-insurance-benefits/">Taxes, Insurance &amp; Benefits</a> / Renters Insurance Premium Affordability Estimator
+    </div>
+
+    <div class="title-row">
+      <h1 class="page-title">Renters Insurance Premium Affordability Estimator</h1>
+      <button class="favorite-button" id="favoriteButton" type="button" aria-label="Add Renters Insurance Premium Affordability Estimator to favorites" aria-pressed="false">☆</button>
+    </div>
+    <p class="intro">
+      <span>Estimate renters insurance premium affordability by comparing the annual premium with gross annual income and a monthly insurance budget you choose. The calculator shows the premium’s share of income, converts the annual charge to a monthly equivalent, and measures how far that amount is above or below your budget.</span> <span>Renters insurance premiums are often small compared with major household expenses, but the same method is useful when comparing several quotes or accounting for a change in coverage. The tool deliberately avoids imposing a universal affordability rule and instead reports the relationship between price and your own inputs.</span>
+    </p>
+    <noscript>
+      <p class="noscript-notice">This calculator requires JavaScript to update results. Enable JavaScript in your browser, then reload this page.</p>
+    </noscript>
+
+    <section class="calculator" aria-label="Renters Insurance Premium Affordability Estimator">
+      <div class="panel input-panel">
+        <h2 class="panel-title">Enter your assumptions</h2>
+
+        <!-- Every number input in INPUTS_HTML must have a unique id, label, default value, min, max and step. Optional blank values must be treated as 0 or not applied, never as an error. -->
+        <div class="field-grid"><div class="field"><label for="premium">Annual renters insurance premium</label><div class="input-wrap"><input class="input-control" id="premium" type="number" value="240" min="0" max="100000" step="1" inputmode="decimal"><span class="suffix">$</span></div></div><div class="field"><label for="income">Gross annual income</label><div class="input-wrap"><input class="input-control" id="income" type="number" value="60000" min="1" max="10000000" step="1000" inputmode="decimal"><span class="suffix">$</span></div></div><div class="field"><label for="budget">Monthly renters insurance budget</label><div class="input-wrap"><input class="input-control" id="budget" type="number" value="25" min="0" max="10000" step="1" inputmode="decimal"><span class="suffix">$</span></div></div></div>
+
+        <div class="actions">
+<button class="button button-secondary" id="resetButton" type="button">Reset</button>
+        </div>
+
+        <p class="error" id="errorMessage" role="alert"></p>
+      </div>
+
+      <aside class="ad-panel ad-one" aria-label="Advertisement">
+        <div class="ad-slot"><span>Advertisement</span></div>
+      </aside>
+
+      <div class="panel result-panel" aria-live="polite">
+        <div class="result-layout">
+          <div class="result-main">
+          <div class="result-eyebrow">Result</div>
+          <div class="main-result" id="mainResult">—</div>
+          <div class="result-label" id="resultLabel">Premium as a share of gross annual income</div>
+            
+          </div>
+          <div class="result-details">
+            <div class="result-breakdown"><div class="result-row"><span>Monthly premium equivalent</span><strong id="stat1">—</strong></div><div class="result-row"><span>Monthly budget headroom</span><strong id="stat2">—</strong></div><div class="result-row"><span>Annual budget difference</span><strong id="stat3">—</strong></div><div class="result-row"><span>Budget status</span><strong id="stat4">—</strong></div></div>
+          </div>
+        </div>
+      </div>
+
+      <aside class="ad-panel ad-two" aria-label="Advertisement">
+        <div class="ad-slot"><span>Advertisement</span></div>
+      </aside>
+    </section>
+
+    <section class="details" aria-label="Calculator information">
+      <article class="accordion">
+        <button class="accordion-button" type="button" aria-expanded="false">
+          <span class="accordion-title">How to use</span>
+          <span class="accordion-icon" aria-hidden="true">+</span>
+        </button>
+        <div class="accordion-content">
+          <div class="accordion-content-inner">
+            <ol><li><strong>Enter the annual renters premium.</strong> Use the total premium for a full 12-month period.</li><li><strong>Enter gross annual income.</strong> Use income before taxes to calculate a consistent percentage.</li><li><strong>Choose a monthly budget.</strong> Enter the amount you are willing to allocate to renters insurance each month.</li><li><strong>Review the percentage.</strong> The main result shows what share of gross annual income the premium represents.</li><li><strong>Check the budget comparison.</strong> Positive headroom means the monthly premium equivalent is below the budget you entered.</li></ol>
+          </div>
+        </div>
+      </article>
+
+      <article class="accordion">
+        <button class="accordion-button" type="button" aria-expanded="false">
+          <span class="accordion-title">Formula</span>
+          <span class="accordion-icon" aria-hidden="true">+</span>
+        </button>
+        <div class="accordion-content">
+          <div class="accordion-content-inner">
+            <span class="formula">Monthly premium = Annual premium ÷ 12</span><span class="formula">Premium share of income = Annual premium ÷ Gross annual income × 100</span><span class="formula">Monthly budget headroom = Monthly budget − Monthly premium</span><p><strong>Where:</strong></p><ul><li><strong>Annual premium</strong> = full-year renters insurance cost</li><li><strong>Gross annual income</strong> = income before taxes</li><li><strong>Monthly budget</strong> = self-selected monthly amount available for renters insurance</li></ul><p><strong>Assumptions:</strong> The calculator does not define a required or recommended affordability threshold. It compares the premium only with your income and chosen budget and does not evaluate whether the underlying coverage is sufficient.</p>
+            <h3>What the result means</h3>
+            <p>The income percentage describes price relative to gross income, while budget headroom measures the premium against the monthly limit you chose.</p>
+            <p>When comparing premiums, also compare personal property limits, liability limits, deductible, loss-of-use coverage, endorsements, and exclusions.</p>
+          </div>
+        </div>
+      </article>
+
+      <article class="accordion">
+        <button class="accordion-button" type="button" aria-expanded="false">
+          <span class="accordion-title">Example calculation</span>
+          <span class="accordion-icon" aria-hidden="true">+</span>
+        </button>
+        <div class="accordion-content">
+          <div class="accordion-content-inner">
+            <p><strong>Given:</strong> Annual renters insurance premium = $240; gross annual income = $60,000; monthly budget = $25.</p><p><strong>Calculation:</strong> Monthly premium = $240 ÷ 12 = $20. Premium share = $240 ÷ $60,000 × 100 = 0.40%. Monthly budget headroom = $25 − $20 = $5. Annual budget difference = $300 − $240 = $60.</p><p><strong>Result:</strong> The premium is 0.40% of gross annual income and $5 per month below the entered budget.</p><p><strong>Interpretation:</strong> Under this budget, the premium fits with $60 of annual room remaining. Coverage quality still needs to be reviewed separately.</p>
+          </div>
+        </div>
+      </article>
+
+      <article class="accordion">
+        <button class="accordion-button" type="button" aria-expanded="false">
+          <span class="accordion-title">FAQ</span>
+          <span class="accordion-icon" aria-hidden="true">+</span>
+        </button>
+        <div class="accordion-content">
+          <div class="accordion-content-inner">
+            <div class="faq-item"><h3 class="faq-question">Should I compare renters insurance by monthly price or annual price?</h3><p>Annual price is useful for comparing the full cost without installment timing differences. The calculator also shows a monthly equivalent for budgeting.</p></div><div class="faq-item"><h3 class="faq-question">Do I include fees in the annual premium?</h3><p>If a fee is unavoidable and part of what you will actually pay for the policy, including it gives a more realistic cost comparison.</p></div><div class="faq-item"><h3 class="faq-question">Is a low percentage of income enough to judge affordability?</h3><p>Not by itself. Income share is only one measure; the monthly budget field can better reflect your actual cash-flow constraints.</p></div><div class="faq-item"><h3 class="faq-question">What if bundling changes the premium on another policy?</h3><p>This calculator evaluates only the renters premium you enter. If a bundle creates savings elsewhere, compare total household insurance cost before and after the bundle.</p></div><div class="faq-item"><h3 class="faq-question">Can two similarly priced renters policies provide different value?</h3><p>Yes. Limits, deductibles, replacement-cost terms, liability coverage, endorsements, and exclusions can differ materially even when premiums are close.</p></div>
+          </div>
+        </div>
+      </article>
+
+      <article class="accordion">
+        <button class="accordion-button" type="button" aria-expanded="false">
+          <span class="accordion-title">Related tools</span>
+          <span class="accordion-icon" aria-hidden="true">+</span>
+        </button>
+        <div class="accordion-content">
+          <div class="accordion-content-inner">
+            <div class="related-tools"><a class="related-link" href="/calculator/renters_insurance_coverage_needs_estimator/"><span><strong>Renters Insurance Coverage Needs Estimator</strong><br><small>Estimate renters insurance coverage needs first.</small></span><span aria-hidden="true">→</span></a><a class="related-link" href="/calculator/renters_insurance_deductible_tradeoff_calculator/"><span><strong>Renters Insurance Deductible Tradeoff Calculator</strong><br><small>Compare premium savings with deductible exposure.</small></span><span aria-hidden="true">→</span></a><a class="related-link" href="/calculator/renters_insurance_expected_claim_calculator/"><span><strong>Renters Insurance Expected Claim Calculator</strong><br><small>Estimate the expected dollar value of a modeled renters claim.</small></span><span aria-hidden="true">→</span></a><a class="related-link" href="/calculator/renters_insurance_loss_probability_calculator/"><span><strong>Renters Insurance Loss Probability Calculator</strong><br><small>Examine cumulative renters loss probability over time.</small></span><span aria-hidden="true">→</span></a></div>
+          </div>
+        </div>
+      </article>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    © 2026 toolbox. Affordability is based on user-entered income and budget values and does not establish a required insurance spending level.
+  </footer>
+
+  <script>
+    const appsButton = document.getElementById("appsButton");
+    const appsMenu = document.getElementById("appsMenu");
+    const favoriteButton = document.getElementById("favoriteButton");
+    const FAVORITES_KEY = "toolboxapp-favorites-v1";
+    const currentTool = {
+      name: "Renters Insurance Premium Affordability Estimator",
+      url: window.location.pathname
+    };
+
+    function readFavorites() {
+      try {
+        const saved = JSON.parse(localStorage.getItem(FAVORITES_KEY) || "[]");
+        return Array.isArray(saved) ? saved : [];
+      } catch (error) {
+        return [];
+      }
+    }
+
+    function updateFavoriteButton() {
+      const isFavorite = readFavorites().some(tool => tool.url === currentTool.url);
+      favoriteButton.classList.toggle("active", isFavorite);
+      favoriteButton.textContent = isFavorite ? "★" : "☆";
+      favoriteButton.setAttribute("aria-pressed", String(isFavorite));
+      favoriteButton.setAttribute("aria-label", `${isFavorite ? "Remove" : "Add"} Renters Insurance Premium Affordability Estimator ${isFavorite ? "from" : "to"} favorites`);
+    }
+
+    favoriteButton.addEventListener("click", () => {
+      const saved = readFavorites();
+      const existingIndex = saved.findIndex(tool => tool.url === currentTool.url);
+
+      if (existingIndex >= 0) {
+        saved.splice(existingIndex, 1);
+      } else {
+        saved.push(currentTool);
+      }
+
+      localStorage.setItem(FAVORITES_KEY, JSON.stringify(saved));
+      updateFavoriteButton();
+    });
+
+    const resetButton = document.getElementById("resetButton");
+    const errorMessage = document.getElementById("errorMessage");
+    const byId = id => document.getElementById(id);
+    const finite = value => Number.isFinite(Number(value));
+    const optionalNumber = (id, fallback = 0) => {
+      const value = byId(id)?.value.trim();
+      return value === "" ? fallback : Number(value);
+    };
+    const formatNumber = (value, digits = 2) => Number(value).toLocaleString("en-US", { maximumFractionDigits: digits });
+    const formatMoney = (value, currency = "USD", digits = 2) => new Intl.NumberFormat("en-US", { style: "currency", currency, maximumFractionDigits: digits }).format(value);
+    const formatPercent = (value, digits = 2) => `${Number(value).toFixed(digits)}%`;
+    const setText = (id, value) => { const node = byId(id); if (node) node.textContent = value; };
+    const showError = message => { errorMessage.textContent = message; };
+    const clearError = () => { errorMessage.textContent = ""; document.querySelectorAll('[aria-invalid="true"]').forEach(node => node.setAttribute("aria-invalid", "false")); };
+    const invalidate = (id, message) => { const node = byId(id); if (node) node.setAttribute("aria-invalid", "true"); showError(message); return false; };
+
+    function calculate(){ clearError(); for(const id of ["premium","income","budget"]){if(!finite(byId(id).value)) return invalidate(id,"Enter a valid number.");} const a=+byId("premium").value,i=+byId("income").value,b=+byId("budget").value; if(a<0||b<0) return showError("Premium and budget cannot be negative."); if(i<=0) return invalidate("income","Gross annual income must be greater than zero."); const m=a/12,share=a/i*100,head=b-m,ad=b*12-a; setText("mainResult",formatPercent(share,2)); setText("stat1",formatMoney(m)); setText("stat2",(head>=0?"+":"")+formatMoney(head)); setText("stat3",(ad>=0?"+":"")+formatMoney(ad)); setText("stat4",head>=0?"Within entered budget":"Above entered budget"); }
+
+    resetButton.addEventListener("click", () => {
+      document.querySelectorAll(".input-control").forEach(input => { input.value = input.defaultValue; });
+      clearError();
+      calculate();
+    });
+    let autoTimer;
+    document.querySelectorAll(".input-control").forEach(input => {
+      input.addEventListener("input", () => {
+        clearTimeout(autoTimer);
+        autoTimer = setTimeout(calculate, 200);
+      });
+      input.addEventListener("change", calculate);
+    });
+
+
+    appsButton.addEventListener("click", () => {
+      const isOpen = appsMenu.classList.toggle("open");
+      appsButton.setAttribute("aria-expanded", String(isOpen));
+    });
+
+    document.addEventListener("click", event => {
+      if (!event.target.closest(".apps-wrap")) {
+        appsMenu.classList.remove("open");
+        appsButton.setAttribute("aria-expanded", "false");
+      }
+    });
+
+    document.querySelectorAll(".accordion-button").forEach(button => {
+      button.addEventListener("click", () => {
+        const accordion = button.closest(".accordion");
+        const content = accordion.querySelector(".accordion-content");
+        const isOpen = accordion.classList.toggle("open");
+
+        button.setAttribute("aria-expanded", String(isOpen));
+        content.style.maxHeight = isOpen ? content.scrollHeight + "px" : "0px";
+      });
+    });
+
+    calculate();
+    updateFavoriteButton();
+  </script>
+</body>
+</html>
