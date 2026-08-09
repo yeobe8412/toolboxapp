@@ -1,0 +1,1022 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Use the Hair Extension Service Capacity Estimator to estimate the result is the estimated weekly number of services supported by productive provider time. Enter your operating assumptions and review the detailed result." />
+  <link rel="canonical" href="https://www.toolboxapp.cc/calculator/hair_extension_service_capacity_estimator/" />
+  <title>Hair Extension Service Capacity Estimator</title>
+  <meta property="og:site_name" content="toolbox" />
+  <meta property="og:title" content="Hair Extension Service Capacity Estimator" />
+  <meta property="og:description" content="Estimate the result is the estimated weekly number of services supported by productive provider time. with this practical calculator." />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://www.toolboxapp.cc/calculator/hair_extension_service_capacity_estimator/" />
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Hair Extension Service Capacity Estimator" />
+  <meta name="twitter:description" content="Estimate the result is the estimated weekly number of services supported by productive provider time. with this practical calculator." />
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+          { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://www.toolboxapp.cc/" },
+          { "@type": "ListItem", "position": 2, "name": "Health, Body & Fitness", "item": "https://www.toolboxapp.cc/categories/health-body-fitness/" },
+          { "@type": "ListItem", "position": 3, "name": "Hair Extension Service Capacity Estimator", "item": "https://www.toolboxapp.cc/calculator/hair_extension_service_capacity_estimator/" }
+        ]
+      },
+      {
+        "@type": "WebApplication",
+        "name": "Hair Extension Service Capacity Estimator",
+        "url": "https://www.toolboxapp.cc/calculator/hair_extension_service_capacity_estimator/",
+        "description": "Use the Hair Extension Service Capacity Estimator to estimate the result is the estimated weekly number of services supported by productive provider time. Enter your operating assumptions and review the detailed result.",
+        "applicationCategory": "UtilitiesApplication",
+        "operatingSystem": "Any",
+        "browserRequirements": "Requires JavaScript"
+      }
+    ]
+  }
+  </script>
+  <script type="application/ld+json">{"@context": "https://schema.org", "@type": "FAQPage", "mainEntity": [{"@type": "Question", "name": "Why include a utilization percentage?", "acceptedAnswer": {"@type": "Answer", "text": "Nominal bookable hours are rarely used perfectly. Utilization lets you reserve time for gaps, breaks, setup, cleaning, administration, or other normal schedule losses."}}, {"@type": "Question", "name": "Should consultation or processing time be included in service minutes?", "acceptedAnswer": {"@type": "Answer", "text": "Include any time that prevents the same provider from taking another appointment. If part of the service can overlap with another client, model only the provider-blocking time if that better matches your workflow."}}, {"@type": "Question", "name": "Does the result account for cancellations?", "acceptedAnswer": {"@type": "Answer", "text": "Only indirectly if your utilization assumption reflects typical cancellations and idle time. If cancellation behavior changes materially, update utilization or compare multiple scenarios."}}, {"@type": "Question", "name": "Can I use this for providers with different schedules?", "acceptedAnswer": {"@type": "Answer", "text": "The single average works best when schedules are similar. For very different hours or service times, calculate each provider group separately and add their capacities."}}, {"@type": "Question", "name": "Why might actual completed services be lower than the estimate?", "acceptedAnswer": {"@type": "Answer", "text": "Demand may not arrive evenly, appointments may run long, and specific time slots can be hard to fill. The result is a time-based planning ceiling under the entered assumptions."}}]}</script>
+
+  <style>
+    :root {
+      color-scheme: dark;
+      --bg: #000;
+      --panel: #0a0a0a;
+      --panel-hover: #111;
+      --border: #292929;
+      --border-strong: #454545;
+      --text: #fff;
+      --muted: #8d8d8d;
+      --soft: #bdbdbd;
+      --danger: #ff7d7d;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      background: var(--bg);
+      color: var(--text);
+      font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    button,
+    input,
+    select {
+      font: inherit;
+    }
+
+    a {
+      color: inherit;
+    }
+
+    .site-header {
+      position: sticky;
+      top: 0;
+      z-index: 30;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: 70px;
+      padding: 0 24px;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+      background: rgba(0, 0, 0, 0.88);
+      backdrop-filter: blur(18px);
+    }
+
+    .brand {
+      color: #fff;
+      text-decoration: none;
+      font-size: 24px;
+      font-weight: 600;
+      letter-spacing: -0.05em;
+    }
+
+    .apps-wrap {
+      position: relative;
+    }
+
+    .apps-button {
+      width: 44px;
+      height: 44px;
+      display: grid;
+      place-items: center;
+      border: 0;
+      border-radius: 50%;
+      background: transparent;
+      cursor: pointer;
+      transition: background 0.18s ease;
+    }
+
+    .apps-button:hover,
+    .apps-button:focus-visible {
+      background: #111;
+      outline: none;
+    }
+
+    .dots {
+      width: 20px;
+      height: 20px;
+      display: grid;
+      grid-template-columns: repeat(3, 4px);
+      grid-template-rows: repeat(3, 4px);
+      gap: 4px;
+    }
+
+    .dots span {
+      width: 4px;
+      height: 4px;
+      border-radius: 50%;
+      background: #fff;
+    }
+
+    .apps-menu {
+      position: absolute;
+      top: 52px;
+      right: 0;
+      width: min(310px, calc(100vw - 32px));
+      max-height: calc(100vh - 84px);
+      overflow-y: auto;
+      padding: 10px;
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      background: rgba(10, 10, 10, 0.98);
+      box-shadow: 0 22px 60px rgba(0, 0, 0, 0.6);
+      opacity: 0;
+      visibility: hidden;
+      transform: translateY(-8px);
+      transition: 0.18s ease;
+    }
+
+    .apps-menu.open {
+      opacity: 1;
+      visibility: visible;
+      transform: translateY(0);
+    }
+
+    .category-list {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+
+    .category-link {
+      min-height: 42px;
+      display: flex;
+      align-items: center;
+      padding: 0 14px;
+      border-radius: 10px;
+      color: #fff;
+      text-decoration: none;
+      font-size: 14px;
+      transition: background 0.16s ease;
+    }
+
+    .category-link:hover,
+    .category-link:focus-visible {
+      background: #181818;
+      outline: none;
+    }
+
+    .page {
+      width: min(1080px, calc(100% - 32px));
+      margin: 0 auto;
+      padding: 64px 0 90px;
+    }
+
+    .breadcrumb {
+      margin-bottom: 22px;
+      color: #737373;
+      font-size: 13px;
+    }
+
+    .breadcrumb a {
+      color: #9b9b9b;
+      text-decoration: none;
+    }
+
+    .breadcrumb a:hover {
+      color: #fff;
+    }
+
+    .page-title {
+      margin: 0;
+      font-size: clamp(36px, 6vw, 62px);
+      line-height: 1;
+      letter-spacing: -0.055em;
+      font-weight: 600;
+    }
+
+    .title-row {
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: flex-start;
+    }
+
+    .title-row .page-title {
+      padding-right: 48px;
+    }
+
+    .favorite-button {
+      position: absolute;
+      right: 0;
+      display: grid;
+      width: 42px;
+      height: 42px;
+      padding: 0;
+      place-items: center;
+      border: 0;
+      background: transparent;
+      color: #858585;
+      cursor: pointer;
+      font-size: 25px;
+      line-height: 1;
+      transition: color .16s ease;
+    }
+
+    .favorite-button:hover,
+    .favorite-button:focus-visible {
+      color: #fff;
+      outline: none;
+    }
+
+    .favorite-button.active {
+      color: #ffd34e;
+    }
+
+    .intro {
+      width: 100%;
+      max-width: none;
+      margin: 18px 0 0;
+      color: var(--muted);
+      font-size: 16px;
+      line-height: 1.7;
+    }
+
+    .noscript-notice {
+      margin: 18px 0 0;
+      padding: 14px 16px;
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      color: var(--soft);
+      background: var(--panel);
+      font-size: 14px;
+      line-height: 1.6;
+    }
+
+    .calculator {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      grid-template-areas:
+        "input input"
+        "ad-one ad-two"
+        "result result";
+      gap: 18px;
+      margin-top: 46px;
+      min-width: 0;
+    }
+
+    .input-panel {
+      grid-area: input;
+    }
+
+    .calculator > *,
+    .field-grid,
+    .field,
+    .input-wrap,
+    .result-panel,
+    .result-breakdown {
+      min-width: 0;
+    }
+
+    .panel {
+      border: 1px solid var(--border);
+      border-radius: 22px;
+      background: var(--panel);
+    }
+
+    .input-panel {
+      padding: 28px;
+    }
+
+    .panel-title {
+      margin: 0 0 24px;
+      font-size: 18px;
+      font-weight: 600;
+      letter-spacing: -0.02em;
+    }
+
+    .field-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 18px;
+    }
+
+    .field {
+      display: grid;
+      gap: 9px;
+    }
+
+    .field label {
+      color: var(--soft);
+      font-size: 13px;
+      font-weight: 500;
+    }
+
+    .input-wrap {
+      position: relative;
+    }
+
+    .input-control {
+      width: 100%;
+      height: 56px;
+      padding: 0 52px 0 16px;
+      border: 1px solid var(--border-strong);
+      border-radius: 13px;
+      background: #050505;
+      color: #fff;
+      outline: none;
+      transition: border-color 0.16s ease, box-shadow 0.16s ease;
+    }
+
+    .input-control:focus {
+      border-color: #777;
+      box-shadow: 0 0 0 4px rgba(255,255,255,0.035);
+    }
+
+    .suffix {
+      position: absolute;
+      top: 50%;
+      right: 16px;
+      transform: translateY(-50%);
+      color: #767676;
+      font-size: 13px;
+      pointer-events: none;
+    }
+
+    .actions {
+      display: flex;
+      gap: 10px;
+      margin-top: 24px;
+    }
+
+    .button {
+      min-height: 50px;
+      padding: 0 20px;
+      border-radius: 12px;
+      cursor: pointer;
+      transition: background 0.16s ease, border-color 0.16s ease, transform 0.16s ease;
+    }
+
+    .button:active {
+      transform: translateY(1px);
+    }
+
+    .button-primary {
+      flex: 1;
+      border: 1px solid #fff;
+      background:#242424;
+      color:#fff;
+      font-weight: 700;
+    }
+
+    .button-primary:hover {
+      background:#3a3a3a;
+      border-color:#4a4a4a;
+    }
+
+    .button-secondary {
+      border: 1px solid var(--border-strong);
+      background: transparent;
+      color: #fff;
+    }
+
+    .button-secondary:hover {
+      background: #151515;
+    }
+
+    .error {
+      min-height: 20px;
+      margin: 13px 0 0;
+      color: var(--danger);
+      font-size: 13px;
+    }
+
+
+    .ad-panel {
+      min-height:140px;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      padding:18px;
+      border:1px dashed #3b3b3b;
+      border-radius:22px;
+      background:#111;
+      color:#686868;
+      text-align:center;
+      font-size:12px;
+      letter-spacing:0.08em;
+      text-transform:uppercase;
+    }
+
+    .ad-one { grid-area: ad-one; }
+    .ad-two { grid-area: ad-two; }
+
+    .ad-slot {
+      width:100%;
+      min-height:104px;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+    }
+
+    .result-panel {
+      grid-area: result;
+      min-height: 360px;
+      padding: 28px;
+      background:#242424;
+      color:#fff;
+    }
+
+    .result-layout {
+      display: grid;
+      grid-template-columns: minmax(0, 1.08fr) minmax(320px, 0.92fr);
+      gap: 40px;
+      align-items: center;
+      min-height: 100%;
+      min-width: 0;
+    }
+
+    .result-main,
+    .result-details {
+      min-width: 0;
+    }
+
+    .result-eyebrow {
+      color:#a0a0a0;
+      font-size: 13px;
+      font-weight: 600;
+    }
+
+    .main-result {
+      margin: 18px 0 4px;
+      font-size: clamp(42px, 7vw, 70px);
+      line-height: 1;
+      letter-spacing: -0.06em;
+      font-weight: 700;
+      overflow-wrap: anywhere;
+    }
+
+    .result-label {
+      color:#9b9b9b;
+      font-size: 14px;
+    }
+
+    .result-breakdown {
+      display: grid;
+      gap: 0;
+      margin-top: 0;
+      border-top:1px solid #353535;
+    }
+
+    .result-row {
+      display: flex;
+      justify-content: space-between;
+      gap: 20px;
+      padding: 15px 0;
+      border-bottom:1px solid #353535;
+      font-size: 14px;
+    }
+
+    .result-row span:first-child {
+      color:#9b9b9b;
+    }
+
+    .result-row strong {
+      text-align: right;
+    }
+
+    .details {
+      display: grid;
+      gap: 10px;
+      margin-top: 22px;
+    }
+
+    .accordion {
+      overflow: hidden;
+      border: 1px solid var(--border);
+      border-radius: 15px;
+      background: #080808;
+    }
+
+    .accordion-button {
+      width: 100%;
+      min-height: 62px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 20px;
+      padding: 0 20px;
+      border: 0;
+      background: transparent;
+      color: #fff;
+      text-align: left;
+      cursor: pointer;
+    }
+
+    .accordion-button:hover {
+      background: #101010;
+    }
+
+    .accordion-title {
+      font-size: 15px;
+      font-weight: 600;
+    }
+
+    .accordion-icon {
+      color: #777;
+      font-size: 22px;
+      transition: transform 0.18s ease;
+    }
+
+    .accordion.open .accordion-icon {
+      transform: rotate(45deg);
+    }
+
+    .accordion-content {
+      max-height: 0;
+      overflow: hidden;
+      color: #aaa;
+      line-height: 1.75;
+      transition: max-height 0.25s ease;
+    }
+
+    .accordion-content-inner {
+      padding: 0 20px 22px;
+    }
+
+    .accordion-content p {
+      margin: 0 0 12px;
+    }
+
+    .accordion-content p:last-child {
+      margin-bottom: 0;
+    }
+
+    .formula {
+      display: block;
+      padding: 16px;
+      border: 1px solid #242424;
+      border-radius: 12px;
+      background: #030303;
+      color: #fff;
+      font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+      overflow-x: auto;
+    }
+
+    .faq-item + .faq-item {
+      margin-top: 18px;
+    }
+
+    .faq-question {
+      margin: 0 0 6px;
+      color: #fff;
+      font-size: 15px;
+    }
+
+    .related-tools {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 10px;
+    }
+
+    .related-link {
+      min-height: 54px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 14px;
+      padding: 0 16px;
+      border: 1px solid #242424;
+      border-radius: 12px;
+      color: #fff;
+      text-decoration: none;
+      background: #050505;
+    }
+
+    .related-link:hover {
+      background: #111;
+    }
+
+    .site-footer {
+      width: min(1080px, calc(100% - 32px));
+      margin: 0 auto;
+      padding: 26px 0 42px;
+      border-top: 1px solid #171717;
+      color: #686868;
+      font-size: 12px;
+    }
+
+    @media (max-width: 780px) {
+      .site-header {
+        height: 64px;
+        padding: 0 16px;
+      }
+
+      .page {
+        padding-top: 42px;
+      }
+
+      .calculator {
+        grid-template-columns: minmax(0, 1fr);
+        grid-template-areas:
+          "input"
+          "ad-one"
+          "result"
+          "ad-two";
+      }
+
+      .input-panel,
+      .field-grid,
+      .field,
+      .input-wrap,
+      .actions,
+      .result-panel {
+        width: 100%;
+        max-width: 100%;
+        min-width: 0;
+      }
+
+      .panel-title,
+      .field,
+      .actions,
+      .error,
+      .result-panel > * {
+        grid-column: 1 / -1;
+        grid-row: auto;
+      }
+
+      .result-panel {
+        min-height: 390px;
+      }
+
+      .field-grid {
+        grid-template-columns: minmax(0, 1fr);
+      }
+
+      .result-layout {
+        grid-template-columns: minmax(0, 1fr);
+        gap: 28px;
+        align-items: start;
+      }
+
+      .result-breakdown {
+        margin-top: 0;
+      }
+    }
+
+    @media (max-width: 520px) {
+      .page {
+        width: calc(100% - 24px);
+        padding-bottom: 60px;
+      }
+
+      .page-title {
+        font-size: clamp(34px, 11vw, 48px);
+        line-height: 1.02;
+        overflow-wrap: anywhere;
+      }
+
+      .input-panel,
+      .result-panel {
+        padding: 22px;
+        border-radius: 18px;
+      }
+
+      .field-grid {
+        grid-template-columns: minmax(0, 1fr) !important;
+      }
+
+      .input-control,
+      select.input-control {
+        width: 100%;
+        max-width: 100%;
+        min-width: 0;
+      }
+
+      .actions {
+        flex-direction: column;
+      }
+
+      .button,
+      .button-secondary {
+        width: 100%;
+        min-width: 0;
+      }
+
+      .result-row {
+        min-width: 0;
+      }
+
+      .result-row span,
+      .result-row strong {
+        min-width: 0;
+        overflow-wrap: anywhere;
+      }
+
+      .related-tools {
+        grid-template-columns: minmax(0, 1fr);
+      }
+
+      .main-result {
+        font-size: 48px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <header class="site-header">
+    <a class="brand" href="/">toolbox</a>
+
+    <div class="apps-wrap">
+      <button
+        class="apps-button"
+        id="appsButton"
+        type="button"
+        aria-label="Open categories"
+        aria-expanded="false"
+        aria-controls="appsMenu"
+      >
+        <span class="dots" aria-hidden="true">
+          <span></span><span></span><span></span>
+          <span></span><span></span><span></span>
+          <span></span><span></span><span></span>
+        </span>
+      </button>
+
+      <div class="apps-menu" id="appsMenu">
+        <nav class="category-list" aria-label="Tool categories">
+          <a class="category-link" href="/categories/money-investing/">Money &amp; Investing</a>
+          <a class="category-link" href="/categories/taxes-insurance-benefits/">Taxes, Insurance &amp; Benefits</a>
+          <a class="category-link" href="/categories/business-operations/">Business &amp; Operations</a>
+          <a class="category-link" href="/categories/startups-digital-business/">Startups &amp; Digital Business</a>
+          <a class="category-link" href="/categories/sales-marketing-audience/">Sales, Marketing &amp; Audience</a>
+          <a class="category-link" href="/categories/online-selling-retail/">Online Selling &amp; Retail</a>
+          <a class="category-link" href="/categories/jobs-pay-workforce/">Jobs, Pay &amp; Workforce</a>
+          <a class="category-link" href="/categories/time-productivity/">Time &amp; Productivity</a>
+          <a class="category-link" href="/categories/property-construction/">Property &amp; Construction</a>
+          <a class="category-link" href="/categories/manufacturing-production/">Manufacturing &amp; Production</a>
+          <a class="category-link" href="/categories/shipping-supply-chain/">Shipping &amp; Supply Chain</a>
+          <a class="category-link" href="/categories/health-body-fitness/">Health, Body &amp; Fitness</a>
+          <a class="category-link" href="/categories/food-cooking-hospitality/">Food, Cooking &amp; Hospitality</a>
+          <a class="category-link" href="/categories/home-everyday-life/">Home &amp; Everyday Life</a>
+          <a class="category-link" href="/categories/learning-grades/">Learning &amp; Grades</a>
+          <a class="category-link" href="/categories/science-math-engineering/">Science, Math &amp; Engineering</a>
+          <a class="category-link" href="/categories/ai-data-technology/">AI, Data &amp; Technology</a>
+          <a class="category-link" href="/categories/energy-sustainability/">Energy &amp; Sustainability</a>
+          <a class="category-link" href="/categories/farming-animals-pets/">Farming, Animals &amp; Pets</a>
+          <a class="category-link" href="/categories/travel-events-recreation/">Travel, Events &amp; Recreation</a>
+          <a class="category-link" href="/categories/legal-safety-compliance/">Legal, Safety &amp; Compliance</a>
+        </nav>
+      </div>
+    </div>
+  </header>
+
+  <main class="page">
+    <div class="breadcrumb">
+      <a href="/">Home</a> / <a href="/categories/health-body-fitness/">Health, Body & Fitness</a> / Hair Extension Service Capacity Estimator
+    </div>
+
+    <div class="title-row">
+      <h1 class="page-title">Hair Extension Service Capacity Estimator</h1>
+      <button class="favorite-button" id="favoriteButton" type="button" aria-label="Add Hair Extension Service Capacity Estimator to favorites" aria-pressed="false">☆</button>
+    </div>
+    <p class="intro">
+      The Hair Extension Service Capacity Estimator estimates weekly hair extension service capacity from staff count, bookable hours, average appointment length, and productive utilization. It is intended for schedule planning, staffing checks, and testing whether expected demand can fit into the time you actually make available for appointments.<br><br>The calculator applies utilization to total bookable hours before dividing by average service time. This avoids assuming every nominal hour can be sold. The result is a planning capacity, not a promise of completed appointments, because cancellations, setup time, consultation needs, and uneven booking patterns can still reduce throughput.
+    </p>
+    <noscript>
+      <p class="noscript-notice">This calculator requires JavaScript to update results. Enable JavaScript in your browser, then reload this page.</p>
+    </noscript>
+
+    <section class="calculator" aria-label="Hair Extension Service Capacity Estimator">
+      <div class="panel input-panel">
+        <h2 class="panel-title">Inputs</h2>
+
+        <!-- Every number input in INPUTS_HTML must have a unique id, label, default value, min, max and step. Optional blank values must be treated as 0 or not applied, never as an error. -->
+        <div class="field-grid"><div class="field"><label for="staff">Service providers</label><div class="input-wrap"><input class="input-control" id="staff" type="number" value="2" min="1" max="10000" step="1" /><span class="suffix">providers</span></div></div><div class="field"><label for="hoursPerDay">Bookable hours per provider/day</label><div class="input-wrap"><input class="input-control" id="hoursPerDay" type="number" value="9" min="0.1" max="24" step="0.1" /><span class="suffix">hours</span></div></div><div class="field"><label for="daysPerWeek">Working days per week</label><div class="input-wrap"><input class="input-control" id="daysPerWeek" type="number" value="5" min="1" max="7" step="1" /><span class="suffix">days</span></div></div><div class="field"><label for="serviceMinutes">Average service time</label><div class="input-wrap"><input class="input-control" id="serviceMinutes" type="number" value="180" min="1" max="1440" step="1" /><span class="suffix">min</span></div></div><div class="field"><label for="utilization">Productive utilization</label><div class="input-wrap"><input class="input-control" id="utilization" type="number" value="76" min="1" max="100" step="0.1" /><span class="suffix">%</span></div></div></div>
+
+        <div class="actions">
+<button class="button button-secondary" id="resetButton" type="button">Reset</button>
+        </div>
+
+        <p class="error" id="errorMessage" role="alert"></p>
+      </div>
+
+      <aside class="ad-panel ad-one" aria-label="Advertisement">
+        <div class="ad-slot"></div>
+      </aside>
+
+      <div class="panel result-panel" aria-live="polite">
+        <div class="result-layout">
+          <div class="result-main">
+          <div class="result-eyebrow">Result</div>
+          <div class="main-result" id="mainResult">—</div>
+          <div class="result-label" id="resultLabel">The result is the estimated weekly number of services supported by productive provider time.</div>
+            
+          </div>
+          <div class="result-details">
+            <div class="result-breakdown"><div class="result-row"><span>Raw weekly hours</span><strong id="rawHoursOut">—</strong></div><div class="result-row"><span>Productive weekly hours</span><strong id="productiveHoursOut">—</strong></div><div class="result-row"><span>Average services per day</span><strong id="dailyCapacityOut">—</strong></div><div class="result-row"><span>Service time</span><strong id="minutesOut">—</strong></div></div>
+          </div>
+        </div>
+      </div>
+
+      <aside class="ad-panel ad-two" aria-label="Advertisement">
+        <div class="ad-slot"></div>
+      </aside>
+    </section>
+
+    <section class="details" aria-label="Calculator information">
+      <article class="accordion">
+        <button class="accordion-button" type="button" aria-expanded="false">
+          <span class="accordion-title">How to use</span>
+          <span class="accordion-icon" aria-hidden="true">+</span>
+        </button>
+        <div class="accordion-content">
+          <div class="accordion-content-inner">
+            <ol><li><strong>Enter active providers.</strong> Count only people whose time is included in the schedule being modeled.</li><li><strong>Enter bookable hours.</strong> Use the appointment hours available per provider per working day.</li><li><strong>Enter working days.</strong> Keep the weekly schedule consistent with the hours input.</li><li><strong>Enter average service time.</strong> Include the appointment time that blocks the provider from another booking.</li><li><strong>Set productive utilization.</strong> Use less than 100% when breaks, gaps, cleaning, administration, or normal booking friction consume part of bookable time.</li><li><strong>Review weekly capacity.</strong> The main result shows the modeled number of services the schedule can support.</li></ol>
+          </div>
+        </div>
+      </article>
+
+      <article class="accordion">
+        <button class="accordion-button" type="button" aria-expanded="false">
+          <span class="accordion-title">Formula</span>
+          <span class="accordion-icon" aria-hidden="true">+</span>
+        </button>
+        <div class="accordion-content">
+          <div class="accordion-content-inner">
+            <p class="formula">Raw weekly hours = Providers × Bookable hours per day × Working days per week<br>Productive weekly hours = Raw weekly hours × (Utilization ÷ 100)<br>Weekly service capacity = (Productive weekly hours × 60) ÷ Average service minutes</p><p>This is a time-capacity model. It assumes average service length and utilization are representative of the modeled week.</p>
+            <h3>What the result means</h3>
+            <p>The result is the estimated weekly number of services supported by productive provider time.</p>
+            <p>Actual throughput can be lower because demand and appointment timing are uneven.</p>
+          </div>
+        </div>
+      </article>
+
+      <article class="accordion">
+        <button class="accordion-button" type="button" aria-expanded="false">
+          <span class="accordion-title">Example calculation</span>
+          <span class="accordion-icon" aria-hidden="true">+</span>
+        </button>
+        <div class="accordion-content">
+          <div class="accordion-content-inner">
+            Two extension specialists each have 9 bookable hours per day, 5 days per week. A typical appointment occupies 180 minutes, and the studio plans around 76% productive utilization.<br><br><strong>Given:</strong> 2 providers, 9 hours/day, 5 days/week, 180 minutes/service, 76% utilization.<br><strong>Calculation:</strong> Raw hours = 2 × 9 × 5 = 90.0. Productive hours = 90.0 × 0.76 = 68.40. Capacity = (68.40 × 60) ÷ 180 = 22.80 services/week.<br><strong>Result:</strong> The schedule supports about 22.8 services per modeled week.
+          </div>
+        </div>
+      </article>
+
+      <article class="accordion">
+        <button class="accordion-button" type="button" aria-expanded="false">
+          <span class="accordion-title">FAQ</span>
+          <span class="accordion-icon" aria-hidden="true">+</span>
+        </button>
+        <div class="accordion-content">
+          <div class="accordion-content-inner">
+            <div class="faq-item"><h3 class="faq-question">Why include a utilization percentage?</h3><p>Nominal bookable hours are rarely used perfectly. Utilization lets you reserve time for gaps, breaks, setup, cleaning, administration, or other normal schedule losses.</p></div><div class="faq-item"><h3 class="faq-question">Should consultation or processing time be included in service minutes?</h3><p>Include any time that prevents the same provider from taking another appointment. If part of the service can overlap with another client, model only the provider-blocking time if that better matches your workflow.</p></div><div class="faq-item"><h3 class="faq-question">Does the result account for cancellations?</h3><p>Only indirectly if your utilization assumption reflects typical cancellations and idle time. If cancellation behavior changes materially, update utilization or compare multiple scenarios.</p></div><div class="faq-item"><h3 class="faq-question">Can I use this for providers with different schedules?</h3><p>The single average works best when schedules are similar. For very different hours or service times, calculate each provider group separately and add their capacities.</p></div><div class="faq-item"><h3 class="faq-question">Why might actual completed services be lower than the estimate?</h3><p>Demand may not arrive evenly, appointments may run long, and specific time slots can be hard to fill. The result is a time-based planning ceiling under the entered assumptions.</p></div>
+          </div>
+        </div>
+      </article>
+
+      <article class="accordion">
+        <button class="accordion-button" type="button" aria-expanded="false">
+          <span class="accordion-title">Related tools</span>
+          <span class="accordion-icon" aria-hidden="true">+</span>
+        </button>
+        <div class="accordion-content">
+          <div class="accordion-content-inner">
+            <div class="related-tools"><a class="related-link" href="/calculator/hair_extension_product_duration_estimator/"><span>Hair Extension Product Duration Estimator</span><span aria-hidden="true">→</span></a><!-- Estimate how long your current supply can support services before reordering. --><a class="related-link" href="/calculator/hair_extension_treatment_cost_estimator/"><span>Hair Extension Treatment Cost Estimator</span><span aria-hidden="true">→</span></a><!-- Translate service inputs into a per-appointment operating cost. --><a class="related-link" href="/calculator/hair_extension_client_retention_calculator/"><span>Hair Extension Client Retention Calculator</span><span aria-hidden="true">→</span></a><!-- Track how many eligible clients return for another service or program cycle. --><a class="related-link" href="/calculator/hair_extension_membership_break_even_point_calculator/"><span>Hair Extension Membership Break-Even Point Calculator</span><span aria-hidden="true">→</span></a><!-- Estimate how many active members are needed to cover recurring program costs. --></div>
+          </div>
+        </div>
+      </article>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    © 2026 toolbox. For informational planning only. Results depend on the values and assumptions entered.
+  </footer>
+
+  <script>
+    const appsButton = document.getElementById("appsButton");
+    const appsMenu = document.getElementById("appsMenu");
+    const favoriteButton = document.getElementById("favoriteButton");
+    const FAVORITES_KEY = "toolboxapp-favorites-v1";
+    const currentTool = {
+      name: "Hair Extension Service Capacity Estimator",
+      url: window.location.pathname
+    };
+
+    function readFavorites() {
+      try {
+        const saved = JSON.parse(localStorage.getItem(FAVORITES_KEY) || "[]");
+        return Array.isArray(saved) ? saved : [];
+      } catch (error) {
+        return [];
+      }
+    }
+
+    function updateFavoriteButton() {
+      const isFavorite = readFavorites().some(tool => tool.url === currentTool.url);
+      favoriteButton.classList.toggle("active", isFavorite);
+      favoriteButton.textContent = isFavorite ? "★" : "☆";
+      favoriteButton.setAttribute("aria-pressed", String(isFavorite));
+      favoriteButton.setAttribute("aria-label", `${isFavorite ? "Remove" : "Add"} Hair Extension Service Capacity Estimator ${isFavorite ? "from" : "to"} favorites`);
+    }
+
+    favoriteButton.addEventListener("click", () => {
+      const saved = readFavorites();
+      const existingIndex = saved.findIndex(tool => tool.url === currentTool.url);
+
+      if (existingIndex >= 0) {
+        saved.splice(existingIndex, 1);
+      } else {
+        saved.push(currentTool);
+      }
+
+      localStorage.setItem(FAVORITES_KEY, JSON.stringify(saved));
+      updateFavoriteButton();
+    });
+
+    const resetButton = document.getElementById("resetButton");
+    const errorMessage = document.getElementById("errorMessage");
+    const byId = id => document.getElementById(id);
+    const finite = value => Number.isFinite(Number(value));
+    const optionalNumber = (id, fallback = 0) => {
+      const value = byId(id)?.value.trim();
+      return value === "" ? fallback : Number(value);
+    };
+    const formatNumber = (value, digits = 2) => Number(value).toLocaleString("en-US", { maximumFractionDigits: digits });
+    const formatMoney = (value, currency = "USD", digits = 2) => new Intl.NumberFormat("en-US", { style: "currency", currency, maximumFractionDigits: digits }).format(value);
+    const formatPercent = (value, digits = 2) => `${Number(value).toFixed(digits)}%`;
+    const setText = (id, value) => { const node = byId(id); if (node) node.textContent = value; };
+    const showError = message => { errorMessage.textContent = message; };
+    const clearError = () => { errorMessage.textContent = ""; document.querySelectorAll('[aria-invalid="true"]').forEach(node => node.setAttribute("aria-invalid", "false")); };
+    const invalidate = (id, message) => { const node = byId(id); if (node) node.setAttribute("aria-invalid", "true"); showError(message); return false; };
+
+    function calculate(){clearError(); const s=optionalNumber("staff"), h=optionalNumber("hoursPerDay"), d=optionalNumber("daysPerWeek"), m=optionalNumber("serviceMinutes"), u=optionalNumber("utilization"); if(s<=0) return invalidate("staff","Service providers must be greater than 0."); if(h<=0||h>24) return invalidate("hoursPerDay","Bookable hours must be greater than 0 and no more than 24."); if(d<=0||d>7) return invalidate("daysPerWeek","Working days must be between 1 and 7."); if(m<=0) return invalidate("serviceMinutes","Average service time must be greater than 0."); if(u<=0||u>100) return invalidate("utilization","Utilization must be greater than 0% and no more than 100%."); const raw=s*h*d, productive=raw*(u/100), weekly=(productive*60)/m, daily=weekly/d; setText("mainResult",formatNumber(weekly,1)); setText("resultLabel","services per week"); setText("rawHoursOut",formatNumber(raw,1)+" h"); setText("productiveHoursOut",formatNumber(productive,1)+" h"); setText("dailyCapacityOut",formatNumber(daily,1)); setText("minutesOut",formatNumber(m,0)+" min");}
+
+    resetButton.addEventListener("click", () => {
+      document.querySelectorAll(".input-control").forEach(input => { input.value = input.defaultValue; });
+      clearError();
+      calculate();
+    });
+    let autoTimer;
+    document.querySelectorAll(".input-control").forEach(input => {
+      input.addEventListener("input", () => {
+        clearTimeout(autoTimer);
+        autoTimer = setTimeout(calculate, 200);
+      });
+      input.addEventListener("change", calculate);
+    });
+
+
+    appsButton.addEventListener("click", () => {
+      const isOpen = appsMenu.classList.toggle("open");
+      appsButton.setAttribute("aria-expanded", String(isOpen));
+    });
+
+    document.addEventListener("click", event => {
+      if (!event.target.closest(".apps-wrap")) {
+        appsMenu.classList.remove("open");
+        appsButton.setAttribute("aria-expanded", "false");
+      }
+    });
+
+    document.querySelectorAll(".accordion-button").forEach(button => {
+      button.addEventListener("click", () => {
+        const accordion = button.closest(".accordion");
+        const content = accordion.querySelector(".accordion-content");
+        const isOpen = accordion.classList.toggle("open");
+
+        button.setAttribute("aria-expanded", String(isOpen));
+        content.style.maxHeight = isOpen ? content.scrollHeight + "px" : "0px";
+      });
+    });
+
+    calculate();
+    updateFavoriteButton();
+  </script>
+</body>
+</html>

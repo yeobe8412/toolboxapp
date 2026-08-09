@@ -1,0 +1,1087 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="The Fence Installation Project Budget Planner estimates a preliminary fence budget from total linear footage, material and labor rates, gate costs, other f" />
+  <link rel="canonical" href="https://www.toolboxapp.cc/calculator/fence_installation_project_budget_planner/" />
+  <title>Fence Installation Project Budget Planner</title>
+  <meta property="og:site_name" content="toolbox" />
+  <meta property="og:title" content="Fence Installation Project Budget Planner" />
+  <meta property="og:description" content="The Fence Installation Project Budget Planner estimates a preliminary fence budget from total linear footage, material and labor rates, gate costs, other f" />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://www.toolboxapp.cc/calculator/fence_installation_project_budget_planner/" />
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Fence Installation Project Budget Planner" />
+  <meta name="twitter:description" content="The Fence Installation Project Budget Planner estimates a preliminary fence budget from total linear footage, material and labor rates, gate costs, other f" />
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+          { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://www.toolboxapp.cc/" },
+          { "@type": "ListItem", "position": 2, "name": "Home &amp; Everyday Life", "item": "https://www.toolboxapp.cc/categories/home-everyday-life/" },
+          { "@type": "ListItem", "position": 3, "name": "Fence Installation Project Budget Planner", "item": "https://www.toolboxapp.cc/calculator/fence_installation_project_budget_planner/" }
+        ]
+      },
+      {
+        "@type": "WebApplication",
+        "name": "Fence Installation Project Budget Planner",
+        "url": "https://www.toolboxapp.cc/calculator/fence_installation_project_budget_planner/",
+        "description": "The Fence Installation Project Budget Planner estimates a preliminary fence budget from total linear footage, material and labor rates, gate costs, other f",
+        "applicationCategory": "UtilitiesApplication",
+        "operatingSystem": "Any",
+        "browserRequirements": "Requires JavaScript"
+      }
+    ]
+  }
+  </script>
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "What should be included in the material rate?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Include the fence materials covered by your per-foot estimate, such as panels or pickets, posts, rails, and standard hardware. Keep gate-specific items separate if you use the gate-cost field."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "How should demolition of an old fence be handled?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Add it to fixed costs if you have a lump-sum removal quote, or incorporate it into the labor rate if the quote is priced per foot. Avoid counting it in both places."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Should permit fees be added even if I am not sure they apply?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Only include permit or review costs that are relevant to your project. Requirements vary by location, so verify them with the appropriate local authority."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Why use a contingency instead of just increasing the rates?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Keeping contingency separate makes the uncertainty reserve visible. That helps you compare the underlying estimate with the amount held back for unknown conditions."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Can this planner compare wood, vinyl, and metal fences?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Yes, provided you enter material and labor rates appropriate to each option. The formula is the same, but the rates, gate costs, maintenance, and installation conditions can differ substantially."
+      }
+    }
+  ]
+}
+</script>
+
+  <style>
+    :root {
+      color-scheme: dark;
+      --bg: #000;
+      --panel: #0a0a0a;
+      --panel-hover: #111;
+      --border: #292929;
+      --border-strong: #454545;
+      --text: #fff;
+      --muted: #8d8d8d;
+      --soft: #bdbdbd;
+      --danger: #ff7d7d;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      background: var(--bg);
+      color: var(--text);
+      font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    button,
+    input,
+    select {
+      font: inherit;
+    }
+
+    a {
+      color: inherit;
+    }
+
+    .site-header {
+      position: sticky;
+      top: 0;
+      z-index: 30;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: 70px;
+      padding: 0 24px;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+      background: rgba(0, 0, 0, 0.88);
+      backdrop-filter: blur(18px);
+    }
+
+    .brand {
+      color: #fff;
+      text-decoration: none;
+      font-size: 24px;
+      font-weight: 600;
+      letter-spacing: -0.05em;
+    }
+
+    .apps-wrap {
+      position: relative;
+    }
+
+    .apps-button {
+      width: 44px;
+      height: 44px;
+      display: grid;
+      place-items: center;
+      border: 0;
+      border-radius: 50%;
+      background: transparent;
+      cursor: pointer;
+      transition: background 0.18s ease;
+    }
+
+    .apps-button:hover,
+    .apps-button:focus-visible {
+      background: #111;
+      outline: none;
+    }
+
+    .dots {
+      width: 20px;
+      height: 20px;
+      display: grid;
+      grid-template-columns: repeat(3, 4px);
+      grid-template-rows: repeat(3, 4px);
+      gap: 4px;
+    }
+
+    .dots span {
+      width: 4px;
+      height: 4px;
+      border-radius: 50%;
+      background: #fff;
+    }
+
+    .apps-menu {
+      position: absolute;
+      top: 52px;
+      right: 0;
+      width: min(310px, calc(100vw - 32px));
+      max-height: calc(100vh - 84px);
+      overflow-y: auto;
+      padding: 10px;
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      background: rgba(10, 10, 10, 0.98);
+      box-shadow: 0 22px 60px rgba(0, 0, 0, 0.6);
+      opacity: 0;
+      visibility: hidden;
+      transform: translateY(-8px);
+      transition: 0.18s ease;
+    }
+
+    .apps-menu.open {
+      opacity: 1;
+      visibility: visible;
+      transform: translateY(0);
+    }
+
+    .category-list {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+
+    .category-link {
+      min-height: 42px;
+      display: flex;
+      align-items: center;
+      padding: 0 14px;
+      border-radius: 10px;
+      color: #fff;
+      text-decoration: none;
+      font-size: 14px;
+      transition: background 0.16s ease;
+    }
+
+    .category-link:hover,
+    .category-link:focus-visible {
+      background: #181818;
+      outline: none;
+    }
+
+    .page {
+      width: min(1080px, calc(100% - 32px));
+      margin: 0 auto;
+      padding: 64px 0 90px;
+    }
+
+    .breadcrumb {
+      margin-bottom: 22px;
+      color: #737373;
+      font-size: 13px;
+    }
+
+    .breadcrumb a {
+      color: #9b9b9b;
+      text-decoration: none;
+    }
+
+    .breadcrumb a:hover {
+      color: #fff;
+    }
+
+    .page-title {
+      margin: 0;
+      font-size: clamp(36px, 6vw, 62px);
+      line-height: 1;
+      letter-spacing: -0.055em;
+      font-weight: 600;
+    }
+
+    .title-row {
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: flex-start;
+    }
+
+    .title-row .page-title {
+      padding-right: 48px;
+    }
+
+    .favorite-button {
+      position: absolute;
+      right: 0;
+      display: grid;
+      width: 42px;
+      height: 42px;
+      padding: 0;
+      place-items: center;
+      border: 0;
+      background: transparent;
+      color: #858585;
+      cursor: pointer;
+      font-size: 25px;
+      line-height: 1;
+      transition: color .16s ease;
+    }
+
+    .favorite-button:hover,
+    .favorite-button:focus-visible {
+      color: #fff;
+      outline: none;
+    }
+
+    .favorite-button.active {
+      color: #ffd34e;
+    }
+
+    .intro {
+      width: 100%;
+      max-width: none;
+      margin: 18px 0 0;
+      color: var(--muted);
+      font-size: 16px;
+      line-height: 1.7;
+    }
+
+    .noscript-notice {
+      margin: 18px 0 0;
+      padding: 14px 16px;
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      color: var(--soft);
+      background: var(--panel);
+      font-size: 14px;
+      line-height: 1.6;
+    }
+
+    .calculator {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      grid-template-areas:
+        "input input"
+        "ad-one ad-two"
+        "result result";
+      gap: 18px;
+      margin-top: 46px;
+      min-width: 0;
+    }
+
+    .input-panel {
+      grid-area: input;
+    }
+
+    .calculator > *,
+    .field-grid,
+    .field,
+    .input-wrap,
+    .result-panel,
+    .result-breakdown {
+      min-width: 0;
+    }
+
+    .panel {
+      border: 1px solid var(--border);
+      border-radius: 22px;
+      background: var(--panel);
+    }
+
+    .input-panel {
+      padding: 28px;
+    }
+
+    .panel-title {
+      margin: 0 0 24px;
+      font-size: 18px;
+      font-weight: 600;
+      letter-spacing: -0.02em;
+    }
+
+    .field-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 18px;
+    }
+
+    .field {
+      display: grid;
+      gap: 9px;
+    }
+
+    .field label {
+      color: var(--soft);
+      font-size: 13px;
+      font-weight: 500;
+    }
+
+    .input-wrap {
+      position: relative;
+    }
+
+    .input-control {
+      width: 100%;
+      height: 56px;
+      padding: 0 52px 0 16px;
+      border: 1px solid var(--border-strong);
+      border-radius: 13px;
+      background: #050505;
+      color: #fff;
+      outline: none;
+      transition: border-color 0.16s ease, box-shadow 0.16s ease;
+    }
+
+    .input-control:focus {
+      border-color: #777;
+      box-shadow: 0 0 0 4px rgba(255,255,255,0.035);
+    }
+
+    .suffix {
+      position: absolute;
+      top: 50%;
+      right: 16px;
+      transform: translateY(-50%);
+      color: #767676;
+      font-size: 13px;
+      pointer-events: none;
+    }
+
+    .actions {
+      display: flex;
+      gap: 10px;
+      margin-top: 24px;
+    }
+
+    .button {
+      min-height: 50px;
+      padding: 0 20px;
+      border-radius: 12px;
+      cursor: pointer;
+      transition: background 0.16s ease, border-color 0.16s ease, transform 0.16s ease;
+    }
+
+    .button:active {
+      transform: translateY(1px);
+    }
+
+    .button-primary {
+      flex: 1;
+      border: 1px solid #fff;
+      background:#242424;
+      color:#fff;
+      font-weight: 700;
+    }
+
+    .button-primary:hover {
+      background:#3a3a3a;
+      border-color:#4a4a4a;
+    }
+
+    .button-secondary {
+      border: 1px solid var(--border-strong);
+      background: transparent;
+      color: #fff;
+    }
+
+    .button-secondary:hover {
+      background: #151515;
+    }
+
+    .error {
+      min-height: 20px;
+      margin: 13px 0 0;
+      color: var(--danger);
+      font-size: 13px;
+    }
+
+
+    .ad-panel {
+      min-height:140px;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      padding:18px;
+      border:1px dashed #3b3b3b;
+      border-radius:22px;
+      background:#111;
+      color:#686868;
+      text-align:center;
+      font-size:12px;
+      letter-spacing:0.08em;
+      text-transform:uppercase;
+    }
+
+    .ad-one { grid-area: ad-one; }
+    .ad-two { grid-area: ad-two; }
+
+    .ad-slot {
+      width:100%;
+      min-height:104px;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+    }
+
+    .result-panel {
+      grid-area: result;
+      min-height: 360px;
+      padding: 28px;
+      background:#242424;
+      color:#fff;
+    }
+
+    .result-layout {
+      display: grid;
+      grid-template-columns: minmax(0, 1.08fr) minmax(320px, 0.92fr);
+      gap: 40px;
+      align-items: center;
+      min-height: 100%;
+      min-width: 0;
+    }
+
+    .result-main,
+    .result-details {
+      min-width: 0;
+    }
+
+    .result-eyebrow {
+      color:#a0a0a0;
+      font-size: 13px;
+      font-weight: 600;
+    }
+
+    .main-result {
+      margin: 18px 0 4px;
+      font-size: clamp(42px, 7vw, 70px);
+      line-height: 1;
+      letter-spacing: -0.06em;
+      font-weight: 700;
+      overflow-wrap: anywhere;
+    }
+
+    .result-label {
+      color:#9b9b9b;
+      font-size: 14px;
+    }
+
+    .result-breakdown {
+      display: grid;
+      gap: 0;
+      margin-top: 0;
+      border-top:1px solid #353535;
+    }
+
+    .result-row {
+      display: flex;
+      justify-content: space-between;
+      gap: 20px;
+      padding: 15px 0;
+      border-bottom:1px solid #353535;
+      font-size: 14px;
+    }
+
+    .result-row span:first-child {
+      color:#9b9b9b;
+    }
+
+    .result-row strong {
+      text-align: right;
+    }
+
+    .details {
+      display: grid;
+      gap: 10px;
+      margin-top: 22px;
+    }
+
+    .accordion {
+      overflow: hidden;
+      border: 1px solid var(--border);
+      border-radius: 15px;
+      background: #080808;
+    }
+
+    .accordion-button {
+      width: 100%;
+      min-height: 62px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 20px;
+      padding: 0 20px;
+      border: 0;
+      background: transparent;
+      color: #fff;
+      text-align: left;
+      cursor: pointer;
+    }
+
+    .accordion-button:hover {
+      background: #101010;
+    }
+
+    .accordion-title {
+      font-size: 15px;
+      font-weight: 600;
+    }
+
+    .accordion-icon {
+      color: #777;
+      font-size: 22px;
+      transition: transform 0.18s ease;
+    }
+
+    .accordion.open .accordion-icon {
+      transform: rotate(45deg);
+    }
+
+    .accordion-content {
+      max-height: 0;
+      overflow: hidden;
+      color: #aaa;
+      line-height: 1.75;
+      transition: max-height 0.25s ease;
+    }
+
+    .accordion-content-inner {
+      padding: 0 20px 22px;
+    }
+
+    .accordion-content p {
+      margin: 0 0 12px;
+    }
+
+    .accordion-content p:last-child {
+      margin-bottom: 0;
+    }
+
+    .formula {
+      display: block;
+      padding: 16px;
+      border: 1px solid #242424;
+      border-radius: 12px;
+      background: #030303;
+      color: #fff;
+      font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+      overflow-x: auto;
+    }
+
+    .faq-item + .faq-item {
+      margin-top: 18px;
+    }
+
+    .faq-question {
+      margin: 0 0 6px;
+      color: #fff;
+      font-size: 15px;
+    }
+
+    .related-tools {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 10px;
+    }
+
+    .related-link {
+      min-height: 54px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 14px;
+      padding: 0 16px;
+      border: 1px solid #242424;
+      border-radius: 12px;
+      color: #fff;
+      text-decoration: none;
+      background: #050505;
+    }
+
+    .related-link:hover {
+      background: #111;
+    }
+
+    .site-footer {
+      width: min(1080px, calc(100% - 32px));
+      margin: 0 auto;
+      padding: 26px 0 42px;
+      border-top: 1px solid #171717;
+      color: #686868;
+      font-size: 12px;
+    }
+
+    @media (max-width: 780px) {
+      .site-header {
+        height: 64px;
+        padding: 0 16px;
+      }
+
+      .page {
+        padding-top: 42px;
+      }
+
+      .calculator {
+        grid-template-columns: minmax(0, 1fr);
+        grid-template-areas:
+          "input"
+          "ad-one"
+          "result"
+          "ad-two";
+      }
+
+      .input-panel,
+      .field-grid,
+      .field,
+      .input-wrap,
+      .actions,
+      .result-panel {
+        width: 100%;
+        max-width: 100%;
+        min-width: 0;
+      }
+
+      .panel-title,
+      .field,
+      .actions,
+      .error,
+      .result-panel > * {
+        grid-column: 1 / -1;
+        grid-row: auto;
+      }
+
+      .result-panel {
+        min-height: 390px;
+      }
+
+      .field-grid {
+        grid-template-columns: minmax(0, 1fr);
+      }
+
+      .result-layout {
+        grid-template-columns: minmax(0, 1fr);
+        gap: 28px;
+        align-items: start;
+      }
+
+      .result-breakdown {
+        margin-top: 0;
+      }
+    }
+
+    @media (max-width: 520px) {
+      .page {
+        width: calc(100% - 24px);
+        padding-bottom: 60px;
+      }
+
+      .page-title {
+        font-size: clamp(34px, 11vw, 48px);
+        line-height: 1.02;
+        overflow-wrap: anywhere;
+      }
+
+      .input-panel,
+      .result-panel {
+        padding: 22px;
+        border-radius: 18px;
+      }
+
+      .field-grid {
+        grid-template-columns: minmax(0, 1fr) !important;
+      }
+
+      .input-control,
+      select.input-control {
+        width: 100%;
+        max-width: 100%;
+        min-width: 0;
+      }
+
+      .actions {
+        flex-direction: column;
+      }
+
+      .button,
+      .button-secondary {
+        width: 100%;
+        min-width: 0;
+      }
+
+      .result-row {
+        min-width: 0;
+      }
+
+      .result-row span,
+      .result-row strong {
+        min-width: 0;
+        overflow-wrap: anywhere;
+      }
+
+      .related-tools {
+        grid-template-columns: minmax(0, 1fr);
+      }
+
+      .main-result {
+        font-size: 48px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <header class="site-header">
+    <a class="brand" href="/">toolbox</a>
+
+    <div class="apps-wrap">
+      <button
+        class="apps-button"
+        id="appsButton"
+        type="button"
+        aria-label="Open categories"
+        aria-expanded="false"
+        aria-controls="appsMenu"
+      >
+        <span class="dots" aria-hidden="true">
+          <span></span><span></span><span></span>
+          <span></span><span></span><span></span>
+          <span></span><span></span><span></span>
+        </span>
+      </button>
+
+      <div class="apps-menu" id="appsMenu">
+        <nav class="category-list" aria-label="Tool categories">
+          <a class="category-link" href="/categories/money-investing/">Money &amp; Investing</a>
+          <a class="category-link" href="/categories/taxes-insurance-benefits/">Taxes, Insurance &amp; Benefits</a>
+          <a class="category-link" href="/categories/business-operations/">Business &amp; Operations</a>
+          <a class="category-link" href="/categories/startups-digital-business/">Startups &amp; Digital Business</a>
+          <a class="category-link" href="/categories/sales-marketing-audience/">Sales, Marketing &amp; Audience</a>
+          <a class="category-link" href="/categories/online-selling-retail/">Online Selling &amp; Retail</a>
+          <a class="category-link" href="/categories/jobs-pay-workforce/">Jobs, Pay &amp; Workforce</a>
+          <a class="category-link" href="/categories/time-productivity/">Time &amp; Productivity</a>
+          <a class="category-link" href="/categories/property-construction/">Property &amp; Construction</a>
+          <a class="category-link" href="/categories/manufacturing-production/">Manufacturing &amp; Production</a>
+          <a class="category-link" href="/categories/shipping-supply-chain/">Shipping &amp; Supply Chain</a>
+          <a class="category-link" href="/categories/health-body-fitness/">Health, Body &amp; Fitness</a>
+          <a class="category-link" href="/categories/food-cooking-hospitality/">Food, Cooking &amp; Hospitality</a>
+          <a class="category-link" href="/categories/home-everyday-life/">Home &amp; Everyday Life</a>
+          <a class="category-link" href="/categories/learning-grades/">Learning &amp; Grades</a>
+          <a class="category-link" href="/categories/science-math-engineering/">Science, Math &amp; Engineering</a>
+          <a class="category-link" href="/categories/ai-data-technology/">AI, Data &amp; Technology</a>
+          <a class="category-link" href="/categories/energy-sustainability/">Energy &amp; Sustainability</a>
+          <a class="category-link" href="/categories/farming-animals-pets/">Farming, Animals &amp; Pets</a>
+          <a class="category-link" href="/categories/travel-events-recreation/">Travel, Events &amp; Recreation</a>
+          <a class="category-link" href="/categories/legal-safety-compliance/">Legal, Safety &amp; Compliance</a>
+        </nav>
+      </div>
+    </div>
+  </header>
+
+  <main class="page">
+    <div class="breadcrumb">
+      <a href="/">Home</a> / <a href="/categories/home-everyday-life/">Home &amp; Everyday Life</a> / Fence Installation Project Budget Planner
+    </div>
+
+    <div class="title-row">
+      <h1 class="page-title">Fence Installation Project Budget Planner</h1>
+      <button class="favorite-button" id="favoriteButton" type="button" aria-label="Add Fence Installation Project Budget Planner to favorites" aria-pressed="false">☆</button>
+    </div>
+    <div class="intro"><p>The Fence Installation Project Budget Planner estimates a preliminary fence budget from total linear footage, material and labor rates, gate costs, other fixed charges, and a contingency allowance. It separates lineal costs from lump-sum items so you can test different fence materials or contractor rates without rebuilding the entire estimate.</p>
+<p>This planner is useful during early scoping, quote comparison, and budget approval. The breakdown shows material cost, labor cost, pre-contingency subtotal, and contingency, while the main result gives the total estimated project budget. Actual fence pricing can vary with demolition, terrain, rock or difficult soil, post depth, gate hardware, corners, decorative features, staining, permits, utility-location requirements, and local labor conditions. Replace the default rates with current supplier and contractor information before committing to a project.</p></div>
+    <noscript>
+      <p class="noscript-notice">This calculator requires JavaScript to update results. Enable JavaScript in your browser, then reload this page.</p>
+    </noscript>
+
+    <section class="calculator" aria-label="Fence Installation Project Budget Planner">
+      <div class="panel input-panel">
+        <h2 class="panel-title">Calculator inputs</h2>
+
+        <!-- Every number input in INPUTS_HTML must have a unique id, label, default value, min, max and step. Optional blank values must be treated as 0 or not applied, never as an error. -->
+        <div class="field-grid"><div class="field"><label for="length">Total fence length</label><div class="input-wrap"><input class="input-control" id="length" type="number" value="180" min="5" max="10000" step="1" /><span class="suffix">ft</span></div></div>
+<div class="field"><label for="materialRate">Material cost per linear foot</label><div class="input-wrap"><input class="input-control" id="materialRate" type="number" value="32" min="0" max="1000" step="0.5" /><span class="suffix">USD/ft</span></div></div>
+<div class="field"><label for="laborRate">Labor cost per linear foot</label><div class="input-wrap"><input class="input-control" id="laborRate" type="number" value="24" min="0" max="1000" step="0.5" /><span class="suffix">USD/ft</span></div></div>
+<div class="field"><label for="gateCost">Total gate cost</label><div class="input-wrap"><input class="input-control" id="gateCost" type="number" value="1200" min="0" max="100000" step="25" /><span class="suffix">USD</span></div></div>
+<div class="field"><label for="fixedCost">Permits, removal, and fixed costs</label><div class="input-wrap"><input class="input-control" id="fixedCost" type="number" value="900" min="0" max="1000000" step="25" /><span class="suffix">USD</span></div></div>
+<div class="field"><label for="contPct">Contingency allowance</label><div class="input-wrap"><input class="input-control" id="contPct" type="number" value="10" min="0" max="100" step="1" /><span class="suffix">%</span></div></div></div>
+
+        <div class="actions">
+<button class="button button-secondary" id="resetButton" type="button">Reset</button>
+        </div>
+
+        <p class="error" id="errorMessage" role="alert"></p>
+      </div>
+
+      <aside class="ad-panel ad-one" aria-label="Advertisement">
+        <div class="ad-slot">Advertisement</div>
+      </aside>
+
+      <div class="panel result-panel" aria-live="polite">
+        <div class="result-layout">
+          <div class="result-main">
+          <div class="result-eyebrow">Result</div>
+          <div class="main-result" id="mainResult">—</div>
+          <div class="result-label" id="resultLabel">estimated project budget</div>
+            
+          </div>
+          <div class="result-details">
+            <div class="result-breakdown"><div class="result-row"><span>Material subtotal</span><strong id="materialCost">—</strong></div>
+<div class="result-row"><span>Labor subtotal</span><strong id="laborCost">—</strong></div>
+<div class="result-row"><span>Pre-contingency subtotal</span><strong id="preCont">—</strong></div>
+<div class="result-row"><span>Contingency amount</span><strong id="contCost">—</strong></div></div>
+          </div>
+        </div>
+      </div>
+
+      <aside class="ad-panel ad-two" aria-label="Advertisement">
+        <div class="ad-slot">Advertisement</div>
+      </aside>
+    </section>
+
+    <section class="details" aria-label="Calculator information">
+      <article class="accordion">
+        <button class="accordion-button" type="button" aria-expanded="false">
+          <span class="accordion-title">How to use</span>
+          <span class="accordion-icon" aria-hidden="true">+</span>
+        </button>
+        <div class="accordion-content">
+          <div class="accordion-content-inner">
+            <p><strong>1. Enter total fence length</strong><br>Use the linear footage of the fence included in the budget.</p><p><strong>2. Enter the material rate</strong><br>Use a current per-foot material figure for the fence type and quality you are considering.</p><p><strong>3. Enter the labor rate</strong><br>Use a contractor quote or internal labor allowance per linear foot.</p><p><strong>4. Add gate cost</strong><br>Enter the combined cost of gates and gate-specific hardware if it is not already included in the lineal rates.</p><p><strong>5. Add fixed costs</strong><br>Include removal, permits, delivery, mobilization, or similar lump-sum items.</p><p><strong>6. Set contingency</strong><br>Reserve a percentage for uncertain quantities or unforeseen conditions.</p><p><strong>7. Review the total</strong><br>Use the category breakdown to identify which assumptions have the largest effect on the project budget.</p>
+          </div>
+        </div>
+      </article>
+
+      <article class="accordion">
+        <button class="accordion-button" type="button" aria-expanded="false">
+          <span class="accordion-title">Formula</span>
+          <span class="accordion-icon" aria-hidden="true">+</span>
+        </button>
+        <div class="accordion-content">
+          <div class="accordion-content-inner">
+            <span class="formula">Material subtotal = Fence length × Material rate
+Labor subtotal = Fence length × Labor rate
+Pre-contingency subtotal = Material + Labor + Gate cost + Fixed costs
+Contingency = Pre-contingency subtotal × Contingency allowance
+Total budget = Pre-contingency subtotal + Contingency</span><p><strong>Where:</strong></p><p>• Fence length = total installed length in feet<br>• Material rate = material cost per linear foot<br>• Labor rate = labor cost per linear foot<br>• Gate cost = lump-sum gate and gate-hardware cost<br>• Fixed costs = permits, removal, delivery, or other non-lineal costs<br>• Contingency allowance = reserve percentage expressed as a decimal</p><p><strong>Assumptions:</strong> All rates are user inputs and should be replaced with local quotes. Taxes, financing, staining, landscaping repair, utility relocation, and specialty engineering are excluded unless incorporated into the entered rates or fixed costs.</p>
+            <h3>What the result means</h3>
+            <p>The main result is the estimated project budget after contingency. The breakdown separates recurring per-foot costs from the contingency reserve.</p>
+            <p>A preliminary budget is not a contractor proposal. Confirm quantities, scope, and exclusions before relying on the total for a purchase or contract.</p>
+          </div>
+        </div>
+      </article>
+
+      <article class="accordion">
+        <button class="accordion-button" type="button" aria-expanded="false">
+          <span class="accordion-title">Example calculation</span>
+          <span class="accordion-icon" aria-hidden="true">+</span>
+        </button>
+        <div class="accordion-content">
+          <div class="accordion-content-inner">
+            <p><strong>Given:</strong><br>• Fence length: 180 ft<br>• Material rate: $32/ft<br>• Labor rate: $24/ft<br>• Gate cost: $1,200<br>• Fixed costs: $900<br>• Contingency: 10%</p><p><strong>Calculation:</strong><br>Materials = 180 × $32 = $5,760<br>Labor = 180 × $24 = $4,320<br>Pre-contingency subtotal = $5,760 + $4,320 + $1,200 + $900 = $12,180<br>Contingency = $12,180 × 0.10 = $1,218<br>Total budget = $12,180 + $1,218 = $13,398</p><p><strong>Result:</strong><br>Estimated project budget: $13,398.</p><p><strong>Interpretation:</strong><br>The per-foot material and labor assumptions account for most of the budget, while the contingency reserves $1,218 for uncertainty.</p>
+          </div>
+        </div>
+      </article>
+
+      <article class="accordion">
+        <button class="accordion-button" type="button" aria-expanded="false">
+          <span class="accordion-title">FAQ</span>
+          <span class="accordion-icon" aria-hidden="true">+</span>
+        </button>
+        <div class="accordion-content">
+          <div class="accordion-content-inner">
+            <div class="faq-item"><h3 class="faq-question">What should be included in the material rate?</h3><p>Include the fence materials covered by your per-foot estimate, such as panels or pickets, posts, rails, and standard hardware. Keep gate-specific items separate if you use the gate-cost field.</p></div>
+<div class="faq-item"><h3 class="faq-question">How should demolition of an old fence be handled?</h3><p>Add it to fixed costs if you have a lump-sum removal quote, or incorporate it into the labor rate if the quote is priced per foot. Avoid counting it in both places.</p></div>
+<div class="faq-item"><h3 class="faq-question">Should permit fees be added even if I am not sure they apply?</h3><p>Only include permit or review costs that are relevant to your project. Requirements vary by location, so verify them with the appropriate local authority.</p></div>
+<div class="faq-item"><h3 class="faq-question">Why use a contingency instead of just increasing the rates?</h3><p>Keeping contingency separate makes the uncertainty reserve visible. That helps you compare the underlying estimate with the amount held back for unknown conditions.</p></div>
+<div class="faq-item"><h3 class="faq-question">Can this planner compare wood, vinyl, and metal fences?</h3><p>Yes, provided you enter material and labor rates appropriate to each option. The formula is the same, but the rates, gate costs, maintenance, and installation conditions can differ substantially.</p></div>
+          </div>
+        </div>
+      </article>
+
+      <article class="accordion">
+        <button class="accordion-button" type="button" aria-expanded="false">
+          <span class="accordion-title">Related tools</span>
+          <span class="accordion-icon" aria-hidden="true">+</span>
+        </button>
+        <div class="accordion-content">
+          <div class="accordion-content-inner">
+            <div class="related-tools"><a class="related-link" href="/calculator/fence_installation_material_requirements_estimator/"><span>Fence Installation Material Requirements Estimator</span><span aria-hidden="true">→</span></a>
+<a class="related-link" href="/calculator/fence_installation_labor_hours_calculator/"><span>Fence Installation Labor Hours Calculator</span><span aria-hidden="true">→</span></a>
+<a class="related-link" href="/calculator/fence_installation_waste_allowance_estimator/"><span>Fence Installation Waste Allowance Estimator</span><span aria-hidden="true">→</span></a>
+<a class="related-link" href="/calculator/fence_installation_payback_timeline_calculator/"><span>Fence Installation Payback Timeline Calculator</span><span aria-hidden="true">→</span></a></div>
+          </div>
+        </div>
+      </article>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    © 2026 toolbox. Estimates are for general planning only and should be verified against project-specific requirements, product instructions, and local rules.
+  </footer>
+
+  <script>
+    const appsButton = document.getElementById("appsButton");
+    const appsMenu = document.getElementById("appsMenu");
+    const favoriteButton = document.getElementById("favoriteButton");
+    const FAVORITES_KEY = "toolboxapp-favorites-v1";
+    const currentTool = {
+      name: "Fence Installation Project Budget Planner",
+      url: window.location.pathname
+    };
+
+    function readFavorites() {
+      try {
+        const saved = JSON.parse(localStorage.getItem(FAVORITES_KEY) || "[]");
+        return Array.isArray(saved) ? saved : [];
+      } catch (error) {
+        return [];
+      }
+    }
+
+    function updateFavoriteButton() {
+      const isFavorite = readFavorites().some(tool => tool.url === currentTool.url);
+      favoriteButton.classList.toggle("active", isFavorite);
+      favoriteButton.textContent = isFavorite ? "★" : "☆";
+      favoriteButton.setAttribute("aria-pressed", String(isFavorite));
+      favoriteButton.setAttribute("aria-label", `${isFavorite ? "Remove" : "Add"} Fence Installation Project Budget Planner ${isFavorite ? "from" : "to"} favorites`);
+    }
+
+    favoriteButton.addEventListener("click", () => {
+      const saved = readFavorites();
+      const existingIndex = saved.findIndex(tool => tool.url === currentTool.url);
+
+      if (existingIndex >= 0) {
+        saved.splice(existingIndex, 1);
+      } else {
+        saved.push(currentTool);
+      }
+
+      localStorage.setItem(FAVORITES_KEY, JSON.stringify(saved));
+      updateFavoriteButton();
+    });
+
+    const resetButton = document.getElementById("resetButton");
+    const errorMessage = document.getElementById("errorMessage");
+    const byId = id => document.getElementById(id);
+    const finite = value => Number.isFinite(Number(value));
+    const optionalNumber = (id, fallback = 0) => {
+      const value = byId(id)?.value.trim();
+      return value === "" ? fallback : Number(value);
+    };
+    const formatNumber = (value, digits = 2) => Number(value).toLocaleString("en-US", { maximumFractionDigits: digits });
+    const formatMoney = (value, currency = "USD", digits = 2) => new Intl.NumberFormat("en-US", { style: "currency", currency, maximumFractionDigits: digits }).format(value);
+    const formatPercent = (value, digits = 2) => `${Number(value).toFixed(digits)}%`;
+    const setText = (id, value) => { const node = byId(id); if (node) node.textContent = value; };
+    const showError = message => { errorMessage.textContent = message; };
+    const clearError = () => { errorMessage.textContent = ""; document.querySelectorAll('[aria-invalid="true"]').forEach(node => node.setAttribute("aria-invalid", "false")); };
+    const invalidate = (id, message) => { const node = byId(id); if (node) node.setAttribute("aria-invalid", "true"); showError(message); return false; };
+
+    function calculate(){clearError(); const length=Number(byId("length").value), m=Number(byId("materialRate").value), l=Number(byId("laborRate").value), gate=Number(byId("gateCost").value), fixed=Number(byId("fixedCost").value), cont=Number(byId("contPct").value); if(!(length>0)) return invalidate("length","Fence length must be greater than 0."); if(m<0) return invalidate("materialRate","Material rate cannot be negative."); if(l<0) return invalidate("laborRate","Labor rate cannot be negative."); if(gate<0) return invalidate("gateCost","Gate cost cannot be negative."); if(fixed<0) return invalidate("fixedCost","Fixed costs cannot be negative."); if(cont<0) return invalidate("contPct","Contingency cannot be negative."); const mc=length*m, lc=length*l, pre=mc+lc+gate+fixed, cc=pre*cont/100, total=pre+cc; setText("mainResult",formatMoney(total)); setText("materialCost",formatMoney(mc)); setText("laborCost",formatMoney(lc)); setText("preCont",formatMoney(pre)); setText("contCost",formatMoney(cc));}
+
+    resetButton.addEventListener("click", () => {
+      document.querySelectorAll(".input-control").forEach(input => { input.value = input.defaultValue; });
+      clearError();
+      calculate();
+    });
+    let autoTimer;
+    document.querySelectorAll(".input-control").forEach(input => {
+      input.addEventListener("input", () => {
+        clearTimeout(autoTimer);
+        autoTimer = setTimeout(calculate, 200);
+      });
+      input.addEventListener("change", calculate);
+    });
+
+
+    appsButton.addEventListener("click", () => {
+      const isOpen = appsMenu.classList.toggle("open");
+      appsButton.setAttribute("aria-expanded", String(isOpen));
+    });
+
+    document.addEventListener("click", event => {
+      if (!event.target.closest(".apps-wrap")) {
+        appsMenu.classList.remove("open");
+        appsButton.setAttribute("aria-expanded", "false");
+      }
+    });
+
+    document.querySelectorAll(".accordion-button").forEach(button => {
+      button.addEventListener("click", () => {
+        const accordion = button.closest(".accordion");
+        const content = accordion.querySelector(".accordion-content");
+        const isOpen = accordion.classList.toggle("open");
+
+        button.setAttribute("aria-expanded", String(isOpen));
+        content.style.maxHeight = isOpen ? content.scrollHeight + "px" : "0px";
+      });
+    });
+
+    calculate();
+    updateFavoriteButton();
+  </script>
+</body>
+</html>

@@ -1,0 +1,1072 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Annuity Income Break-Even Age Calculator: estimate results with adjustable assumptions, clear formulas, examples, and planning guidance." />
+  <link rel="canonical" href="https://www.toolboxapp.cc/calculator/annuity_income_break_even_age_calculator/" />
+  <title>Annuity Income Break-Even Age Calculator</title>
+  <meta property="og:site_name" content="toolbox" />
+  <meta property="og:title" content="Annuity Income Break-Even Age Calculator" />
+  <meta property="og:description" content="Annuity Income Break-Even Age Calculator: estimate results with adjustable assumptions, clear formulas, examples, and planning guidance." />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://www.toolboxapp.cc/calculator/annuity_income_break_even_age_calculator/" />
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Annuity Income Break-Even Age Calculator" />
+  <meta name="twitter:description" content="Annuity Income Break-Even Age Calculator: estimate results with adjustable assumptions, clear formulas, examples, and planning guidance." />
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+          { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://www.toolboxapp.cc/" },
+          { "@type": "ListItem", "position": 2, "name": "Money &amp; Investing", "item": "https://www.toolboxapp.cc/categories/money-investing/" },
+          { "@type": "ListItem", "position": 3, "name": "Annuity Income Break-Even Age Calculator", "item": "https://www.toolboxapp.cc/calculator/annuity_income_break_even_age_calculator/" }
+        ]
+      },
+      {
+        "@type": "WebApplication",
+        "name": "Annuity Income Break-Even Age Calculator",
+        "url": "https://www.toolboxapp.cc/calculator/annuity_income_break_even_age_calculator/",
+        "description": "Annuity Income Break-Even Age Calculator: estimate results with adjustable assumptions, clear formulas, examples, and planning guidance.",
+        "applicationCategory": "UtilitiesApplication",
+        "operatingSystem": "Any",
+        "browserRequirements": "Requires JavaScript"
+      }
+    ]
+  }
+  </script>
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "Is this the same as an annuity internal rate of return?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "No. Break-even age simply asks when cumulative modeled payments equal the entered premium. An internal-rate-of-return analysis also accounts for the timing of each cash flow."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Why use after-tax income for break-even?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Taxes can reduce the amount available to recover the original outlay. Using an after-tax payment stream gives a cash-flow perspective based on the tax assumptions you enter."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "What if part of my annuity payment is tax-free?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Enter a taxable portion below 100%. The calculator will apply the assumed tax rates only to that portion of annual income."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Does the calculator account for death benefits or period-certain guarantees?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "No. Contract guarantees and beneficiary provisions can materially affect value but are outside this simple cumulative-income comparison."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "What if the after-tax annual income is zero?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "A break-even age cannot be calculated because no modeled cash flow is available to recover the premium. Review the income and tax assumptions in that case."
+      }
+    }
+  ]
+}
+</script>
+
+  <style>
+    :root {
+      color-scheme: dark;
+      --bg: #000;
+      --panel: #0a0a0a;
+      --panel-hover: #111;
+      --border: #292929;
+      --border-strong: #454545;
+      --text: #fff;
+      --muted: #8d8d8d;
+      --soft: #bdbdbd;
+      --danger: #ff7d7d;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      background: var(--bg);
+      color: var(--text);
+      font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    button,
+    input,
+    select {
+      font: inherit;
+    }
+
+    a {
+      color: inherit;
+    }
+
+    .site-header {
+      position: sticky;
+      top: 0;
+      z-index: 30;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: 70px;
+      padding: 0 24px;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+      background: rgba(0, 0, 0, 0.88);
+      backdrop-filter: blur(18px);
+    }
+
+    .brand {
+      color: #fff;
+      text-decoration: none;
+      font-size: 24px;
+      font-weight: 600;
+      letter-spacing: -0.05em;
+    }
+
+    .apps-wrap {
+      position: relative;
+    }
+
+    .apps-button {
+      width: 44px;
+      height: 44px;
+      display: grid;
+      place-items: center;
+      border: 0;
+      border-radius: 50%;
+      background: transparent;
+      cursor: pointer;
+      transition: background 0.18s ease;
+    }
+
+    .apps-button:hover,
+    .apps-button:focus-visible {
+      background: #111;
+      outline: none;
+    }
+
+    .dots {
+      width: 20px;
+      height: 20px;
+      display: grid;
+      grid-template-columns: repeat(3, 4px);
+      grid-template-rows: repeat(3, 4px);
+      gap: 4px;
+    }
+
+    .dots span {
+      width: 4px;
+      height: 4px;
+      border-radius: 50%;
+      background: #fff;
+    }
+
+    .apps-menu {
+      position: absolute;
+      top: 52px;
+      right: 0;
+      width: min(310px, calc(100vw - 32px));
+      max-height: calc(100vh - 84px);
+      overflow-y: auto;
+      padding: 10px;
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      background: rgba(10, 10, 10, 0.98);
+      box-shadow: 0 22px 60px rgba(0, 0, 0, 0.6);
+      opacity: 0;
+      visibility: hidden;
+      transform: translateY(-8px);
+      transition: 0.18s ease;
+    }
+
+    .apps-menu.open {
+      opacity: 1;
+      visibility: visible;
+      transform: translateY(0);
+    }
+
+    .category-list {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+
+    .category-link {
+      min-height: 42px;
+      display: flex;
+      align-items: center;
+      padding: 0 14px;
+      border-radius: 10px;
+      color: #fff;
+      text-decoration: none;
+      font-size: 14px;
+      transition: background 0.16s ease;
+    }
+
+    .category-link:hover,
+    .category-link:focus-visible {
+      background: #181818;
+      outline: none;
+    }
+
+    .page {
+      width: min(1080px, calc(100% - 32px));
+      margin: 0 auto;
+      padding: 64px 0 90px;
+    }
+
+    .breadcrumb {
+      margin-bottom: 22px;
+      color: #737373;
+      font-size: 13px;
+    }
+
+    .breadcrumb a {
+      color: #9b9b9b;
+      text-decoration: none;
+    }
+
+    .breadcrumb a:hover {
+      color: #fff;
+    }
+
+    .page-title {
+      margin: 0;
+      font-size: clamp(36px, 6vw, 62px);
+      line-height: 1;
+      letter-spacing: -0.055em;
+      font-weight: 600;
+    }
+
+    .title-row {
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: flex-start;
+    }
+
+    .title-row .page-title {
+      padding-right: 48px;
+    }
+
+    .favorite-button {
+      position: absolute;
+      right: 0;
+      display: grid;
+      width: 42px;
+      height: 42px;
+      padding: 0;
+      place-items: center;
+      border: 0;
+      background: transparent;
+      color: #858585;
+      cursor: pointer;
+      font-size: 25px;
+      line-height: 1;
+      transition: color .16s ease;
+    }
+
+    .favorite-button:hover,
+    .favorite-button:focus-visible {
+      color: #fff;
+      outline: none;
+    }
+
+    .favorite-button.active {
+      color: #ffd34e;
+    }
+
+    .intro {
+      width: 100%;
+      max-width: none;
+      margin: 18px 0 0;
+      color: var(--muted);
+      font-size: 16px;
+      line-height: 1.7;
+    }
+
+    .noscript-notice {
+      margin: 18px 0 0;
+      padding: 14px 16px;
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      color: var(--soft);
+      background: var(--panel);
+      font-size: 14px;
+      line-height: 1.6;
+    }
+
+    .calculator {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      grid-template-areas:
+        "input input"
+        "ad-one ad-two"
+        "result result";
+      gap: 18px;
+      margin-top: 46px;
+      min-width: 0;
+    }
+
+    .input-panel {
+      grid-area: input;
+    }
+
+    .calculator > *,
+    .field-grid,
+    .field,
+    .input-wrap,
+    .result-panel,
+    .result-breakdown {
+      min-width: 0;
+    }
+
+    .panel {
+      border: 1px solid var(--border);
+      border-radius: 22px;
+      background: var(--panel);
+    }
+
+    .input-panel {
+      padding: 28px;
+    }
+
+    .panel-title {
+      margin: 0 0 24px;
+      font-size: 18px;
+      font-weight: 600;
+      letter-spacing: -0.02em;
+    }
+
+    .field-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 18px;
+    }
+
+    .field {
+      display: grid;
+      gap: 9px;
+    }
+
+    .field label {
+      color: var(--soft);
+      font-size: 13px;
+      font-weight: 500;
+    }
+
+    .input-wrap {
+      position: relative;
+    }
+
+    .input-control {
+      width: 100%;
+      height: 56px;
+      padding: 0 52px 0 16px;
+      border: 1px solid var(--border-strong);
+      border-radius: 13px;
+      background: #050505;
+      color: #fff;
+      outline: none;
+      transition: border-color 0.16s ease, box-shadow 0.16s ease;
+    }
+
+    .input-control:focus {
+      border-color: #777;
+      box-shadow: 0 0 0 4px rgba(255,255,255,0.035);
+    }
+
+    .suffix {
+      position: absolute;
+      top: 50%;
+      right: 16px;
+      transform: translateY(-50%);
+      color: #767676;
+      font-size: 13px;
+      pointer-events: none;
+    }
+
+    .actions {
+      display: flex;
+      gap: 10px;
+      margin-top: 24px;
+    }
+
+    .button {
+      min-height: 50px;
+      padding: 0 20px;
+      border-radius: 12px;
+      cursor: pointer;
+      transition: background 0.16s ease, border-color 0.16s ease, transform 0.16s ease;
+    }
+
+    .button:active {
+      transform: translateY(1px);
+    }
+
+    .button-primary {
+      flex: 1;
+      border: 1px solid #fff;
+      background:#242424;
+      color:#fff;
+      font-weight: 700;
+    }
+
+    .button-primary:hover {
+      background:#3a3a3a;
+      border-color:#4a4a4a;
+    }
+
+    .button-secondary {
+      border: 1px solid var(--border-strong);
+      background: transparent;
+      color: #fff;
+    }
+
+    .button-secondary:hover {
+      background: #151515;
+    }
+
+    .error {
+      min-height: 20px;
+      margin: 13px 0 0;
+      color: var(--danger);
+      font-size: 13px;
+    }
+
+
+    .ad-panel {
+      min-height:140px;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      padding:18px;
+      border:1px dashed #3b3b3b;
+      border-radius:22px;
+      background:#111;
+      color:#686868;
+      text-align:center;
+      font-size:12px;
+      letter-spacing:0.08em;
+      text-transform:uppercase;
+    }
+
+    .ad-one { grid-area: ad-one; }
+    .ad-two { grid-area: ad-two; }
+
+    .ad-slot {
+      width:100%;
+      min-height:104px;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+    }
+
+    .result-panel {
+      grid-area: result;
+      min-height: 360px;
+      padding: 28px;
+      background:#242424;
+      color:#fff;
+    }
+
+    .result-layout {
+      display: grid;
+      grid-template-columns: minmax(0, 1.08fr) minmax(320px, 0.92fr);
+      gap: 40px;
+      align-items: center;
+      min-height: 100%;
+      min-width: 0;
+    }
+
+    .result-main,
+    .result-details {
+      min-width: 0;
+    }
+
+    .result-eyebrow {
+      color:#a0a0a0;
+      font-size: 13px;
+      font-weight: 600;
+    }
+
+    .main-result {
+      margin: 18px 0 4px;
+      font-size: clamp(42px, 7vw, 70px);
+      line-height: 1;
+      letter-spacing: -0.06em;
+      font-weight: 700;
+      overflow-wrap: anywhere;
+    }
+
+    .result-label {
+      color:#9b9b9b;
+      font-size: 14px;
+    }
+
+    .result-breakdown {
+      display: grid;
+      gap: 0;
+      margin-top: 0;
+      border-top:1px solid #353535;
+    }
+
+    .result-row {
+      display: flex;
+      justify-content: space-between;
+      gap: 20px;
+      padding: 15px 0;
+      border-bottom:1px solid #353535;
+      font-size: 14px;
+    }
+
+    .result-row span:first-child {
+      color:#9b9b9b;
+    }
+
+    .result-row strong {
+      text-align: right;
+    }
+
+    .details {
+      display: grid;
+      gap: 10px;
+      margin-top: 22px;
+    }
+
+    .accordion {
+      overflow: hidden;
+      border: 1px solid var(--border);
+      border-radius: 15px;
+      background: #080808;
+    }
+
+    .accordion-button {
+      width: 100%;
+      min-height: 62px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 20px;
+      padding: 0 20px;
+      border: 0;
+      background: transparent;
+      color: #fff;
+      text-align: left;
+      cursor: pointer;
+    }
+
+    .accordion-button:hover {
+      background: #101010;
+    }
+
+    .accordion-title {
+      font-size: 15px;
+      font-weight: 600;
+    }
+
+    .accordion-icon {
+      color: #777;
+      font-size: 22px;
+      transition: transform 0.18s ease;
+    }
+
+    .accordion.open .accordion-icon {
+      transform: rotate(45deg);
+    }
+
+    .accordion-content {
+      max-height: 0;
+      overflow: hidden;
+      color: #aaa;
+      line-height: 1.75;
+      transition: max-height 0.25s ease;
+    }
+
+    .accordion-content-inner {
+      padding: 0 20px 22px;
+    }
+
+    .accordion-content p {
+      margin: 0 0 12px;
+    }
+
+    .accordion-content p:last-child {
+      margin-bottom: 0;
+    }
+
+    .formula {
+      display: block;
+      padding: 16px;
+      border: 1px solid #242424;
+      border-radius: 12px;
+      background: #030303;
+      color: #fff;
+      font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+      overflow-x: auto;
+    }
+
+    .faq-item + .faq-item {
+      margin-top: 18px;
+    }
+
+    .faq-question {
+      margin: 0 0 6px;
+      color: #fff;
+      font-size: 15px;
+    }
+
+    .related-tools {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 10px;
+    }
+
+    .related-link {
+      min-height: 54px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 14px;
+      padding: 0 16px;
+      border: 1px solid #242424;
+      border-radius: 12px;
+      color: #fff;
+      text-decoration: none;
+      background: #050505;
+    }
+
+    .related-link:hover {
+      background: #111;
+    }
+
+    .site-footer {
+      width: min(1080px, calc(100% - 32px));
+      margin: 0 auto;
+      padding: 26px 0 42px;
+      border-top: 1px solid #171717;
+      color: #686868;
+      font-size: 12px;
+    }
+
+    @media (max-width: 780px) {
+      .site-header {
+        height: 64px;
+        padding: 0 16px;
+      }
+
+      .page {
+        padding-top: 42px;
+      }
+
+      .calculator {
+        grid-template-columns: minmax(0, 1fr);
+        grid-template-areas:
+          "input"
+          "ad-one"
+          "result"
+          "ad-two";
+      }
+
+      .input-panel,
+      .field-grid,
+      .field,
+      .input-wrap,
+      .actions,
+      .result-panel {
+        width: 100%;
+        max-width: 100%;
+        min-width: 0;
+      }
+
+      .panel-title,
+      .field,
+      .actions,
+      .error,
+      .result-panel > * {
+        grid-column: 1 / -1;
+        grid-row: auto;
+      }
+
+      .result-panel {
+        min-height: 390px;
+      }
+
+      .field-grid {
+        grid-template-columns: minmax(0, 1fr);
+      }
+
+      .result-layout {
+        grid-template-columns: minmax(0, 1fr);
+        gap: 28px;
+        align-items: start;
+      }
+
+      .result-breakdown {
+        margin-top: 0;
+      }
+    }
+
+    @media (max-width: 520px) {
+      .page {
+        width: calc(100% - 24px);
+        padding-bottom: 60px;
+      }
+
+      .page-title {
+        font-size: clamp(34px, 11vw, 48px);
+        line-height: 1.02;
+        overflow-wrap: anywhere;
+      }
+
+      .input-panel,
+      .result-panel {
+        padding: 22px;
+        border-radius: 18px;
+      }
+
+      .field-grid {
+        grid-template-columns: minmax(0, 1fr) !important;
+      }
+
+      .input-control,
+      select.input-control {
+        width: 100%;
+        max-width: 100%;
+        min-width: 0;
+      }
+
+      .actions {
+        flex-direction: column;
+      }
+
+      .button,
+      .button-secondary {
+        width: 100%;
+        min-width: 0;
+      }
+
+      .result-row {
+        min-width: 0;
+      }
+
+      .result-row span,
+      .result-row strong {
+        min-width: 0;
+        overflow-wrap: anywhere;
+      }
+
+      .related-tools {
+        grid-template-columns: minmax(0, 1fr);
+      }
+
+      .main-result {
+        font-size: 48px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <header class="site-header">
+    <a class="brand" href="/">toolbox</a>
+
+    <div class="apps-wrap">
+      <button
+        class="apps-button"
+        id="appsButton"
+        type="button"
+        aria-label="Open categories"
+        aria-expanded="false"
+        aria-controls="appsMenu"
+      >
+        <span class="dots" aria-hidden="true">
+          <span></span><span></span><span></span>
+          <span></span><span></span><span></span>
+          <span></span><span></span><span></span>
+        </span>
+      </button>
+
+      <div class="apps-menu" id="appsMenu">
+        <nav class="category-list" aria-label="Tool categories">
+          <a class="category-link" href="/categories/money-investing/">Money &amp; Investing</a>
+          <a class="category-link" href="/categories/taxes-insurance-benefits/">Taxes, Insurance &amp; Benefits</a>
+          <a class="category-link" href="/categories/business-operations/">Business &amp; Operations</a>
+          <a class="category-link" href="/categories/startups-digital-business/">Startups &amp; Digital Business</a>
+          <a class="category-link" href="/categories/sales-marketing-audience/">Sales, Marketing &amp; Audience</a>
+          <a class="category-link" href="/categories/online-selling-retail/">Online Selling &amp; Retail</a>
+          <a class="category-link" href="/categories/jobs-pay-workforce/">Jobs, Pay &amp; Workforce</a>
+          <a class="category-link" href="/categories/time-productivity/">Time &amp; Productivity</a>
+          <a class="category-link" href="/categories/property-construction/">Property &amp; Construction</a>
+          <a class="category-link" href="/categories/manufacturing-production/">Manufacturing &amp; Production</a>
+          <a class="category-link" href="/categories/shipping-supply-chain/">Shipping &amp; Supply Chain</a>
+          <a class="category-link" href="/categories/health-body-fitness/">Health, Body &amp; Fitness</a>
+          <a class="category-link" href="/categories/food-cooking-hospitality/">Food, Cooking &amp; Hospitality</a>
+          <a class="category-link" href="/categories/home-everyday-life/">Home &amp; Everyday Life</a>
+          <a class="category-link" href="/categories/learning-grades/">Learning &amp; Grades</a>
+          <a class="category-link" href="/categories/science-math-engineering/">Science, Math &amp; Engineering</a>
+          <a class="category-link" href="/categories/ai-data-technology/">AI, Data &amp; Technology</a>
+          <a class="category-link" href="/categories/energy-sustainability/">Energy &amp; Sustainability</a>
+          <a class="category-link" href="/categories/farming-animals-pets/">Farming, Animals &amp; Pets</a>
+          <a class="category-link" href="/categories/travel-events-recreation/">Travel, Events &amp; Recreation</a>
+          <a class="category-link" href="/categories/legal-safety-compliance/">Legal, Safety &amp; Compliance</a>
+        </nav>
+      </div>
+    </div>
+  </header>
+
+  <main class="page">
+    <div class="breadcrumb">
+      <a href="/">Home</a> / <a href="/categories/money-investing/">Money &amp; Investing</a> / Annuity Income Break-Even Age Calculator
+    </div>
+
+    <div class="title-row">
+      <h1 class="page-title">Annuity Income Break-Even Age Calculator</h1>
+      <button class="favorite-button" id="favoriteButton" type="button" aria-label="Add Annuity Income Break-Even Age Calculator to favorites" aria-pressed="false">☆</button>
+    </div>
+    <p class="intro">
+      Estimate the age at which cumulative after-tax annuity income equals the premium or purchase amount you want to recover. This break-even view is useful when comparing the cash-flow side of an income annuity with its upfront cost and when testing how taxes change the time needed to receive an equivalent amount back through payments.<br><br>The calculator uses a constant annual income and applies your taxable-percentage and marginal-tax assumptions before determining the recovery period. It does not attempt to value mortality credits, insurer guarantees, investment alternatives, inflation, survivor benefits, or surrender values. Those factors can be important in an annuity decision, so the break-even age should be treated as one comparison point rather than a complete measure of value.
+    </p>
+    <noscript>
+      <p class="noscript-notice">This calculator requires JavaScript to update results. Enable JavaScript in your browser, then reload this page.</p>
+    </noscript>
+
+    <section class="calculator" aria-label="Annuity Income Break-Even Age Calculator">
+      <div class="panel input-panel">
+        <h2 class="panel-title">Calculator inputs</h2>
+
+        <div class="field-grid"><div class="field"><label for="premium">Premium or purchase amount</label><div class="input-wrap"><input class="input-control" id="premium" type="number" value="250000" min="0" max="100000000" step="100" /><span class="suffix">USD</span></div></div><div class="field"><label for="startAge">Income start age</label><div class="input-wrap"><input class="input-control" id="startAge" type="number" value="65" min="0" max="120" step="1" /><span class="suffix">years</span></div></div><div class="field"><label for="annualIncome">Gross annual annuity income</label><div class="input-wrap"><input class="input-control" id="annualIncome" type="number" value="18000" min="0" max="10000000" step="100" /><span class="suffix">USD/yr</span></div></div><div class="field"><label for="taxable">Taxable portion</label><div class="input-wrap"><input class="input-control" id="taxable" type="number" value="100" min="0" max="100" step="1" /><span class="suffix">%</span></div></div><div class="field"><label for="fed">Federal marginal tax rate</label><div class="input-wrap"><input class="input-control" id="fed" type="number" value="22" min="0" max="100" step="0.1" /><span class="suffix">%</span></div></div><div class="field"><label for="state">State/local marginal tax rate</label><div class="input-wrap"><input class="input-control" id="state" type="number" value="4" min="0" max="100" step="0.1" /><span class="suffix">%</span></div></div></div>
+
+        <div class="actions">
+<button class="button button-secondary" id="resetButton" type="button">Reset</button>
+        </div>
+
+        <p class="error" id="errorMessage" role="alert"></p>
+      </div>
+
+      <aside class="ad-panel ad-one" aria-label="Advertisement">
+        <div class="ad-slot"><span>Advertisement</span></div>
+      </aside>
+
+      <div class="panel result-panel" aria-live="polite">
+        <div class="result-layout">
+          <div class="result-main">
+          <div class="result-eyebrow">Result</div>
+          <div class="main-result" id="mainResult">—</div>
+          <div class="result-label" id="resultLabel">Estimated break-even age</div>
+            
+          </div>
+          <div class="result-details">
+            <div class="result-breakdown"><div class="result-row"><span>After-tax annual income</span><strong id="netAnnual">—</strong></div><div class="result-row"><span>Years to break even</span><strong id="yearsToBreakEven">—</strong></div><div class="result-row"><span>Estimated annual tax</span><strong id="annualTax">—</strong></div><div class="result-row"><span>Premium-to-income multiple</span><strong id="incomeMultiple">—</strong></div></div>
+          </div>
+        </div>
+      </div>
+
+      <aside class="ad-panel ad-two" aria-label="Advertisement">
+        <div class="ad-slot"><span>Advertisement</span></div>
+      </aside>
+    </section>
+
+    <section class="details" aria-label="Calculator information">
+      <article class="accordion">
+        <button class="accordion-button" type="button" aria-expanded="false">
+          <span class="accordion-title">How to use</span>
+          <span class="accordion-icon" aria-hidden="true">+</span>
+        </button>
+        <div class="accordion-content">
+          <div class="accordion-content-inner">
+            <p><strong>1. Enter the premium</strong><br>Use the amount paid or allocated to the annuity that you want to recover through income.</p><p><strong>2. Enter the starting age</strong><br>Use the age when the modeled income stream begins.</p><p><strong>3. Enter annual income</strong><br>Use the gross yearly annuity income before taxes.</p><p><strong>4. Describe the taxable share</strong><br>Enter the percentage of the annual payment you expect to treat as taxable in this scenario.</p><p><strong>5. Add tax assumptions</strong><br>Enter federal and state or local marginal rates, then compare the years and age required for after-tax income to equal the premium.</p>
+          </div>
+        </div>
+      </article>
+
+      <article class="accordion">
+        <button class="accordion-button" type="button" aria-expanded="false">
+          <span class="accordion-title">Formula</span>
+          <span class="accordion-icon" aria-hidden="true">+</span>
+        </button>
+        <div class="accordion-content">
+          <div class="accordion-content-inner">
+            <span class="formula">Taxable annual income = gross annual income × taxable portion
+Estimated annual tax = taxable annual income × (federal rate + state/local rate)
+After-tax annual income = gross annual income − estimated annual tax
+Years to break even = premium ÷ after-tax annual income
+Break-even age = starting age + years to break even</span><p>The calculation assumes level annual income and constant tax assumptions. It does not discount future payments or model investment returns on the premium.</p>
+            <h3>What the result means</h3>
+            <p>The break-even age is the modeled age when cumulative after-tax annuity payments equal the premium entered.</p>
+            <p>Living beyond the break-even age does not by itself prove that one financial choice is better because liquidity, guarantees, alternatives, inflation, and survivor provisions are not included.</p>
+          </div>
+        </div>
+      </article>
+
+      <article class="accordion">
+        <button class="accordion-button" type="button" aria-expanded="false">
+          <span class="accordion-title">Example calculation</span>
+          <span class="accordion-icon" aria-hidden="true">+</span>
+        </button>
+        <div class="accordion-content">
+          <div class="accordion-content-inner">
+            <p><strong>Given</strong></p><ul><li>Premium: $250,000</li><li>Income starts at age 65</li><li>Gross annual income: $20,000</li><li>Taxable portion: 100%</li><li>Combined assumed tax rate: 25%</li></ul><p><strong>Calculation</strong><br>Estimated annual tax = $20,000 × 25% = $5,000<br>After-tax annual income = $20,000 − $5,000 = $15,000<br>Years to break even = $250,000 ÷ $15,000 = 16.67 years<br>Break-even age = 65 + 16.67 = 81.67</p><p><strong>Result</strong><br>Estimated break-even age is about 81.7.</p><p>Under these assumptions, cumulative after-tax payments reach the entered premium roughly 16 years and 8 months after income starts.</p>
+          </div>
+        </div>
+      </article>
+
+      <article class="accordion">
+        <button class="accordion-button" type="button" aria-expanded="false">
+          <span class="accordion-title">FAQ</span>
+          <span class="accordion-icon" aria-hidden="true">+</span>
+        </button>
+        <div class="accordion-content">
+          <div class="accordion-content-inner">
+            <div class="faq-item"><h3 class="faq-question">Is this the same as an annuity internal rate of return?</h3><p>No. Break-even age simply asks when cumulative modeled payments equal the entered premium. An internal-rate-of-return analysis also accounts for the timing of each cash flow.</p></div><div class="faq-item"><h3 class="faq-question">Why use after-tax income for break-even?</h3><p>Taxes can reduce the amount available to recover the original outlay. Using an after-tax payment stream gives a cash-flow perspective based on the tax assumptions you enter.</p></div><div class="faq-item"><h3 class="faq-question">What if part of my annuity payment is tax-free?</h3><p>Enter a taxable portion below 100%. The calculator will apply the assumed tax rates only to that portion of annual income.</p></div><div class="faq-item"><h3 class="faq-question">Does the calculator account for death benefits or period-certain guarantees?</h3><p>No. Contract guarantees and beneficiary provisions can materially affect value but are outside this simple cumulative-income comparison.</p></div><div class="faq-item"><h3 class="faq-question">What if the after-tax annual income is zero?</h3><p>A break-even age cannot be calculated because no modeled cash flow is available to recover the premium. Review the income and tax assumptions in that case.</p></div>
+          </div>
+        </div>
+      </article>
+
+      <article class="accordion">
+        <button class="accordion-button" type="button" aria-expanded="false">
+          <span class="accordion-title">Related tools</span>
+          <span class="accordion-icon" aria-hidden="true">+</span>
+        </button>
+        <div class="accordion-content">
+          <div class="accordion-content-inner">
+            <div class="related-tools"><a class="related-link" href="/calculator/annuity_income_after_tax_value_estimator/"><span><strong>Annuity Income After Tax Value Estimator</strong><br><small>Estimate after-tax annuity payments.</small></span><span aria-hidden="true">→</span></a><a class="related-link" href="/calculator/annuity_income_withdrawal_schedule_planner/"><span><strong>Annuity Income Withdrawal Schedule Planner</strong><br><small>Model annuity withdrawal sustainability.</small></span><span aria-hidden="true">→</span></a><a class="related-link" href="/calculator/annuity_income_income_forecast_estimator/"><span><strong>Annuity Income Income Forecast Estimator</strong><br><small>Forecast annuity income.</small></span><span aria-hidden="true">→</span></a><a class="related-link" href="/calculator/annuity_income_tax_impact_estimator/"><span><strong>Annuity Income Tax Impact Estimator</strong><br><small>Estimate tax impact on annuity income.</small></span><span aria-hidden="true">→</span></a></div>
+          </div>
+        </div>
+      </article>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    © 2026 toolbox. For educational and planning purposes only. Results are estimates based on the inputs provided and are not financial, tax, legal, or investment advice.
+  </footer>
+
+  <script>
+    const appsButton = document.getElementById("appsButton");
+    const appsMenu = document.getElementById("appsMenu");
+    const favoriteButton = document.getElementById("favoriteButton");
+    const FAVORITES_KEY = "toolboxapp-favorites-v1";
+    const currentTool = {
+      name: "Annuity Income Break-Even Age Calculator",
+      url: window.location.pathname
+    };
+
+    function readFavorites() {
+      try {
+        const saved = JSON.parse(localStorage.getItem(FAVORITES_KEY) || "[]");
+        return Array.isArray(saved) ? saved : [];
+      } catch (error) {
+        return [];
+      }
+    }
+
+    function updateFavoriteButton() {
+      const isFavorite = readFavorites().some(tool => tool.url === currentTool.url);
+      favoriteButton.classList.toggle("active", isFavorite);
+      favoriteButton.textContent = isFavorite ? "★" : "☆";
+      favoriteButton.setAttribute("aria-pressed", String(isFavorite));
+      favoriteButton.setAttribute("aria-label", `${isFavorite ? "Remove" : "Add"} Annuity Income Break-Even Age Calculator ${isFavorite ? "from" : "to"} favorites`);
+    }
+
+    favoriteButton.addEventListener("click", () => {
+      const saved = readFavorites();
+      const existingIndex = saved.findIndex(tool => tool.url === currentTool.url);
+
+      if (existingIndex >= 0) {
+        saved.splice(existingIndex, 1);
+      } else {
+        saved.push(currentTool);
+      }
+
+      localStorage.setItem(FAVORITES_KEY, JSON.stringify(saved));
+      updateFavoriteButton();
+    });
+
+    const resetButton = document.getElementById("resetButton");
+    const errorMessage = document.getElementById("errorMessage");
+    const byId = id => document.getElementById(id);
+    const finite = value => Number.isFinite(Number(value));
+    const optionalNumber = (id, fallback = 0) => {
+      const value = byId(id)?.value.trim();
+      return value === "" ? fallback : Number(value);
+    };
+    const formatNumber = (value, digits = 2) => Number(value).toLocaleString("en-US", { maximumFractionDigits: digits });
+    const formatMoney = (value, currency = "USD", digits = 2) => new Intl.NumberFormat("en-US", { style: "currency", currency, maximumFractionDigits: digits }).format(value);
+    const formatPercent = (value, digits = 2) => `${Number(value).toFixed(digits)}%`;
+    const setText = (id, value) => { const node = byId(id); if (node) node.textContent = value; };
+    const showError = message => { errorMessage.textContent = message; };
+    const clearError = () => { errorMessage.textContent = ""; document.querySelectorAll('[aria-invalid="true"]').forEach(node => node.setAttribute("aria-invalid", "false")); };
+    const invalidate = (id, message) => { const node = byId(id); if (node) node.setAttribute("aria-invalid", "true"); showError(message); return false; };
+
+    function calculate(){clearError(); const premium=Number(byId("premium").value), age=Number(byId("startAge").value), income=Number(byId("annualIncome").value), taxable=Number(byId("taxable").value), fed=Number(byId("fed").value), state=Number(byId("state").value); if(![premium,age,income,taxable,fed,state].every(Number.isFinite)) return invalidate("premium","Enter valid numeric inputs."); if(premium<0||age<0||age>120||income<0||taxable<0||taxable>100||fed<0||state<0) return invalidate("premium","Check the input ranges."); const combined=Math.min(100,fed+state), tax=income*taxable/100*combined/100, net=income-tax; if(net<=0){setText("mainResult","Not reached"); setText("netAnnual",formatMoney(net)); setText("yearsToBreakEven","—"); setText("annualTax",formatMoney(tax)); setText("incomeMultiple","—"); return;} const yrs=premium/net, beAge=age+yrs; setText("mainResult",beAge<=150?`${formatNumber(beAge,1)} years`:"Over 150"); setText("netAnnual",formatMoney(net)); setText("yearsToBreakEven",`${formatNumber(yrs,2)} years`); setText("annualTax",formatMoney(tax)); setText("incomeMultiple",`${formatNumber(premium/income,2)}×`);}
+
+    resetButton.addEventListener("click", () => {
+      document.querySelectorAll(".input-control").forEach(input => { input.value = input.defaultValue; });
+      clearError();
+      calculate();
+    });
+    let autoTimer;
+    document.querySelectorAll(".input-control").forEach(input => {
+      input.addEventListener("input", () => {
+        clearTimeout(autoTimer);
+        autoTimer = setTimeout(calculate, 200);
+      });
+      input.addEventListener("change", calculate);
+    });
+
+
+    appsButton.addEventListener("click", () => {
+      const isOpen = appsMenu.classList.toggle("open");
+      appsButton.setAttribute("aria-expanded", String(isOpen));
+    });
+
+    document.addEventListener("click", event => {
+      if (!event.target.closest(".apps-wrap")) {
+        appsMenu.classList.remove("open");
+        appsButton.setAttribute("aria-expanded", "false");
+      }
+    });
+
+    document.querySelectorAll(".accordion-button").forEach(button => {
+      button.addEventListener("click", () => {
+        const accordion = button.closest(".accordion");
+        const content = accordion.querySelector(".accordion-content");
+        const isOpen = accordion.classList.toggle("open");
+
+        button.setAttribute("aria-expanded", String(isOpen));
+        content.style.maxHeight = isOpen ? content.scrollHeight + "px" : "0px";
+      });
+    });
+
+    calculate();
+    updateFavoriteButton();
+  </script>
+</body>
+</html>
