@@ -1,0 +1,24 @@
+name: Apply hreflang 1-400
+on:
+  push:
+    branches: [main]
+    paths:
+      - scripts/add_hreflang_repo.py
+      - .github/workflows/apply-hreflang-1-400.yml
+permissions:
+  contents: write
+jobs:
+  apply:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+      - run: python scripts/add_hreflang_repo.py
+      - run: |
+          rm -f scripts/add_hreflang_repo.py .github/workflows/apply-hreflang-1-400.yml
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -A
+          git commit -m "add hreflang to main categories and tools 1-400"
+          git push origin HEAD:main
