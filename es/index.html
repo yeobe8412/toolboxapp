@@ -1,0 +1,810 @@
+<!DOCTYPE html>
+
+<html lang="es">
+<head>
+<script async="" crossorigin="anonymous" src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3030226322885854"></script>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<meta content="Toolbox te ayuda a encontrar al instante la calculadora o herramienta online que necesitas." name="description"/>
+<link href="https://www.toolboxapp.cc/es/" rel="canonical"/><link href="https://www.toolboxapp.cc/" hreflang="en" rel="alternate"/><link href="https://www.toolboxapp.cc/es/" hreflang="es" rel="alternate"/><link href="https://www.toolboxapp.cc/" hreflang="x-default" rel="alternate"/>
+<link href="/favicon.svg" rel="icon" type="image/svg+xml"/>
+<title>Toolbox – Encuentra la herramienta online que necesitas</title>
+<style>
+    :root {
+      color-scheme: dark;
+      --bg: #000;
+      --panel: #0b0b0b;
+      --panel-hover: #141414;
+      --border: #2a2a2a;
+      --border-strong: #4a4a4a;
+      --text: #fff;
+      --muted: #8f8f8f;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html,
+    body {
+      margin: 0;
+      min-height: 100%;
+      background: var(--bg);
+      color: var(--text);
+      font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    }
+
+    body {
+      min-height: 100vh;
+    }
+
+    button,
+    input {
+      font: inherit;
+    }
+
+    .topbar {
+      position: fixed;
+      inset: 0 0 auto 0;
+      height: 72px;
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+      gap: 8px;
+      padding: 0 24px;
+      z-index: 10;
+      pointer-events: none;
+    }
+
+    .language-wrap {
+      position: relative;
+      pointer-events: auto;
+    }
+
+    .language-button {
+      min-width: 92px;
+      height: 38px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 7px;
+      padding: 0 12px;
+      border: 1px solid #292929;
+      border-radius: 999px;
+      background: rgba(10, 10, 10, 0.92);
+      color: #d7d7d7;
+      font-size: 13px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background 0.18s ease, border-color 0.18s ease, color 0.18s ease;
+    }
+
+    .language-button:hover,
+    .language-button:focus-visible {
+      background: #141414;
+      border-color: #454545;
+      color: #fff;
+      outline: none;
+    }
+
+    .language-chevron {
+      color: #777;
+      font-size: 10px;
+      transition: transform 0.18s ease;
+    }
+
+    .language-button[aria-expanded="true"] .language-chevron {
+      transform: rotate(180deg);
+    }
+
+    .language-menu {
+      position: absolute;
+      top: 46px;
+      right: 0;
+      width: 142px;
+      padding: 7px;
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      background: rgba(10, 10, 10, 0.98);
+      box-shadow: 0 18px 50px rgba(0, 0, 0, 0.52);
+      opacity: 0;
+      visibility: hidden;
+      transform: translateY(-7px);
+      transition: 0.18s ease;
+    }
+
+    .language-menu.open {
+      opacity: 1;
+      visibility: visible;
+      transform: translateY(0);
+    }
+
+    .language-option {
+      min-height: 38px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      padding: 0 11px;
+      border-radius: 9px;
+      color: #d0d0d0;
+      text-decoration: none;
+      font-size: 13px;
+      transition: background 0.16s ease, color 0.16s ease;
+    }
+
+    .language-option:hover,
+    .language-option:focus-visible {
+      background: #181818;
+      color: #fff;
+      outline: none;
+    }
+
+    .language-option.active {
+      color: #fff;
+      background: #111;
+    }
+
+    .language-check {
+      color: #8f8f8f;
+      font-size: 12px;
+    }
+
+    .apps-wrap {
+      position: relative;
+      pointer-events: auto;
+    }
+
+    .apps-button {
+      width: 44px;
+      height: 44px;
+      display: grid;
+      place-items: center;
+      border: 0;
+      border-radius: 50%;
+      background: transparent;
+      cursor: pointer;
+      transition: background 0.18s ease;
+    }
+
+    .apps-button:hover,
+    .apps-button:focus-visible {
+      background: #111;
+      outline: none;
+    }
+
+    .dots {
+      width: 20px;
+      height: 20px;
+      display: grid;
+      grid-template-columns: repeat(3, 4px);
+      grid-template-rows: repeat(3, 4px);
+      gap: 4px;
+    }
+
+    .dots span {
+      width: 4px;
+      height: 4px;
+      border-radius: 50%;
+      background: #fff;
+    }
+
+    .apps-menu {
+      position: absolute;
+      top: 52px;
+      right: 0;
+      width: 250px;
+      padding: 12px;
+      border: 1px solid var(--border);
+      border-radius: 18px;
+      background: rgba(10, 10, 10, 0.98);
+      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.55);
+      opacity: 0;
+      visibility: hidden;
+      transform: translateY(-8px);
+      transition: 0.18s ease;
+      max-height: calc(100vh - 76px);
+      overflow-y: auto;
+    }
+
+    .apps-menu.open {
+      opacity: 1;
+      visibility: visible;
+      transform: translateY(0);
+    }
+
+    .category-grid {
+      display:flex;
+      flex-direction:column;
+      gap:6px;
+    }
+
+    .category-link {
+      display:flex;
+      align-items:center;
+      min-height:42px;
+      padding:0 14px;
+      color: var(--text);
+      text-decoration:none;
+      text-align:left;
+      font-size:13px;
+      line-height: 1.3;
+      border-radius: 12px;
+      background: #111;
+      transition: background 0.18s ease, transform 0.18s ease;
+    }
+
+    .category-link:hover,
+    .category-link:focus-visible {
+      background: #1a1a1a;
+      transform: translateY(-1px);
+      outline: none;
+    }
+
+    .page {
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      padding: 0 20px 80px;
+    }
+
+    .hero {
+      width: min(720px, 100%);
+      padding-top: clamp(145px, 23vh, 250px);
+      transition: padding-top 0.25s ease;
+    }
+
+    .hero.searching {
+      padding-top: 105px;
+    }
+
+    .brand {
+      margin: 0 0 32px;
+      text-align: center;
+      font-size: clamp(52px, 9vw, 82px);
+      font-weight: 500;
+      letter-spacing: -0.065em;
+      line-height: 0.95;
+    }
+
+    .search-shell {
+      position: relative;
+    }
+
+    .search-input {
+      width: 100%;
+      height: 64px;
+      padding: 0 58px 0 24px;
+      border: 1px solid var(--border-strong);
+      border-radius: 999px;
+      background: #090909;
+      color: var(--text);
+      font-size: 17px;
+      outline: none;
+      transition: border-color 0.18s ease, background 0.18s ease, box-shadow 0.18s ease;
+    }
+
+    .search-input::placeholder {
+      color: #777;
+    }
+
+    .search-input:focus {
+      border-color: #747474;
+      background: #0d0d0d;
+      box-shadow: 0 0 0 4px rgba(255, 255, 255, 0.035);
+    }
+
+    .clear-button {
+      position: absolute;
+      top: 50%;
+      right: 14px;
+      width: 36px;
+      height: 36px;
+      display: none;
+      place-items: center;
+      transform: translateY(-50%);
+      border: 0;
+      border-radius: 50%;
+      background: transparent;
+      color: #aaa;
+      font-size: 25px;
+      line-height: 1;
+      cursor: pointer;
+    }
+
+    .clear-button.visible {
+      display: grid;
+    }
+
+    .clear-button:hover,
+    .clear-button:focus-visible {
+      background: #181818;
+      color: #fff;
+      outline: none;
+    }
+
+    .results {
+      margin-top: 18px;
+      display: none;
+    }
+
+    .results.visible {
+      display: block;
+    }
+
+    .result-link {
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:18px;
+      min-height:54px;
+      margin-bottom:8px;
+      padding:14px 18px;
+      border:1px solid #1d1d1d;
+      border-radius:14px;
+      background:#0a0a0a;
+      color:var(--text);
+      text-decoration:none;
+      transition:background 0.16s ease, border-color 0.16s ease, transform 0.16s ease;
+    }
+
+    .result-link:last-of-type {
+      margin-bottom:0;
+    }
+
+    .result-link:hover,
+    .result-link:focus-visible,
+    .result-link.active {
+      background:var(--panel-hover);
+      border-color:#333;
+      transform:translateY(-1px);
+      outline:none;
+    }
+
+    .result-title {
+      display:inline;
+      font-size:16px;
+      font-weight:600;
+    }
+
+    .result-title mark {
+      padding:0;
+      background:transparent;
+      color:inherit;
+      font-weight:800;
+    }
+
+    .result-category {
+      display:inline;
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+    .arrow {
+      flex: 0 0 auto;
+      color: #777;
+      font-size: 19px;
+    }
+
+    .empty-state {
+      padding:20px;
+      border:1px solid #1d1d1d;
+      border-radius:14px;
+      background:#0a0a0a;
+      color:var(--muted);
+      text-align:center;
+      font-size:14px;
+    }
+
+    .result-count {
+      padding:8px 4px 0;
+      color:#666;
+      font-size:12px;
+      text-align:right;
+    }
+
+    .favorites {
+      display: none;
+      width: 100%;
+      margin-top: 28px;
+      text-align: left;
+    }
+
+    .favorites.visible { display: block; }
+
+    .favorites-heading {
+      margin: 0 0 12px;
+      color: #f2f2f2;
+      font-size: 14px;
+      font-weight: 600;
+    }
+
+    .favorites-list {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 8px;
+    }
+
+    .favorite-card {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 14px;
+      min-width: 0;
+      padding: 14px 16px;
+      border: 1px solid #242424;
+      border-radius: 13px;
+      background: #111;
+      color: #f5f5f5;
+      text-decoration: none;
+      transition: border-color .16s ease, background .16s ease;
+    }
+
+    .favorite-card:hover,
+    .favorite-card:focus-visible {
+      border-color: #555;
+      background: #171717;
+      outline: none;
+    }
+
+    .favorite-name {
+      overflow: hidden;
+      font-size: 14px;
+      font-weight: 600;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+
+    .favorite-star {
+      flex: 0 0 auto;
+      color: #ffd34e;
+      font-size: 18px;
+    }
+
+    .site-footer {
+      position: fixed;
+      inset: auto 0 0;
+      z-index: 8;
+      padding: 18px 20px;
+      background: linear-gradient(to top, #000 70%, transparent);
+      text-align: center;
+    }
+
+    .footer-links {
+      display: flex;
+      justify-content: center;
+      gap: 10px 20px;
+      flex-wrap: wrap;
+    }
+
+    .footer-links a {
+      color: #777;
+      font-size: 12px;
+      text-decoration: none;
+    }
+
+    .footer-links a:hover,
+    .footer-links a:focus-visible {
+      color: #fff;
+      outline: none;
+    }
+
+    @media (max-width: 640px) {
+      .topbar {
+        height: 64px;
+        padding: 0 12px;
+      }
+
+      .apps-menu {
+        right: -2px;
+        width: min(250px, calc(100vw - 24px));
+      }
+
+      .page {
+        padding-inline: 16px;
+      }
+
+      .hero {
+        padding-top: 165px;
+      }
+
+      .hero.searching {
+        padding-top: 88px;
+      }
+
+      .brand {
+        margin-bottom: 26px;
+      }
+
+      .search-input {
+        height: 58px;
+        padding-left: 20px;
+        font-size: 16px;
+      }
+
+      .result-link {
+        border-radius:12px;
+      }
+    }
+  </style>
+</head>
+<body>
+<header class="topbar">
+<div class="language-wrap">
+<button aria-controls="languageMenu" aria-expanded="false" aria-haspopup="true" class="language-button" id="languageButton" type="button">
+<span>Español</span>
+<span aria-hidden="true" class="language-chevron">▼</span>
+</button>
+<div class="language-menu" id="languageMenu">
+<a class="language-option" href="https://www.toolboxapp.cc/" lang="en">
+<span>English</span>
+</a>
+<a aria-current="page" class="language-option active" href="/es/" lang="es">
+<span>Español</span>
+<span aria-hidden="true" class="language-check">✓</span>
+</a>
+</div>
+</div>
+<div class="apps-wrap">
+<button aria-controls="appsMenu" aria-expanded="false" aria-label="Abrir categorías" class="apps-button" id="appsButton" type="button">
+<span aria-hidden="true" class="dots">
+<span></span><span></span><span></span>
+<span></span><span></span><span></span>
+<span></span><span></span><span></span>
+</span>
+</button>
+<div class="apps-menu" id="appsMenu">
+<nav aria-label="Categorías de herramientas" class="category-grid"><a class="category-link" href="/es/calculator/categories/money-investing/">Dinero e inversión</a>
+<a class="category-link" href="/es/calculator/categories/taxes-insurance-benefits/">Impuestos, seguros y prestaciones</a>
+<a class="category-link" href="/es/calculator/categories/business-operations/">Negocios y operaciones</a>
+<a class="category-link" href="/es/calculator/categories/startups-digital-business/">Startups y negocios digitales</a>
+<a class="category-link" href="/es/calculator/categories/sales-marketing-audience/">Ventas, marketing y audiencia</a>
+<a class="category-link" href="/es/calculator/categories/online-selling-retail/">Venta online y comercio minorista</a>
+<a class="category-link" href="/es/calculator/categories/jobs-pay-workforce/">Empleo, salarios y personal</a>
+<a class="category-link" href="/es/calculator/categories/time-productivity/">Tiempo y productividad</a>
+<a class="category-link" href="/es/calculator/categories/property-construction/">Inmuebles y construcción</a>
+<a class="category-link" href="/es/calculator/categories/manufacturing-production/">Fabricación y producción</a>
+<a class="category-link" href="/es/calculator/categories/shipping-supply-chain/">Envíos y cadena de suministro</a>
+<a class="category-link" href="/es/calculator/categories/health-body-fitness/">Salud, cuerpo y ejercicio</a>
+<a class="category-link" href="/es/calculator/categories/food-cooking-hospitality/">Alimentación, cocina y hostelería</a>
+<a class="category-link" href="/es/calculator/categories/home-everyday-life/">Hogar y vida cotidiana</a>
+<a class="category-link" href="/es/calculator/categories/learning-grades/">Aprendizaje y calificaciones</a>
+<a class="category-link" href="/es/calculator/categories/science-math-engineering/">Ciencia, matemáticas e ingeniería</a>
+<a class="category-link" href="/es/calculator/categories/ai-data-technology/">IA, datos y tecnología</a>
+<a class="category-link" href="/es/calculator/categories/energy-sustainability/">Energía y sostenibilidad</a>
+<a class="category-link" href="/es/calculator/categories/farming-animals-pets/">Agricultura, animales y mascotas</a>
+<a class="category-link" href="/es/calculator/categories/travel-events-recreation/">Viajes, eventos y ocio</a>
+<a class="category-link" href="/es/calculator/categories/legal-safety-compliance/">Asuntos legales, seguridad y cumplimiento</a></nav>
+</div>
+</div>
+</header>
+<main class="page">
+<section class="hero" id="hero">
+<h1 class="brand">toolbox</h1>
+<div class="search-shell">
+<input aria-controls="results" aria-label="Buscar herramientas" autocomplete="off" class="search-input" id="toolSearch" placeholder="Buscar herramientas..." spellcheck="false" type="text"/>
+<button aria-label="Borrar búsqueda" class="clear-button" id="clearButton" type="button">×</button>
+</div>
+<div aria-live="polite" class="results" id="results"></div>
+<section aria-labelledby="favoritesHeading" class="favorites" id="favorites">
+<h2 class="favorites-heading" id="favoritesHeading">Mis favoritos</h2>
+<div class="favorites-list" id="favoritesList"></div>
+</section>
+</section>
+</main>
+<footer class="site-footer">
+<nav aria-label="Información del sitio" class="footer-links"><a href="/es/about/">Acerca de</a><a href="/es/contact/">Contacto</a><a href="/es/privacy-policy/">Política de privacidad</a><a href="/es/terms-of-use/">Términos de uso</a><a href="/es/disclaimer/">Aviso legal</a></nav>
+</footer>
+<script>
+    const tools=[{"name":"Calculadora de jubilación","category":"Dinero e inversión","url":"/es/calculator/retirement_calculator/"},{"name":"Calculadora de número FIRE","category":"Dinero e inversión","url":"/es/calculator/fire_number_calculator/"},{"name":"Calculadora de Coast FIRE","category":"Dinero e inversión","url":"/es/calculator/coast_fire_calculator/"},{"name":"Calculadora de Lean FIRE","category":"Dinero e inversión","url":"/es/calculator/lean_fire_calculator/"},{"name":"Calculadora de Fat FIRE","category":"Dinero e inversión","url":"/es/calculator/fat_fire_calculator/"},{"name":"Estimador de tasa de retirada segura","category":"Dinero e inversión","url":"/es/calculator/safe_withdrawal_rate_estimator/"},{"name":"Estimador de tasa de ahorro","category":"Dinero e inversión","url":"/es/calculator/savings_rate_estimator/"},{"name":"Calculadora de interés compuesto","category":"Dinero e inversión","url":"/es/calculator/compound_interest_calculator/"},{"name":"Calculadora de crecimiento de la inversión","category":"Dinero e inversión","url":"/es/calculator/investment_growth_calculator/"},{"name":"Calculadora de dividendos de ETF","category":"Dinero e inversión","url":"/es/calculator/etf_dividend_calculator/"},{"name":"Calculadora de objetivo mensual de dividendos","category":"Dinero e inversión","url":"/es/calculator/monthly_dividend_goal_calculator/"},{"name":"Calculadora de rentabilidad por dividendo","category":"Dinero e inversión","url":"/es/calculator/dividend_yield_calculator/"},{"name":"Calculadora de reinversión de dividendos","category":"Dinero e inversión","url":"/es/calculator/dividend_reinvestment_calculator/"},{"name":"Calculadora de la regla del 72","category":"Dinero e inversión","url":"/es/calculator/rule_of_72_calculator/"},{"name":"Estimador de coste medio de acciones","category":"Dinero e inversión","url":"/es/calculator/stock_average_cost_estimator/"},{"name":"Calculadora de patrimonio neto","category":"Dinero e inversión","url":"/es/calculator/net_worth_calculator/"},{"name":"Calculadora de hipoteca","category":"Inmuebles y construcción","url":"/es/calculator/mortgage_calculator/"},{"name":"Calculadora de préstamo","category":"Dinero e inversión","url":"/es/calculator/loan_calculator/"},{"name":"Calculadora de fondo de emergencia","category":"Dinero e inversión","url":"/es/calculator/emergency_fund_calculator/"},{"name":"Estimador de tasa de crecimiento anual compuesto","category":"Dinero e inversión","url":"/es/calculator/compound_annual_growth_rate_estimator/"},{"name":"Calculadora de alquiler frente a compra","category":"Inmuebles y construcción","url":"/es/calculator/rent_vs_buy_calculator/"},{"name":"Estimador de capacidad de compra de vivienda","category":"Inmuebles y construcción","url":"/es/calculator/house_affordability_estimator/"},{"name":"Calculadora de objetivo de ahorro","category":"Dinero e inversión","url":"/es/calculator/savings_goal_calculator/"},{"name":"Estimador de valor futuro","category":"Dinero e inversión","url":"/es/calculator/future_value_estimator/"},{"name":"Planificador de presupuesto","category":"Dinero e inversión","url":"/es/calculator/budget_planner/"},{"name":"Calculadora de rentabilidad del alquiler","category":"Inmuebles y construcción","url":"/es/calculator/rental_yield_calculator/"},{"name":"Calculadora de inversión inmobiliaria retorno de la inversión","category":"Inmuebles y construcción","url":"/es/calculator/real_estate_return_on_investment_calculator/"},{"name":"Estimador de comisiones de inversión","category":"Dinero e inversión","url":"/es/calculator/investment_fee_estimator/"},{"name":"Calculadora de inversión de golpe frente a DCA","category":"Dinero e inversión","url":"/es/calculator/lump_sum_vs_dca_calculator/"},{"name":"Calculadora para alcanzar un millón","category":"Dinero e inversión","url":"/es/calculator/millionaire_calculator/"},{"name":"Estimador de coste de oportunidad","category":"Hogar y vida cotidiana","url":"/es/calculator/opportunity_cost_estimator/"},{"name":"Calculadora de ingresos pasivos","category":"Dinero e inversión","url":"/es/calculator/passive_income_calculator/"},{"name":"Calculadora de flujo de caja","category":"Negocios y operaciones","url":"/es/calculator/cash_flow_calculator/"},{"name":"Calculadora del método bola de nieve para deudas","category":"Dinero e inversión","url":"/es/calculator/debt_snowball_calculator/"},{"name":"Calculadora del método avalancha para deudas","category":"Dinero e inversión","url":"/es/calculator/debt_avalanche_calculator/"},{"name":"Calculadora de conversión de pago por hora a salario","category":"Empleo, salarios y personal","url":"/es/calculator/hourly_to_salary_calculator/"},{"name":"Calculadora de conversión de salario a pago por hora","category":"Empleo, salarios y personal","url":"/es/calculator/salary_to_hourly_calculator/"},{"name":"Calculadora de aumento salarial","category":"Empleo, salarios y personal","url":"/es/calculator/pay_raise_calculator/"},{"name":"Calculadora de tasa de ahorro Plus","category":"Dinero e inversión","url":"/es/calculator/savings_rate_plus_calculator/"},{"name":"Calculadora de tiempo necesario para ahorrar","category":"Tiempo y productividad","url":"/es/calculator/time_to_save_calculator/"},{"name":"Calculadora de independencia financiera","category":"Dinero e inversión","url":"/es/calculator/financial_independence_calculator/"},{"name":"Calculadora de progreso hacia Coast FI","category":"Dinero e inversión","url":"/es/calculator/coast_fi_progress_calculator/"},{"name":"Calculadora de crecimiento del patrimonio neto","category":"Dinero e inversión","url":"/es/calculator/net_worth_growth_calculator/"},{"name":"Calculadora de gasto en la jubilación","category":"Dinero e inversión","url":"/es/calculator/retirement_spending_calculator/"},{"name":"Calculadora de número de libertad financiera","category":"Dinero e inversión","url":"/es/calculator/freedom_number_calculator/"},{"name":"Calculadora de asignación de activos","category":"Dinero e inversión","url":"/es/calculator/asset_allocation_calculator/"},{"name":"Calculadora de reequilibrio de cartera","category":"Dinero e inversión","url":"/es/calculator/portfolio_rebalancing_calculator/"},{"name":"Calculadora avanzada de tasa de retirada","category":"Dinero e inversión","url":"/es/calculator/withdrawal_rate_calculator_plus/"},{"name":"Calculadora de secuencia de rentabilidades","category":"Dinero e inversión","url":"/es/calculator/sequence_of_returns_calculator/"},{"name":"Calculadora de rentabilidad ajustada a la inflación","category":"Dinero e inversión","url":"/es/calculator/inflation_adjusted_return_calculator/"},{"name":"Estimador de youTube tiempo de visualización","category":"Ventas, marketing y audiencia","url":"/es/calculator/youtube_watch_time_estimator/"},{"name":"Calculadora de objetivo de ingresos en YouTube","category":"Ventas, marketing y audiencia","url":"/es/calculator/youtube_earnings_goal_calculator/"},{"name":"Calculadora de monetización de YouTube","category":"Ventas, marketing y audiencia","url":"/es/calculator/youtube_monetization_calculator/"},{"name":"Calculadora de youTube crecimiento del canal","category":"Ventas, marketing y audiencia","url":"/es/calculator/youtube_channel_growth_calculator/"},{"name":"Calculadora de youTube regularidad de publicación","category":"Ventas, marketing y audiencia","url":"/es/calculator/youtube_upload_consistency_calculator/"},{"name":"Estimador de tikTok tasa de interacción","category":"Ventas, marketing y audiencia","url":"/es/calculator/tiktok_engagement_rate_estimator/"},{"name":"Estimador de ingresos en TikTok","category":"Ventas, marketing y audiencia","url":"/es/calculator/tiktok_earnings_estimator/"},{"name":"Calculadora de crecimiento en TikTok","category":"Ventas, marketing y audiencia","url":"/es/calculator/tiktok_growth_calculator/"},{"name":"Calculadora de tikTok regularidad de publicación","category":"Ventas, marketing y audiencia","url":"/es/calculator/tiktok_posting_consistency_calculator/"},{"name":"Calculadora de patrocinios en TikTok","category":"Ventas, marketing y audiencia","url":"/es/calculator/tiktok_sponsorship_calculator/"},{"name":"Estimador de instagram tasa de interacción","category":"Ventas, marketing y audiencia","url":"/es/calculator/instagram_engagement_rate_estimator/"},{"name":"Calculadora de crecimiento en Instagram","category":"Ventas, marketing y audiencia","url":"/es/calculator/instagram_growth_calculator/"},{"name":"Calculadora de alcance en Instagram","category":"Ventas, marketing y audiencia","url":"/es/calculator/instagram_reach_calculator/"},{"name":"Calculadora de patrocinios en Instagram","category":"Ventas, marketing y audiencia","url":"/es/calculator/instagram_sponsorship_calculator/"},{"name":"Calculadora de instagram regularidad de publicación","category":"Ventas, marketing y audiencia","url":"/es/calculator/instagram_posting_consistency_calculator/"},{"name":"Estimador de tarifa de influencer","category":"Ventas, marketing y audiencia","url":"/es/calculator/influencer_rate_estimator/"},{"name":"Calculadora de acuerdo con marcas","category":"Dinero e inversión","url":"/es/calculator/brand_deal_calculator/"},{"name":"Calculadora de objetivo de patrocinios","category":"Ventas, marketing y audiencia","url":"/es/calculator/sponsorship_goal_calculator/"},{"name":"Estimador de ingresos de creadores","category":"Ventas, marketing y audiencia","url":"/es/calculator/creator_revenue_estimator/"},{"name":"Calculadora de influencer retorno de la inversión","category":"Ventas, marketing y audiencia","url":"/es/calculator/influencer_return_on_investment_calculator/"},{"name":"Estimador de tarifa por hora freelance","category":"Empleo, salarios y personal","url":"/es/calculator/freelancer_hourly_rate_estimator/"},{"name":"Calculadora de precio de proyectos freelance","category":"Empleo, salarios y personal","url":"/es/calculator/freelancer_project_pricing_calculator/"},{"name":"Estimador de impuestos de autónomos","category":"Impuestos, seguros y prestaciones","url":"/es/calculator/freelancer_tax_estimator/"},{"name":"Estimador de tasa de utilización freelance","category":"Empleo, salarios y personal","url":"/es/calculator/freelancer_utilization_rate_estimator/"},{"name":"Calculadora de objetivo de ingresos freelance","category":"Empleo, salarios y personal","url":"/es/calculator/freelancer_income_goal_calculator/"},{"name":"Estimador de beneficio empresarial","category":"Negocios y operaciones","url":"/es/calculator/business_profit_estimator/"},{"name":"Calculadora de punto de equilibrio","category":"Negocios y operaciones","url":"/es/calculator/break_even_point_calculator/"},{"name":"Estimador de margen bruto","category":"Negocios y operaciones","url":"/es/calculator/gross_margin_estimator/"},{"name":"Calculadora de recargo","category":"Negocios y operaciones","url":"/es/calculator/markup_calculator/"},{"name":"Calculadora de retorno de la inversión empresarial","category":"Negocios y operaciones","url":"/es/calculator/business_return_on_investment_calculator/"},{"name":"Estimador de coste de adquisición de clientes","category":"Ventas, marketing y audiencia","url":"/es/calculator/customer_acquisition_cost_estimator/"},{"name":"Estimador de valor de vida del cliente","category":"Ventas, marketing y audiencia","url":"/es/calculator/customer_lifetime_value_estimator/"},{"name":"Calculadora de crecimiento de ingresos","category":"Negocios y operaciones","url":"/es/calculator/revenue_growth_calculator/"},{"name":"Calculadora de comisión de ventas","category":"Empleo, salarios y personal","url":"/es/calculator/sales_commission_calculator/"},{"name":"Calculadora de rotación de inventario","category":"Venta online y comercio minorista","url":"/es/calculator/inventory_turnover_calculator/"},{"name":"Calculadora de precios","category":"Dinero e inversión","url":"/es/calculator/pricing_calculator/"},{"name":"Calculadora de descuentos","category":"Hogar y vida cotidiana","url":"/es/calculator/discount_calculator/"},{"name":"Estimador de margen de beneficio","category":"Negocios y operaciones","url":"/es/calculator/profit_margin_estimator/"},{"name":"Estimador de markup frente a margen","category":"Negocios y operaciones","url":"/es/calculator/markup_vs_margin_estimator/"},{"name":"Calculadora de precios mayoristas","category":"Dinero e inversión","url":"/es/calculator/wholesale_pricing_calculator/"},{"name":"Calculadora de marketing retorno de la inversión","category":"Ventas, marketing y audiencia","url":"/es/calculator/marketing_return_on_investment_calculator/"},{"name":"Calculadora de retorno de la inversión publicitaria","category":"Ventas, marketing y audiencia","url":"/es/calculator/return_on_ad_spend_calculator/"},{"name":"Estimador de tasa de conversión","category":"Ventas, marketing y audiencia","url":"/es/calculator/conversion_rate_estimator/"},{"name":"Calculadora de coste por lead","category":"Ventas, marketing y audiencia","url":"/es/calculator/cost_per_lead_calculator/"},{"name":"Estimador de valor de los leads","category":"Ventas, marketing y audiencia","url":"/es/calculator/lead_value_estimator/"},{"name":"Calculadora de autonomía de caja","category":"Startups y negocios digitales","url":"/es/calculator/cash_runway_calculator/"},{"name":"Estimador de tasa de consumo de caja de una startup","category":"Startups y negocios digitales","url":"/es/calculator/startup_burn_rate_estimator/"},{"name":"Estimador de coste del empleado","category":"Empleo, salarios y personal","url":"/es/calculator/employee_cost_estimator/"},{"name":"Calculadora de nómina","category":"Empleo, salarios y personal","url":"/es/calculator/payroll_calculator/"},{"name":"Estimador de tasa de crecimiento empresarial","category":"Negocios y operaciones","url":"/es/calculator/business_growth_rate_estimator/"},{"name":"Estimador del tamaño de muestra para pruebas A/B","category":"Ventas, marketing y audiencia","url":"/es/calculator/a_b_testing_sample_size_estimator/"},{"name":"Calculadora de límite de ausencias","category":"Aprendizaje y calificaciones","url":"/es/calculator/absence_limit_calculator/"},{"name":"Calculadora de rotación de cuentas por cobrar","category":"Negocios y operaciones","url":"/es/calculator/accounts_receivable_turnover_calculator/"},{"name":"Calculadora de frecuencia de anuncios","category":"Ventas, marketing y audiencia","url":"/es/calculator/ad_frequency_calculator/"},{"name":"Calculadora de gasto publicitario","category":"Ventas, marketing y audiencia","url":"/es/calculator/ad_spend_calculator/"},{"name":"Estimador de ingresos de creadores por afiliación","category":"Ventas, marketing y audiencia","url":"/es/calculator/affiliate_creator_revenue_estimator/"},{"name":"Estimador de amazon valor medio del pedido","category":"Venta online y comercio minorista","url":"/es/calculator/amazon_average_order_value_estimator/"},{"name":"Calculadora de packs de Amazon","category":"Venta online y comercio minorista","url":"/es/calculator/amazon_bundle_calculator/"},{"name":"Estimador de amazon coste de adquisición de clientes","category":"Venta online y comercio minorista","url":"/es/calculator/amazon_customer_acquisition_cost_estimator/"},{"name":"Calculadora de conversión en Amazon","category":"Venta online y comercio minorista","url":"/es/calculator/amazon_conversion_calculator/"},{"name":"Calculadora de descuentos de Amazon","category":"Venta online y comercio minorista","url":"/es/calculator/amazon_discount_calculator/"},{"name":"Estimador de comisiones de Amazon FBA","category":"Venta online y comercio minorista","url":"/es/calculator/amazon_fba_fee_estimator/"},{"name":"Estimador de comisiones de Amazon","category":"Venta online y comercio minorista","url":"/es/calculator/amazon_fee_estimator/"},{"name":"Calculadora de inventario de Amazon","category":"Venta online y comercio minorista","url":"/es/calculator/amazon_inventory_calculator/"},{"name":"Estimador de amazon valor de vida del cliente","category":"Venta online y comercio minorista","url":"/es/calculator/amazon_customer_lifetime_value_estimator/"},{"name":"Estimador de margen de Amazon","category":"Venta online y comercio minorista","url":"/es/calculator/amazon_margin_estimator/"},{"name":"Estimador de precio de Amazon","category":"Venta online y comercio minorista","url":"/es/calculator/amazon_price_estimator/"},{"name":"Estimador de beneficio de Amazon","category":"Venta online y comercio minorista","url":"/es/calculator/amazon_profit_estimator/"},{"name":"Calculadora de amazon Refund","category":"Venta online y comercio minorista","url":"/es/calculator/amazon_refund_calculator/"},{"name":"Calculadora de amazon Reorder","category":"Venta online y comercio minorista","url":"/es/calculator/amazon_reorder_calculator/"},{"name":"Calculadora de amazon rentabilidad","category":"Venta online y comercio minorista","url":"/es/calculator/amazon_return_calculator/"},{"name":"Calculadora de envíos de Amazon","category":"Venta online y comercio minorista","url":"/es/calculator/amazon_shipping_calculator/"},{"name":"Calculadora de anual prestación","category":"Dinero e inversión","url":"/es/calculator/annual_benefit_calculator/"},{"name":"Calculadora de anual bonificación","category":"Empleo, salarios y personal","url":"/es/calculator/annual_bonus_calculator/"},{"name":"Calculadora de anual comisión","category":"Empleo, salarios y personal","url":"/es/calculator/annual_commission_calculator/"},{"name":"Calculadora de anual salario neto","category":"Empleo, salarios y personal","url":"/es/calculator/annual_net_pay_calculator/"},{"name":"Calculadora de anual horas extra","category":"Empleo, salarios y personal","url":"/es/calculator/annual_overtime_calculator/"},{"name":"Calculadora de anual pago","category":"Empleo, salarios y personal","url":"/es/calculator/annual_pay_calculator/"},{"name":"Calculadora de anual salario","category":"Empleo, salarios y personal","url":"/es/calculator/annual_salary_calculator/"},{"name":"Calculadora de anual sueldo","category":"Empleo, salarios y personal","url":"/es/calculator/annual_wage_calculator/"},{"name":"Calculadora de annuity Payout","category":"Dinero e inversión","url":"/es/calculator/annuity_payout_calculator/"},{"name":"Calculadora de APR to APY","category":"Dinero e inversión","url":"/es/calculator/apr_to_apy_calculator/"},{"name":"Calculadora de APY to APR","category":"Dinero e inversión","url":"/es/calculator/apy_to_apr_calculator/"},{"name":"Calculadora de ARPA","category":"Startups y negocios digitales","url":"/es/calculator/arpa_calculator/"},{"name":"Calculadora de ARPU","category":"Startups y negocios digitales","url":"/es/calculator/arpu_calculator/"},{"name":"Calculadora de ARR","category":"Startups y negocios digitales","url":"/es/calculator/arr_calculator/"},{"name":"Calculadora de asset Drawdown","category":"Dinero e inversión","url":"/es/calculator/asset_drawdown_calculator/"},{"name":"Calculadora de assignment calificación","category":"Aprendizaje y calificaciones","url":"/es/calculator/assignment_grade_calculator/"},{"name":"Estimador de asistencia Requirements","category":"Aprendizaje y calificaciones","url":"/es/calculator/attendance_requirements_estimator/"},{"name":"Estimador de valor medio del pedido","category":"Venta online y comercio minorista","url":"/es/calculator/average_order_value_estimator/"},{"name":"Calculadora de índice de masa corporal objetivo","category":"Salud, cuerpo y ejercicio","url":"/es/calculator/body_mass_index_goal_calculator/"},{"name":"Calculadora de bond Yield","category":"Dinero e inversión","url":"/es/calculator/bond_yield_calculator/"},{"name":"Estimador de bonificación After impuestos","category":"Impuestos, seguros y prestaciones","url":"/es/calculator/bonus_after_tax_estimator/"},{"name":"Calculadora de brand Awareness Lift","category":"Ventas, marketing y audiencia","url":"/es/calculator/brand_awareness_lift_calculator/"},{"name":"Calculadora de presupuesto Rule 50 30 20","category":"Dinero e inversión","url":"/es/calculator/budget_rule_50_30_20_calculator/"},{"name":"Calculadora de bundle precios","category":"Venta online y comercio minorista","url":"/es/calculator/bundle_pricing_calculator/"},{"name":"Estimador de consumo de caja tasa","category":"Startups y negocios digitales","url":"/es/calculator/burn_rate_estimator/"},{"name":"Estimador de business valoración","category":"Negocios y operaciones","url":"/es/calculator/business_valuation_estimator/"},{"name":"Calculadora de CAC","category":"Ventas, marketing y audiencia","url":"/es/calculator/cac_calculator/"},{"name":"Estimador de CAC Payback","category":"Startups y negocios digitales","url":"/es/calculator/cac_payback_estimator/"},{"name":"Calculadora de calendar Utilization","category":"Tiempo y productividad","url":"/es/calculator/calendar_utilization_calculator/"},{"name":"Estimador de campaign beneficio","category":"Ventas, marketing y audiencia","url":"/es/calculator/campaign_profit_estimator/"},{"name":"Calculadora de carbohydrate Intake","category":"Salud, cuerpo y ejercicio","url":"/es/calculator/carbohydrate_intake_calculator/"},{"name":"Calculadora de cart Abandonment","category":"Venta online y comercio minorista","url":"/es/calculator/cart_abandonment_calculator/"},{"name":"Calculadora de cash conversión Cycle","category":"Negocios y operaciones","url":"/es/calculator/cash_conversion_cycle_calculator/"},{"name":"Calculadora de CD Ladder","category":"Dinero e inversión","url":"/es/calculator/cd_ladder_calculator/"},{"name":"Estimador de churn tasa","category":"Startups y negocios digitales","url":"/es/calculator/churn_rate_estimator/"},{"name":"Calculadora de class medio","category":"Aprendizaje y calificaciones","url":"/es/calculator/class_average_calculator/"},{"name":"Calculadora de comisión pago","category":"Empleo, salarios y personal","url":"/es/calculator/commission_pay_calculator/"},{"name":"Calculadora de community crecimiento","category":"Ventas, marketing y audiencia","url":"/es/calculator/community_growth_calculator/"},{"name":"Calculadora de interés compuesto With comisiones","category":"Dinero e inversión","url":"/es/calculator/compound_interest_with_fees_calculator/"},{"name":"Calculadora de content Calendar","category":"Ventas, marketing y audiencia","url":"/es/calculator/content_calendar_calculator/"},{"name":"Estimador de context Switching coste","category":"Tiempo y productividad","url":"/es/calculator/context_switching_cost_estimator/"},{"name":"Estimador de contractor tasa","category":"Empleo, salarios y personal","url":"/es/calculator/contractor_rate_estimator/"},{"name":"Calculadora de contribution punto de equilibrio","category":"Negocios y operaciones","url":"/es/calculator/contribution_break_even_calculator/"},{"name":"Estimador de contribution margen","category":"Negocios y operaciones","url":"/es/calculator/contribution_margin_estimator/"},{"name":"Calculadora de coste of Goods Sold","category":"Negocios y operaciones","url":"/es/calculator/cost_of_goods_sold_calculator/"},{"name":"Calculadora de coste of Living salario","category":"Empleo, salarios y personal","url":"/es/calculator/cost_of_living_salary_calculator/"},{"name":"Calculadora de nota del curso","category":"Aprendizaje y calificaciones","url":"/es/calculator/course_grade_calculator/"},{"name":"Calculadora de CPA","category":"Ventas, marketing y audiencia","url":"/es/calculator/cpa_calculator/"},{"name":"Calculadora de CPC","category":"Ventas, marketing y audiencia","url":"/es/calculator/cpc_calculator/"},{"name":"Calculadora de CPM","category":"Ventas, marketing y audiencia","url":"/es/calculator/cpm_calculator/"},{"name":"Estimador de creator patrocinio precio","category":"Ventas, marketing y audiencia","url":"/es/calculator/creator_sponsorship_price_estimator/"},{"name":"Calculadora de crédito Card Payoff","category":"Dinero e inversión","url":"/es/calculator/credit_card_payoff_calculator/"},{"name":"Calculadora de crédito Hour","category":"Aprendizaje y calificaciones","url":"/es/calculator/credit_hour_calculator/"},{"name":"Calculadora de CTR","category":"Ventas, marketing y audiencia","url":"/es/calculator/ctr_calculator/"},{"name":"Estimador de cliente crecimiento tasa","category":"Dinero e inversión","url":"/es/calculator/customer_growth_rate_estimator/"},{"name":"Calculadora de cliente Repeat Purchase","category":"Venta online y comercio minorista","url":"/es/calculator/customer_repeat_purchase_calculator/"},{"name":"Calculadora de calorías al pedalear","category":"Salud, cuerpo y ejercicio","url":"/es/calculator/cycling_calorie_calculator/"},{"name":"Calculadora de diario Break","category":"Tiempo y productividad","url":"/es/calculator/daily_break_calculator/"},{"name":"Estimador de diario Capacity","category":"Tiempo y productividad","url":"/es/calculator/daily_capacity_estimator/"},{"name":"Planificador de diario fecha límite","category":"Tiempo y productividad","url":"/es/calculator/daily_deadline_planner/"},{"name":"Calculadora de diario Focus","category":"Tiempo y productividad","url":"/es/calculator/daily_focus_calculator/"},{"name":"Calculadora de diario Habit","category":"Tiempo y productividad","url":"/es/calculator/daily_habit_calculator/"},{"name":"Calculadora de diario Meeting","category":"Tiempo y productividad","url":"/es/calculator/daily_meeting_calculator/"},{"name":"Calculadora de diario Priority","category":"Tiempo y productividad","url":"/es/calculator/daily_priority_calculator/"},{"name":"Calculadora de diario Project","category":"Tiempo y productividad","url":"/es/calculator/daily_project_calculator/"},{"name":"Calculadora de diario Routine","category":"Tiempo y productividad","url":"/es/calculator/daily_routine_calculator/"},{"name":"Calculadora de diario Task","category":"Tiempo y productividad","url":"/es/calculator/daily_task_calculator/"},{"name":"Calculadora de diario Workload","category":"Tiempo y productividad","url":"/es/calculator/daily_workload_calculator/"},{"name":"Calculadora de fecha límite Countdown","category":"Tiempo y productividad","url":"/es/calculator/deadline_countdown_calculator/"},{"name":"Calculadora de deuda Consolidation","category":"Dinero e inversión","url":"/es/calculator/debt_consolidation_calculator/"},{"name":"Calculadora de deuda to ingresos ratio","category":"Dinero e inversión","url":"/es/calculator/debt_to_income_ratio_calculator/"},{"name":"Planificador de deep Work Session Duration","category":"Tiempo y productividad","url":"/es/calculator/deep_work_session_duration_planner/"},{"name":"Estimador de dividend impuestos Impact","category":"Impuestos, seguros y prestaciones","url":"/es/calculator/dividend_tax_impact_estimator/"},{"name":"Calculadora de dollar coste Averaging","category":"Dinero e inversión","url":"/es/calculator/dollar_cost_averaging_calculator/"},{"name":"Estimador de dropshipping beneficio","category":"Venta online y comercio minorista","url":"/es/calculator/dropshipping_profit_estimator/"},{"name":"Estimador de eBay comisiones","category":"Venta online y comercio minorista","url":"/es/calculator/ebay_fee_estimator/"},{"name":"Estimador de EBIT margen","category":"Negocios y operaciones","url":"/es/calculator/ebit_margin_estimator/"},{"name":"Calculadora de EBITDA","category":"Negocios y operaciones","url":"/es/calculator/ebitda_calculator/"},{"name":"Estimador de ecommerce tasa de conversión","category":"Venta online y comercio minorista","url":"/es/calculator/ecommerce_conversion_rate_estimator/"},{"name":"Calculadora de eisenhower Matrix","category":"Tiempo y productividad","url":"/es/calculator/eisenhower_matrix_calculator/"},{"name":"Estimador de email Click tasa","category":"Ventas, marketing y audiencia","url":"/es/calculator/email_click_rate_estimator/"},{"name":"Estimador de email Open tasa","category":"Ventas, marketing y audiencia","url":"/es/calculator/email_open_rate_estimator/"},{"name":"Calculadora de fondo de emergencia Months","category":"Dinero e inversión","url":"/es/calculator/emergency_fund_months_calculator/"},{"name":"Calculadora de ETF comisiones Comparison","category":"Dinero e inversión","url":"/es/calculator/etf_fee_comparison_calculator/"},{"name":"Estimador de etsy comisiones","category":"Venta online y comercio minorista","url":"/es/calculator/etsy_fee_estimator/"},{"name":"Calculadora de examen medio","category":"Aprendizaje y calificaciones","url":"/es/calculator/exam_average_calculator/"},{"name":"Estimador de expansion ingresos","category":"Negocios y operaciones","url":"/es/calculator/expansion_revenue_estimator/"},{"name":"Estimador de gastos previsión","category":"Negocios y operaciones","url":"/es/calculator/expense_forecast_estimator/"},{"name":"Estimador de gastos ratio Impact","category":"Dinero e inversión","url":"/es/calculator/expense_ratio_impact_estimator/"},{"name":"Estimador de facebook tasa de interacción","category":"Ventas, marketing y audiencia","url":"/es/calculator/facebook_engagement_rate_estimator/"},{"name":"Calculadora de fat Intake","category":"Salud, cuerpo y ejercicio","url":"/es/calculator/fat_intake_calculator/"},{"name":"Calculadora de financial Freedom Date","category":"Dinero e inversión","url":"/es/calculator/financial_freedom_date_calculator/"},{"name":"Estimador de fixed coste","category":"Negocios y operaciones","url":"/es/calculator/fixed_cost_estimator/"},{"name":"Calculadora de flashcard Review","category":"Aprendizaje y calificaciones","url":"/es/calculator/flashcard_review_calculator/"},{"name":"Estimador de flow tiempo","category":"Tiempo y productividad","url":"/es/calculator/flow_time_estimator/"},{"name":"Estimador de tiempo de concentración","category":"Tiempo y productividad","url":"/es/calculator/focus_time_estimator/"},{"name":"Calculadora de follower crecimiento","category":"Ventas, marketing y audiencia","url":"/es/calculator/follower_growth_calculator/"},{"name":"Calculadora de free envío Threshold","category":"Venta online y comercio minorista","url":"/es/calculator/free_shipping_threshold_calculator/"},{"name":"Calculadora de funnel conversión","category":"Ventas, marketing y audiencia","url":"/es/calculator/funnel_conversion_calculator/"},{"name":"Planificador de google Ads presupuesto","category":"Ventas, marketing y audiencia","url":"/es/calculator/google_ads_budget_planner/"},{"name":"Calculadora de google Ads Campaign","category":"Ventas, marketing y audiencia","url":"/es/calculator/google_ads_campaign_calculator/"},{"name":"Calculadora de google Ads conversión","category":"Ventas, marketing y audiencia","url":"/es/calculator/google_ads_conversion_calculator/"},{"name":"Calculadora de google Ads CPA","category":"Ventas, marketing y audiencia","url":"/es/calculator/google_ads_cpa_calculator/"},{"name":"Calculadora de google Ads CPC","category":"Ventas, marketing y audiencia","url":"/es/calculator/google_ads_cpc_calculator/"},{"name":"Calculadora de google Ads CPM","category":"Ventas, marketing y audiencia","url":"/es/calculator/google_ads_cpm_calculator/"},{"name":"Calculadora de google Ads CTR","category":"Ventas, marketing y audiencia","url":"/es/calculator/google_ads_ctr_calculator/"},{"name":"Calculadora de google Ads Email","category":"Ventas, marketing y audiencia","url":"/es/calculator/google_ads_email_calculator/"},{"name":"Calculadora de google Ads Funnel","category":"Ventas, marketing y audiencia","url":"/es/calculator/google_ads_funnel_calculator/"},{"name":"Calculadora de google Ads Impression","category":"Ventas, marketing y audiencia","url":"/es/calculator/google_ads_impression_calculator/"},{"name":"Calculadora de google Ads Lead","category":"Ventas, marketing y audiencia","url":"/es/calculator/google_ads_lead_calculator/"},{"name":"Calculadora de google Ads alcance","category":"Ventas, marketing y audiencia","url":"/es/calculator/google_ads_reach_calculator/"},{"name":"Calculadora de google Ads retorno de la inversión publicitaria","category":"Ventas, marketing y audiencia","url":"/es/calculator/google_ads_return_on_ad_spend_calculator/"},{"name":"Calculadora de google Ads retorno de la inversión","category":"Ventas, marketing y audiencia","url":"/es/calculator/google_ads_return_on_investment_calculator/"},{"name":"Calculadora de calificación Improvement","category":"Aprendizaje y calificaciones","url":"/es/calculator/grade_improvement_calculator/"},{"name":"Calculadora de salario bruto","category":"Impuestos, seguros y prestaciones","url":"/es/calculator/gross_pay_calculator/"},{"name":"Calculadora de gross ingresos retención","category":"Startups y negocios digitales","url":"/es/calculator/gross_revenue_retention_calculator/"},{"name":"Calculadora de habit Streak","category":"Tiempo y productividad","url":"/es/calculator/habit_streak_calculator/"},{"name":"Calculadora de cardíaca tasa Zone","category":"Salud, cuerpo y ejercicio","url":"/es/calculator/heart_rate_zone_calculator/"},{"name":"Calculadora de holiday pago","category":"Empleo, salarios y personal","url":"/es/calculator/holiday_pay_calculator/"},{"name":"Calculadora de tareas Completion","category":"Aprendizaje y calificaciones","url":"/es/calculator/homework_completion_calculator/"},{"name":"Calculadora de hourly sueldo","category":"Empleo, salarios y personal","url":"/es/calculator/hourly_wage_calculator/"},{"name":"Calculadora de hydration","category":"Salud, cuerpo y ejercicio","url":"/es/calculator/hydration_calculator/"},{"name":"Estimador de peso ideal","category":"Salud, cuerpo y ejercicio","url":"/es/calculator/ideal_weight_estimator/"},{"name":"Calculadora de impression","category":"Ventas, marketing y audiencia","url":"/es/calculator/impression_calculator/"},{"name":"Calculadora de inflation","category":"Dinero e inversión","url":"/es/calculator/inflation_calculator/"},{"name":"Calculadora de instagram Content","category":"Ventas, marketing y audiencia","url":"/es/calculator/instagram_content_calculator/"},{"name":"Calculadora de instagram CPM","category":"Ventas, marketing y audiencia","url":"/es/calculator/instagram_cpm_calculator/"},{"name":"Estimador de instagram ingresos","category":"Ventas, marketing y audiencia","url":"/es/calculator/instagram_earnings_estimator/"},{"name":"Calculadora de instagram interacción","category":"Ventas, marketing y audiencia","url":"/es/calculator/instagram_engagement_calculator/"},{"name":"Calculadora de instagram Follower","category":"Ventas, marketing y audiencia","url":"/es/calculator/instagram_follower_calculator/"},{"name":"Calculadora de instagram Impression","category":"Ventas, marketing y audiencia","url":"/es/calculator/instagram_impression_calculator/"},{"name":"Calculadora de instagram Post","category":"Ventas, marketing y audiencia","url":"/es/calculator/instagram_post_calculator/"},{"name":"Estimador de instagram Reel ingresos","category":"Ventas, marketing y audiencia","url":"/es/calculator/instagram_reel_earnings_estimator/"},{"name":"Calculadora de instagram retorno de la inversión","category":"Ventas, marketing y audiencia","url":"/es/calculator/instagram_return_on_investment_calculator/"},{"name":"Calculadora de instagram RPM","category":"Ventas, marketing y audiencia","url":"/es/calculator/instagram_rpm_calculator/"},{"name":"Calculadora de inventario Days","category":"Negocios y operaciones","url":"/es/calculator/inventory_days_calculator/"},{"name":"Calculadora de inventario Reorder Point","category":"Venta online y comercio minorista","url":"/es/calculator/inventory_reorder_point_calculator/"},{"name":"Calculadora de inversión Contribution","category":"Dinero e inversión","url":"/es/calculator/investment_contribution_calculator/"},{"name":"Calculadora de inversión rentabilidad","category":"Dinero e inversión","url":"/es/calculator/investment_return_calculator/"},{"name":"Calculadora de landing Page conversión","category":"Ventas, marketing y audiencia","url":"/es/calculator/landing_page_conversion_calculator/"},{"name":"Calculadora de lead conversión","category":"Ventas, marketing y audiencia","url":"/es/calculator/lead_conversion_calculator/"},{"name":"Estimador de lección plan tiempo","category":"Aprendizaje y calificaciones","url":"/es/calculator/lesson_plan_time_estimator/"},{"name":"Estimador de linkedIn tasa de interacción","category":"Ventas, marketing y audiencia","url":"/es/calculator/linkedin_engagement_rate_estimator/"},{"name":"Estimador de livestream ingresos","category":"Negocios y operaciones","url":"/es/calculator/livestream_revenue_estimator/"},{"name":"Calculadora de préstamo Comparison","category":"Dinero e inversión","url":"/es/calculator/loan_comparison_calculator/"},{"name":"Calculadora de logo churn","category":"Startups y negocios digitales","url":"/es/calculator/logo_churn_calculator/"},{"name":"Calculadora de LTV CAC ratio","category":"Ventas, marketing y audiencia","url":"/es/calculator/ltv_cac_ratio_calculator/"},{"name":"Calculadora de LTV","category":"Ventas, marketing y audiencia","url":"/es/calculator/ltv_calculator/"},{"name":"Calculadora de macro","category":"Salud, cuerpo y ejercicio","url":"/es/calculator/macro_calculator/"},{"name":"Calculadora de magic Number","category":"Dinero e inversión","url":"/es/calculator/magic_number_calculator/"},{"name":"Planificador de marketing presupuesto","category":"Ventas, marketing y audiencia","url":"/es/calculator/marketing_budget_planner/"},{"name":"Estimador de marketplace comisiones","category":"Venta online y comercio minorista","url":"/es/calculator/marketplace_fee_estimator/"},{"name":"Calculadora de meal calorías","category":"Salud, cuerpo y ejercicio","url":"/es/calculator/meal_calorie_calculator/"},{"name":"Calculadora de meeting retorno de la inversión","category":"Tiempo y productividad","url":"/es/calculator/meeting_return_on_investment_calculator/"},{"name":"Calculadora de meta Ads CPA","category":"Ventas, marketing y audiencia","url":"/es/calculator/meta_ads_cpa_calculator/"},{"name":"Calculadora de meta Ads CPC","category":"Ventas, marketing y audiencia","url":"/es/calculator/meta_ads_cpc_calculator/"},{"name":"Calculadora de meta Ads CPM","category":"Ventas, marketing y audiencia","url":"/es/calculator/meta_ads_cpm_calculator/"},{"name":"Calculadora de meta Ads CTR","category":"Ventas, marketing y audiencia","url":"/es/calculator/meta_ads_ctr_calculator/"},{"name":"Calculadora de meta Ads retorno de la inversión publicitaria","category":"Ventas, marketing y audiencia","url":"/es/calculator/meta_ads_return_on_ad_spend_calculator/"},{"name":"Calculadora de meta Ads retorno de la inversión","category":"Ventas, marketing y audiencia","url":"/es/calculator/meta_ads_return_on_investment_calculator/"},{"name":"Calculadora de prestación mensual","category":"Dinero e inversión","url":"/es/calculator/monthly_benefit_calculator/"},{"name":"Calculadora de bonificación mensual","category":"Empleo, salarios y personal","url":"/es/calculator/monthly_bonus_calculator/"},{"name":"Calculadora de mensual flujo de caja","category":"Negocios y operaciones","url":"/es/calculator/monthly_cash_flow_calculator/"},{"name":"Calculadora de comisión mensual","category":"Empleo, salarios y personal","url":"/es/calculator/monthly_commission_calculator/"},{"name":"Calculadora de deuda mensual","category":"Dinero e inversión","url":"/es/calculator/monthly_debt_calculator/"},{"name":"Calculadora de deducciones mensuales","category":"Dinero e inversión","url":"/es/calculator/monthly_deduction_calculator/"},{"name":"Calculadora de gastos mensuales","category":"Dinero e inversión","url":"/es/calculator/monthly_expense_calculator/"},{"name":"Estimador de comisión mensual","category":"Dinero e inversión","url":"/es/calculator/monthly_fee_estimator/"},{"name":"Calculadora de objetivo mensual","category":"Tiempo y productividad","url":"/es/calculator/monthly_goal_calculator/"},{"name":"Calculadora de salario bruto mensual","category":"Dinero e inversión","url":"/es/calculator/monthly_gross_pay_calculator/"},{"name":"Calculadora de ingresos mensuales","category":"Dinero e inversión","url":"/es/calculator/monthly_income_calculator/"},{"name":"Calculadora de inversión mensual","category":"Dinero e inversión","url":"/es/calculator/monthly_investment_calculator/"},{"name":"Calculadora de permisos mensuales","category":"Empleo, salarios y personal","url":"/es/calculator/monthly_leave_calculator/"},{"name":"Calculadora de salario neto mensual","category":"Empleo, salarios y personal","url":"/es/calculator/monthly_net_pay_calculator/"},{"name":"Calculadora de horas extra mensuales","category":"Empleo, salarios y personal","url":"/es/calculator/monthly_overtime_calculator/"},{"name":"Calculadora de pago mensual","category":"Empleo, salarios y personal","url":"/es/calculator/monthly_pay_calculator/"},{"name":"Calculadora de aumento mensual","category":"Dinero e inversión","url":"/es/calculator/monthly_raise_calculator/"},{"name":"Calculadora de ratio mensual","category":"Dinero e inversión","url":"/es/calculator/monthly_ratio_calculator/"},{"name":"Calculadora de rentabilidad mensual","category":"Dinero e inversión","url":"/es/calculator/monthly_return_calculator/"},{"name":"Calculadora de salario mensual","category":"Empleo, salarios y personal","url":"/es/calculator/monthly_salary_calculator/"},{"name":"Estimador de ahorro mensual","category":"Dinero e inversión","url":"/es/calculator/monthly_savings_estimator/"},{"name":"Calculadora de ahorro mensual plan","category":"Dinero e inversión","url":"/es/calculator/monthly_savings_plan_calculator/"},{"name":"Calculadora de mensual Severance","category":"Empleo, salarios y personal","url":"/es/calculator/monthly_severance_calculator/"},{"name":"Calculadora de turnos mensuales","category":"Empleo, salarios y personal","url":"/es/calculator/monthly_shift_calculator/"},{"name":"Calculadora de sueldo mensual","category":"Empleo, salarios y personal","url":"/es/calculator/monthly_wage_calculator/"},{"name":"Calculadora de MRR","category":"Startups y negocios digitales","url":"/es/calculator/mrr_calculator/"},{"name":"Calculadora de salario neto","category":"Empleo, salarios y personal","url":"/es/calculator/net_pay_calculator/"},{"name":"Estimador de beneficio neto","category":"Negocios y operaciones","url":"/es/calculator/net_profit_estimator/"},{"name":"Calculadora de retención neta de ingresos","category":"Startups y negocios digitales","url":"/es/calculator/net_revenue_retention_calculator/"},{"name":"Calculadora de proyección del patrimonio neto","category":"Dinero e inversión","url":"/es/calculator/net_worth_projection_calculator/"},{"name":"Calculadora de crecimiento del boletín","category":"Ventas, marketing y audiencia","url":"/es/calculator/newsletter_growth_calculator/"},{"name":"Calculadora de repetición máxima (1RM)","category":"Salud, cuerpo y ejercicio","url":"/es/calculator/one_rep_max_calculator/"},{"name":"Estimador de margen operativo","category":"Negocios y operaciones","url":"/es/calculator/operating_margin_estimator/"},{"name":"Estimador de beneficio por pedido","category":"Negocios y operaciones","url":"/es/calculator/order_profit_estimator/"},{"name":"Calculadora de pago de horas extra","category":"Empleo, salarios y personal","url":"/es/calculator/overtime_pay_calculator/"},{"name":"Calculadora de ovulación","category":"Salud, cuerpo y ejercicio","url":"/es/calculator/ovulation_calculator/"},{"name":"Calculadora de salario a tiempo parcial","category":"Empleo, salarios y personal","url":"/es/calculator/part_time_pay_calculator/"},{"name":"Calculadora de objetivo de ingresos pasivos","category":"Dinero e inversión","url":"/es/calculator/passive_income_goal_calculator/"},{"name":"Calculadora de plazo de recuperación","category":"Dinero e inversión","url":"/es/calculator/payback_timeline_calculator/"},{"name":"Calculadora de nómina","category":"Empleo, salarios y personal","url":"/es/calculator/paycheck_calculator/"},{"name":"Estimador de comisiones de PayPal","category":"Venta online y comercio minorista","url":"/es/calculator/paypal_fee_estimator/"},{"name":"Estimador de salud financiera personal","category":"Salud, cuerpo y ejercicio","url":"/es/calculator/personal_finance_health_score_estimator/"},{"name":"Estimador de tasa de interacción en Pinterest","category":"Ventas, marketing y audiencia","url":"/es/calculator/pinterest_engagement_rate_estimator/"},{"name":"Calculadora de crecimiento de la cartera","category":"Dinero e inversión","url":"/es/calculator/portfolio_growth_calculator/"},{"name":"Estimador de riesgo de la cartera","category":"Dinero e inversión","url":"/es/calculator/portfolio_risk_estimator/"},{"name":"Calculadora de frecuencia de publicación","category":"Ventas, marketing y audiencia","url":"/es/calculator/post_frequency_calculator/"},{"name":"Calculadora de fecha probable de parto","category":"Salud, cuerpo y ejercicio","url":"/es/calculator/pregnancy_due_date_calculator/"},{"name":"Estimador de coste de la procrastinación","category":"Tiempo y productividad","url":"/es/calculator/procrastination_cost_estimator/"},{"name":"Estimador de beneficio por producto","category":"Venta online y comercio minorista","url":"/es/calculator/product_profit_estimator/"},{"name":"Estimador de puntuación de productividad","category":"Tiempo y productividad","url":"/es/calculator/productivity_score_estimator/"},{"name":"Calculadora de cronograma del proyecto","category":"Tiempo y productividad","url":"/es/calculator/project_timeline_calculator/"},{"name":"Calculadora del ratio de liquidez inmediata","category":"Dinero e inversión","url":"/es/calculator/quick_ratio_calculator/"},{"name":"Calculadora de nota de cuestionarios","category":"Aprendizaje y calificaciones","url":"/es/calculator/quiz_grade_calculator/"},{"name":"Calculadora de porcentaje de aumento salarial","category":"Empleo, salarios y personal","url":"/es/calculator/raise_percentage_calculator/"},{"name":"Calculadora de alcance","category":"Ventas, marketing y audiencia","url":"/es/calculator/reach_calculator/"},{"name":"Calculadora de velocidad de lectura","category":"Aprendizaje y calificaciones","url":"/es/calculator/reading_speed_calculator/"},{"name":"Calculadora de rentabilidad real","category":"Dinero e inversión","url":"/es/calculator/real_return_calculator/"},{"name":"Estimador de impacto de los reembolsos","category":"Venta online y comercio minorista","url":"/es/calculator/refund_impact_estimator/"},{"name":"Calculadora de salario por trabajo remoto","category":"Empleo, salarios y personal","url":"/es/calculator/remote_work_salary_calculator/"},{"name":"Calculadora de brecha de jubilación","category":"Dinero e inversión","url":"/es/calculator/retirement_gap_calculator/"},{"name":"Estimador de tasa de devoluciones","category":"Venta online y comercio minorista","url":"/es/calculator/return_rate_estimator/"},{"name":"Estimador de previsión de ingresos","category":"Negocios y operaciones","url":"/es/calculator/revenue_forecast_estimator/"},{"name":"Calculadora de la regla del 40","category":"Startups y negocios digitales","url":"/es/calculator/rule_of_40_calculator/"},{"name":"Calculadora de autonomía financiera","category":"Startups y negocios digitales","url":"/es/calculator/runway_calculator/"},{"name":"Estimador de valoración SaaS","category":"Startups y negocios digitales","url":"/es/calculator/saas_valuation_estimator/"},{"name":"Calculadora de stock de seguridad","category":"Venta online y comercio minorista","url":"/es/calculator/safety_stock_calculator/"},{"name":"Calculadora de aumento salarial","category":"Empleo, salarios y personal","url":"/es/calculator/salary_increase_calculator/"},{"name":"Calculadora de embudo de ventas","category":"Ventas, marketing y audiencia","url":"/es/calculator/sales_funnel_calculator/"},{"name":"Calculadora de objetivo de ventas","category":"Negocios y operaciones","url":"/es/calculator/sales_target_calculator/"},{"name":"Calculadora de plazo para alcanzar el objetivo de ahorro","category":"Dinero e inversión","url":"/es/calculator/savings_goal_timeline_calculator/"},{"name":"Calculadora del GPA para becas","category":"Aprendizaje y calificaciones","url":"/es/calculator/scholarship_gpa_calculator/"},{"name":"Calculadora de fase semilla ARR","category":"Startups y negocios digitales","url":"/es/calculator/seed_stage_arr_calculator/"},{"name":"Calculadora de fase semilla consumo de caja","category":"Startups y negocios digitales","url":"/es/calculator/seed_stage_burn_calculator/"},{"name":"Estimador de fase semilla coste de adquisición de clientes","category":"Startups y negocios digitales","url":"/es/calculator/seed_stage_customer_acquisition_cost_estimator/"},{"name":"Calculadora de fase semilla churn","category":"Startups y negocios digitales","url":"/es/calculator/seed_stage_churn_calculator/"},{"name":"Calculadora de fase semilla dilución","category":"Startups y negocios digitales","url":"/es/calculator/seed_stage_dilution_calculator/"},{"name":"Calculadora de fase semilla capital","category":"Startups y negocios digitales","url":"/es/calculator/seed_stage_equity_calculator/"},{"name":"Estimador de fase semilla valor de vida del cliente","category":"Startups y negocios digitales","url":"/es/calculator/seed_stage_customer_lifetime_value_estimator/"},{"name":"Calculadora de fase semilla retención","category":"Startups y negocios digitales","url":"/es/calculator/seed_stage_retention_calculator/"},{"name":"Calculadora de fase semilla autonomía financiera","category":"Startups y negocios digitales","url":"/es/calculator/seed_stage_runway_calculator/"},{"name":"Estimador de fase semilla valoración","category":"Startups y negocios digitales","url":"/es/calculator/seed_stage_valuation_estimator/"},{"name":"Calculadora de créditos semestrales","category":"Aprendizaje y calificaciones","url":"/es/calculator/semester_credit_calculator/"},{"name":"Calculadora de precios de servicios","category":"Negocios y operaciones","url":"/es/calculator/service_pricing_calculator/"},{"name":"Calculadora de indemnización por despido","category":"Empleo, salarios y personal","url":"/es/calculator/severance_pay_calculator/"},{"name":"Calculadora de complemento por turno","category":"Empleo, salarios y personal","url":"/es/calculator/shift_differential_pay_calculator/"},{"name":"Estimador de coste de envío","category":"Venta online y comercio minorista","url":"/es/calculator/shipping_cost_estimator/"},{"name":"Estimador de shopify valor medio del pedido","category":"Venta online y comercio minorista","url":"/es/calculator/shopify_average_order_value_estimator/"},{"name":"Calculadora de conversión en Shopify","category":"Venta online y comercio minorista","url":"/es/calculator/shopify_conversion_calculator/"},{"name":"Estimador de comisiones de Shopify","category":"Venta online y comercio minorista","url":"/es/calculator/shopify_fee_estimator/"},{"name":"Calculadora de inventario de Shopify","category":"Venta online y comercio minorista","url":"/es/calculator/shopify_inventory_calculator/"},{"name":"Estimador de beneficio de Shopify","category":"Venta online y comercio minorista","url":"/es/calculator/shopify_profit_estimator/"},{"name":"Calculadora de envíos de Shopify","category":"Venta online y comercio minorista","url":"/es/calculator/shopify_shipping_calculator/"},{"name":"Planificador de presupuesto de anuncios en redes sociales","category":"Ventas, marketing y audiencia","url":"/es/calculator/social_ad_budget_planner/"},{"name":"Calculadora de redes sociales retorno de la inversión","category":"Ventas, marketing y audiencia","url":"/es/calculator/social_media_return_on_investment_calculator/"},{"name":"Calculadora de repetición espaciada","category":"Aprendizaje y calificaciones","url":"/es/calculator/spaced_repetition_calculator/"},{"name":"Calculadora de calorías por pasos","category":"Salud, cuerpo y ejercicio","url":"/es/calculator/step_calorie_calculator/"},{"name":"Estimador de comisiones de Stripe","category":"Venta online y comercio minorista","url":"/es/calculator/stripe_fee_estimator/"},{"name":"Calculadora de asistencia del estudiante","category":"Aprendizaje y calificaciones","url":"/es/calculator/student_attendance_calculator/"},{"name":"Calculadora de cursos del estudiante","category":"Aprendizaje y calificaciones","url":"/es/calculator/student_course_calculator/"},{"name":"Calculadora de créditos del estudiante","category":"Aprendizaje y calificaciones","url":"/es/calculator/student_credits_calculator/"},{"name":"Calculadora de exámenes del estudiante","category":"Aprendizaje y calificaciones","url":"/es/calculator/student_exam_calculator/"},{"name":"Calculadora del GPA del estudiante","category":"Aprendizaje y calificaciones","url":"/es/calculator/student_gpa_calculator/"},{"name":"Calculadora de calificaciones del estudiante","category":"Aprendizaje y calificaciones","url":"/es/calculator/student_grade_calculator/"},{"name":"Calculadora de tareas del estudiante","category":"Aprendizaje y calificaciones","url":"/es/calculator/student_homework_calculator/"},{"name":"Calculadora de lecciones del estudiante","category":"Aprendizaje y calificaciones","url":"/es/calculator/student_lesson_calculator/"},{"name":"Calculadora de cuestionarios del estudiante","category":"Aprendizaje y calificaciones","url":"/es/calculator/student_quiz_calculator/"},{"name":"Calculadora de lectura del estudiante","category":"Aprendizaje y calificaciones","url":"/es/calculator/student_reading_calculator/"},{"name":"Calculadora de repaso del estudiante","category":"Aprendizaje y calificaciones","url":"/es/calculator/student_revision_calculator/"},{"name":"Estimador de puntuación del estudiante","category":"Aprendizaje y calificaciones","url":"/es/calculator/student_score_estimator/"},{"name":"Calculadora de semestre del estudiante","category":"Aprendizaje y calificaciones","url":"/es/calculator/student_semester_calculator/"},{"name":"Estimador de tiempo de estudio del estudiante","category":"Aprendizaje y calificaciones","url":"/es/calculator/student_study_time_estimator/"},{"name":"Calculadora de tiempo de estudio necesario","category":"Aprendizaje y calificaciones","url":"/es/calculator/study_time_required_calculator/"},{"name":"Calculadora de calorías al nadar","category":"Salud, cuerpo y ejercicio","url":"/es/calculator/swimming_calorie_calculator/"},{"name":"Calculadora de salario neto percibido","category":"Impuestos, seguros y prestaciones","url":"/es/calculator/take_home_pay_calculator/"},{"name":"Estimador de frecuencia cardíaca objetivo","category":"Salud, cuerpo y ejercicio","url":"/es/calculator/target_heart_rate_estimator/"},{"name":"Calculadora de estimación de tareas","category":"Tiempo y productividad","url":"/es/calculator/task_estimate_calculator/"},{"name":"Calculadora de prioridad de tareas","category":"Tiempo y productividad","url":"/es/calculator/task_priority_calculator/"},{"name":"Calculadora de asistencia docente","category":"Aprendizaje y calificaciones","url":"/es/calculator/teacher_attendance_calculator/"}];
+
+    const searchInput = document.getElementById("toolSearch");
+    const clearButton = document.getElementById("clearButton");
+    const results = document.getElementById("results");
+    const hero = document.getElementById("hero");
+    const appsButton = document.getElementById("appsButton");
+    const appsMenu = document.getElementById("appsMenu");
+    const languageButton = document.getElementById("languageButton");
+    const languageMenu = document.getElementById("languageMenu");
+    const favorites = document.getElementById("favorites");
+    const favoritesList = document.getElementById("favoritesList");
+    const FAVORITES_KEY = "toolboxapp-favorites-v1";
+
+    let activeIndex = -1;
+    let currentMatches = [];
+
+    function normalize(value) {
+      return value.trim().toLowerCase();
+    }
+
+    function escapeHtml(value) {
+      return value.replace(/[&<>"']/g, character => ({
+        "&": "&amp;",
+        "<": "&lt;",
+        ">": "&gt;",
+        '"': "&quot;",
+        "'": "&#039;"
+      })[character]);
+    }
+
+    function escapeRegExp(value) {
+      return value.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+    }
+
+    function highlightMatch(name, query) {
+      const safeName = escapeHtml(name);
+      const expression = new RegExp(`(${escapeRegExp(query)})`, "ig");
+      return safeName.replace(expression, "<mark>$1</mark>");
+    }
+
+    function readFavorites() {
+      try {
+        const saved = JSON.parse(localStorage.getItem(FAVORITES_KEY) || "[]");
+        return Array.isArray(saved) ? saved : [];
+      } catch (error) {
+        return [];
+      }
+    }
+
+    function renderFavorites() {
+      const saved = readFavorites();
+      favorites.classList.toggle("visible", saved.length > 0 && !normalize(searchInput.value));
+      favoritesList.innerHTML = saved.map(tool => `
+        <a class="favorite-card" href="${escapeHtml(tool.url)}">
+          <span class="favorite-name">${escapeHtml(tool.name)}</span>
+          <span class="favorite-star" aria-hidden="true">★</span>
+        </a>
+      `).join("");
+    }
+
+    function updateActiveResult() {
+      const resultLinks = [...results.querySelectorAll(".result-link")];
+
+      resultLinks.forEach((link, index) => {
+        const isActive = index === activeIndex;
+        link.classList.toggle("active", isActive);
+        link.setAttribute("aria-selected", String(isActive));
+      });
+
+      if (activeIndex >= 0 && resultLinks[activeIndex]) {
+        resultLinks[activeIndex].scrollIntoView({
+          block: "nearest",
+          behavior: "smooth"
+        });
+      }
+    }
+
+    function renderResults() {
+      const query = normalize(searchInput.value);
+      const hasQuery = query.length > 0;
+
+      clearButton.classList.toggle("visible", hasQuery);
+      hero.classList.toggle("searching", hasQuery);
+      renderFavorites();
+      activeIndex = -1;
+
+      if (!hasQuery) {
+        currentMatches = [];
+        results.classList.remove("visible");
+        results.innerHTML = "";
+        return;
+      }
+
+      currentMatches = tools.filter(tool =>
+        tool.name.toLowerCase().includes(query)
+      );
+
+      if (currentMatches.length === 0) {
+        results.innerHTML = '<div class="empty-state">No se han encontrado herramientas que coincidan.</div>';
+        results.classList.add("visible");
+        return;
+      }
+
+      const list = currentMatches.map((tool, index) => `
+        <a
+          class="result-link"
+          href="${tool.url}"
+          role="option"
+          aria-selected="false"
+          data-index="${index}"
+        >
+          <span style="display:flex;align-items:center;gap:10px;flex-wrap:wrap">
+            <span class="result-title" style="margin:0">${highlightMatch(tool.name, query)}</span>
+            <span class="result-category" style="margin:0">${escapeHtml(tool.category)}</span>
+          </span>
+          <span class="arrow" aria-hidden="true">→</span>
+        </a>
+      `).join("");
+
+      results.innerHTML = `
+        ${list}
+        <div class="result-count">${currentMatches.length} tool${currentMatches.length === 1 ? "" : "s"} found</div>
+      `;
+      results.classList.add("visible");
+    }
+
+    searchInput.addEventListener("input", renderResults);
+
+    searchInput.addEventListener("keydown", event => {
+      if (!currentMatches.length) {
+        return;
+      }
+
+      if (event.key === "ArrowDown") {
+        event.preventDefault();
+        activeIndex = activeIndex < currentMatches.length - 1 ? activeIndex + 1 : 0;
+        updateActiveResult();
+      }
+
+      if (event.key === "ArrowUp") {
+        event.preventDefault();
+        activeIndex = activeIndex > 0 ? activeIndex - 1 : currentMatches.length - 1;
+        updateActiveResult();
+      }
+
+      if (event.key === "Enter" && activeIndex >= 0) {
+        event.preventDefault();
+        window.location.href = currentMatches[activeIndex].url;
+      }
+    });
+
+    results.addEventListener("mousemove", event => {
+      const link = event.target.closest(".result-link");
+      if (!link) return;
+
+      activeIndex = Number(link.dataset.index);
+      updateActiveResult();
+    });
+
+    clearButton.addEventListener("click", () => {
+      searchInput.value = "";
+      renderResults();
+      searchInput.focus();
+    });
+
+    languageButton.addEventListener("click", () => {
+      const isOpen = languageMenu.classList.toggle("open");
+      languageButton.setAttribute("aria-expanded", String(isOpen));
+      appsMenu.classList.remove("open");
+      appsButton.setAttribute("aria-expanded", "false");
+    });
+
+    appsButton.addEventListener("click", () => {
+      const isOpen = appsMenu.classList.toggle("open");
+      appsButton.setAttribute("aria-expanded", String(isOpen));
+      languageMenu.classList.remove("open");
+      languageButton.setAttribute("aria-expanded", "false");
+    });
+
+    document.addEventListener("click", event => {
+      if (!event.target.closest(".apps-wrap")) {
+        appsMenu.classList.remove("open");
+        appsButton.setAttribute("aria-expanded", "false");
+      }
+
+      if (!event.target.closest(".language-wrap")) {
+        languageMenu.classList.remove("open");
+        languageButton.setAttribute("aria-expanded", "false");
+      }
+    });
+
+    document.addEventListener("keydown", event => {
+      if (event.key === "Escape") {
+        appsMenu.classList.remove("open");
+        appsButton.setAttribute("aria-expanded", "false");
+        languageMenu.classList.remove("open");
+        languageButton.setAttribute("aria-expanded", "false");
+
+        if (document.activeElement === searchInput && searchInput.value) {
+          searchInput.value = "";
+          renderResults();
+        }
+      }
+    });
+
+    searchInput.focus();
+    renderFavorites();
+    window.addEventListener("storage", renderFavorites);
+  </script>
+</body>
+</html>

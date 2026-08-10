@@ -1,0 +1,1075 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Estima un precio de vivienda orientativo a partir de ingresos, deudas, presupuesto de vivienda, tipo hipotecario, plazo y entrada." />
+  <link rel="canonical" href="https://www.toolboxapp.cc/es/calculator/house_affordability_estimator/" />
+  <link rel="alternate" hreflang="en" href="https://www.toolboxapp.cc/calculator/house_affordability_estimator/" />
+  <link rel="alternate" hreflang="es" href="https://www.toolboxapp.cc/es/calculator/house_affordability_estimator/" />
+  <link rel="alternate" hreflang="x-default" href="https://www.toolboxapp.cc/calculator/house_affordability_estimator/" />
+  <title>Estimador de precio de vivienda asequible | toolbox</title>
+  <meta property="og:site_name" content="toolbox" />
+  <meta property="og:title" content="Estimador de precio de vivienda asequible | toolbox" />
+  <meta property="og:description" content="Estima un precio de vivienda orientativo a partir de ingresos, deudas, presupuesto de vivienda, tipo hipotecario, plazo y entrada." />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://www.toolboxapp.cc/es/calculator/house_affordability_estimator/" />
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Estimador de precio de vivienda asequible | toolbox" />
+  <meta name="twitter:description" content="Estima un precio de vivienda orientativo a partir de ingresos, deudas, presupuesto de vivienda, tipo hipotecario, plazo y entrada." />
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+          { "@type": "ListItem", "position": 1, "name": "Inicio", "item": "https://www.toolboxapp.cc/" },
+          { "@type": "ListItem", "position": 2, "name": "Inmuebles y construcción", "item": "https://www.toolboxapp.cc/es/calculator/categories/property-construction/" },
+          { "@type": "ListItem", "position": 3, "name": "Estimador de precio de vivienda asequible", "item": "https://www.toolboxapp.cc/es/calculator/house_affordability_estimator/" }
+        ]
+      },
+      {
+        "@type": "WebApplication",
+        "name": "Estimador de precio de vivienda asequible",
+        "url": "https://www.toolboxapp.cc/es/calculator/house_affordability_estimator/",
+        "description": "Estima un precio de vivienda orientativo a partir de ingresos, deudas, presupuesto de vivienda, tipo hipotecario, plazo y entrada.",
+        "applicationCategory": "UtilitiesApplication",
+        "operatingSystem": "Any",
+        "browserRequirements": "Requiere JavaScript"
+      }
+    ]
+  }
+  </script>
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "¿El porcentaje de endeudamiento es una regla oficial?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "No. Es un supuesto editable para construir un presupuesto. Los criterios de concesión y las métricas de capacidad de pago varían por entidad, producto y jurisdicción."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "¿Debo usar ingresos brutos o netos?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Este modelo usa ingresos brutos porque así está definida la variable del cálculo. Para un presupuesto doméstico también conviene comprobar por separado cuánto queda del ingreso neto tras impuestos y gastos esenciales."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "¿Qué pongo en otros costes de vivienda?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Puedes agrupar impuestos sobre la propiedad, seguros, cuotas de comunidad y otros costes mensuales previsibles. Es preferible una estimación conservadora a dejar esa partida en cero si sabes que existirá."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "¿Por qué sube el precio asequible si alargo el plazo?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Porque una misma cuota mensual puede amortizar un principal mayor cuando se reparte en más pagos. A cambio, un plazo más largo puede aumentar los intereses pagados durante la vida del préstamo."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "¿Puedo usar el resultado como presupuesto final de compra?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Úsalo como primera aproximación. Antes de comprar, añade costes de cierre, mantenimiento, reservas de emergencia y una oferta hipotecaria real."
+      }
+    }
+  ]
+}
+</script>
+
+  <style>
+    :root {
+      color-scheme: dark;
+      --bg: #000;
+      --panel: #0a0a0a;
+      --panel-hover: #111;
+      --border: #292929;
+      --border-strong: #454545;
+      --text: #fff;
+      --muted: #8d8d8d;
+      --soft: #bdbdbd;
+      --danger: #ff7d7d;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      background: var(--bg);
+      color: var(--text);
+      font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    button,
+    input,
+    select {
+      font: inherit;
+    }
+
+    a {
+      color: inherit;
+    }
+
+    .site-header {
+      position: sticky;
+      top: 0;
+      z-index: 30;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: 70px;
+      padding: 0 24px;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+      background: rgba(0, 0, 0, 0.88);
+      backdrop-filter: blur(18px);
+    }
+
+    .brand {
+      color: #fff;
+      text-decoration: none;
+      font-size: 24px;
+      font-weight: 600;
+      letter-spacing: -0.05em;
+    }
+
+    .apps-wrap {
+      position: relative;
+    }
+
+    .apps-button {
+      width: 44px;
+      height: 44px;
+      display: grid;
+      place-items: center;
+      border: 0;
+      border-radius: 50%;
+      background: transparent;
+      cursor: pointer;
+      transition: background 0.18s ease;
+    }
+
+    .apps-button:hover,
+    .apps-button:focus-visible {
+      background: #111;
+      outline: none;
+    }
+
+    .dots {
+      width: 20px;
+      height: 20px;
+      display: grid;
+      grid-template-columns: repeat(3, 4px);
+      grid-template-rows: repeat(3, 4px);
+      gap: 4px;
+    }
+
+    .dots span {
+      width: 4px;
+      height: 4px;
+      border-radius: 50%;
+      background: #fff;
+    }
+
+    .apps-menu {
+      position: absolute;
+      top: 52px;
+      right: 0;
+      width: min(310px, calc(100vw - 32px));
+      max-height: calc(100vh - 84px);
+      overflow-y: auto;
+      padding: 10px;
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      background: rgba(10, 10, 10, 0.98);
+      box-shadow: 0 22px 60px rgba(0, 0, 0, 0.6);
+      opacity: 0;
+      visibility: hidden;
+      transform: translateY(-8px);
+      transition: 0.18s ease;
+    }
+
+    .apps-menu.open {
+      opacity: 1;
+      visibility: visible;
+      transform: translateY(0);
+    }
+
+    .category-list {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+
+    .category-link {
+      min-height: 42px;
+      display: flex;
+      align-items: center;
+      padding: 0 14px;
+      border-radius: 10px;
+      color: #fff;
+      text-decoration: none;
+      font-size: 14px;
+      transition: background 0.16s ease;
+    }
+
+    .category-link:hover,
+    .category-link:focus-visible {
+      background: #181818;
+      outline: none;
+    }
+
+    .page {
+      width: min(1080px, calc(100% - 32px));
+      margin: 0 auto;
+      padding: 64px 0 90px;
+    }
+
+    .breadcrumb {
+      margin-bottom: 22px;
+      color: #737373;
+      font-size: 13px;
+    }
+
+    .breadcrumb a {
+      color: #9b9b9b;
+      text-decoration: none;
+    }
+
+    .breadcrumb a:hover {
+      color: #fff;
+    }
+
+    .page-title {
+      margin: 0;
+      font-size: clamp(36px, 6vw, 62px);
+      line-height: 1;
+      letter-spacing: -0.055em;
+      font-weight: 600;
+    }
+
+    .title-row {
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: flex-start;
+    }
+
+    .title-row .page-title {
+      padding-right: 48px;
+    }
+
+    .favorite-button {
+      position: absolute;
+      right: 0;
+      display: grid;
+      width: 42px;
+      height: 42px;
+      padding: 0;
+      place-items: center;
+      border: 0;
+      background: transparent;
+      color: #858585;
+      cursor: pointer;
+      font-size: 25px;
+      line-height: 1;
+      transition: color .16s ease;
+    }
+
+    .favorite-button:hover,
+    .favorite-button:focus-visible {
+      color: #fff;
+      outline: none;
+    }
+
+    .favorite-button.active {
+      color: #ffd34e;
+    }
+
+    .intro {
+      width: 100%;
+      max-width: none;
+      margin: 18px 0 0;
+      color: var(--muted);
+      font-size: 16px;
+      line-height: 1.7;
+    }
+
+    .noscript-notice {
+      margin: 18px 0 0;
+      padding: 14px 16px;
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      color: var(--soft);
+      background: var(--panel);
+      font-size: 14px;
+      line-height: 1.6;
+    }
+
+    .calculator {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      grid-template-areas:
+        "input input"
+        "ad-one ad-two"
+        "result result";
+      gap: 18px;
+      margin-top: 46px;
+      min-width: 0;
+    }
+
+    .input-panel {
+      grid-area: input;
+    }
+
+    .calculator > *,
+    .field-grid,
+    .field,
+    .input-wrap,
+    .result-panel,
+    .result-breakdown {
+      min-width: 0;
+    }
+
+    .panel {
+      border: 1px solid var(--border);
+      border-radius: 22px;
+      background: var(--panel);
+    }
+
+    .input-panel {
+      padding: 28px;
+    }
+
+    .panel-title {
+      margin: 0 0 24px;
+      font-size: 18px;
+      font-weight: 600;
+      letter-spacing: -0.02em;
+    }
+
+    .field-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 18px;
+    }
+
+    .field {
+      display: grid;
+      gap: 9px;
+    }
+
+    .field label {
+      color: var(--soft);
+      font-size: 13px;
+      font-weight: 500;
+    }
+
+    .input-wrap {
+      position: relative;
+    }
+
+    .input-control {
+      width: 100%;
+      height: 56px;
+      padding: 0 52px 0 16px;
+      border: 1px solid var(--border-strong);
+      border-radius: 13px;
+      background: #050505;
+      color: #fff;
+      outline: none;
+      transition: border-color 0.16s ease, box-shadow 0.16s ease;
+    }
+
+    .input-control:focus {
+      border-color: #777;
+      box-shadow: 0 0 0 4px rgba(255,255,255,0.035);
+    }
+
+    .suffix {
+      position: absolute;
+      top: 50%;
+      right: 16px;
+      transform: translateY(-50%);
+      color: #767676;
+      font-size: 13px;
+      pointer-events: none;
+    }
+
+    .actions {
+      display: flex;
+      gap: 10px;
+      margin-top: 24px;
+    }
+
+    .button {
+      min-height: 50px;
+      padding: 0 20px;
+      border-radius: 12px;
+      cursor: pointer;
+      transition: background 0.16s ease, border-color 0.16s ease, transform 0.16s ease;
+    }
+
+    .button:active {
+      transform: translateY(1px);
+    }
+
+    .button-primary {
+      flex: 1;
+      border: 1px solid #fff;
+      background:#242424;
+      color:#fff;
+      font-weight: 700;
+    }
+
+    .button-primary:hover {
+      background:#3a3a3a;
+      border-color:#4a4a4a;
+    }
+
+    .button-secondary {
+      border: 1px solid var(--border-strong);
+      background: transparent;
+      color: #fff;
+    }
+
+    .button-secondary:hover {
+      background: #151515;
+    }
+
+    .error {
+      min-height: 20px;
+      margin: 13px 0 0;
+      color: var(--danger);
+      font-size: 13px;
+    }
+
+
+    .ad-panel {
+      min-height:140px;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      padding:18px;
+      border:1px dashed #3b3b3b;
+      border-radius:22px;
+      background:#111;
+      color:#686868;
+      text-align:center;
+      font-size:12px;
+      letter-spacing:0.08em;
+      text-transform:uppercase;
+    }
+
+    .ad-one { grid-area: ad-one; }
+    .ad-two { grid-area: ad-two; }
+
+    .ad-slot {
+      width:100%;
+      min-height:104px;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+    }
+
+    .result-panel {
+      grid-area: result;
+      min-height: 360px;
+      padding: 28px;
+      background:#242424;
+      color:#fff;
+    }
+
+    .result-layout {
+      display: grid;
+      grid-template-columns: minmax(0, 1.08fr) minmax(320px, 0.92fr);
+      gap: 40px;
+      align-items: center;
+      min-height: 100%;
+      min-width: 0;
+    }
+
+    .result-main,
+    .result-details {
+      min-width: 0;
+    }
+
+    .result-eyebrow {
+      color:#a0a0a0;
+      font-size: 13px;
+      font-weight: 600;
+    }
+
+    .main-result {
+      margin: 18px 0 4px;
+      font-size: clamp(42px, 7vw, 70px);
+      line-height: 1;
+      letter-spacing: -0.06em;
+      font-weight: 700;
+      overflow-wrap: anywhere;
+    }
+
+    .result-label {
+      color:#9b9b9b;
+      font-size: 14px;
+    }
+
+    .result-breakdown {
+      display: grid;
+      gap: 0;
+      margin-top: 0;
+      border-top:1px solid #353535;
+    }
+
+    .result-row {
+      display: flex;
+      justify-content: space-between;
+      gap: 20px;
+      padding: 15px 0;
+      border-bottom:1px solid #353535;
+      font-size: 14px;
+    }
+
+    .result-row span:first-child {
+      color:#9b9b9b;
+    }
+
+    .result-row strong {
+      text-align: right;
+    }
+
+    .details {
+      display: grid;
+      gap: 10px;
+      margin-top: 22px;
+    }
+
+    .accordion {
+      overflow: hidden;
+      border: 1px solid var(--border);
+      border-radius: 15px;
+      background: #080808;
+    }
+
+    .accordion-button {
+      width: 100%;
+      min-height: 62px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 20px;
+      padding: 0 20px;
+      border: 0;
+      background: transparent;
+      color: #fff;
+      text-align: left;
+      cursor: pointer;
+    }
+
+    .accordion-button:hover {
+      background: #101010;
+    }
+
+    .accordion-title {
+      font-size: 15px;
+      font-weight: 600;
+    }
+
+    .accordion-icon {
+      color: #777;
+      font-size: 22px;
+      transition: transform 0.18s ease;
+    }
+
+    .accordion.open .accordion-icon {
+      transform: rotate(45deg);
+    }
+
+    .accordion-content {
+      max-height: 0;
+      overflow: hidden;
+      color: #aaa;
+      line-height: 1.75;
+      transition: max-height 0.25s ease;
+    }
+
+    .accordion-content-inner {
+      padding: 0 20px 22px;
+    }
+
+    .accordion-content p {
+      margin: 0 0 12px;
+    }
+
+    .accordion-content p:last-child {
+      margin-bottom: 0;
+    }
+
+    .formula {
+      display: block;
+      padding: 16px;
+      border: 1px solid #242424;
+      border-radius: 12px;
+      background: #030303;
+      color: #fff;
+      font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+      overflow-x: auto;
+    }
+
+    .faq-item + .faq-item {
+      margin-top: 18px;
+    }
+
+    .faq-question {
+      margin: 0 0 6px;
+      color: #fff;
+      font-size: 15px;
+    }
+
+    .related-tools {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 10px;
+    }
+
+    .related-link {
+      min-height: 54px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 14px;
+      padding: 0 16px;
+      border: 1px solid #242424;
+      border-radius: 12px;
+      color: #fff;
+      text-decoration: none;
+      background: #050505;
+    }
+
+    .related-link:hover {
+      background: #111;
+    }
+
+    .site-footer {
+      width: min(1080px, calc(100% - 32px));
+      margin: 0 auto;
+      padding: 26px 0 42px;
+      border-top: 1px solid #171717;
+      color: #686868;
+      font-size: 12px;
+    }
+
+    @media (max-width: 780px) {
+      .site-header {
+        height: 64px;
+        padding: 0 16px;
+      }
+
+      .page {
+        padding-top: 42px;
+      }
+
+      .calculator {
+        grid-template-columns: minmax(0, 1fr);
+        grid-template-areas:
+          "input"
+          "ad-one"
+          "result"
+          "ad-two";
+      }
+
+      .input-panel,
+      .field-grid,
+      .field,
+      .input-wrap,
+      .actions,
+      .result-panel {
+        width: 100%;
+        max-width: 100%;
+        min-width: 0;
+      }
+
+      .panel-title,
+      .field,
+      .actions,
+      .error,
+      .result-panel > * {
+        grid-column: 1 / -1;
+        grid-row: auto;
+      }
+
+      .result-panel {
+        min-height: 390px;
+      }
+
+      .field-grid {
+        grid-template-columns: minmax(0, 1fr);
+      }
+
+      .result-layout {
+        grid-template-columns: minmax(0, 1fr);
+        gap: 28px;
+        align-items: start;
+      }
+
+      .result-breakdown {
+        margin-top: 0;
+      }
+    }
+
+    @media (max-width: 520px) {
+      .page {
+        width: calc(100% - 24px);
+        padding-bottom: 60px;
+      }
+
+      .page-title {
+        font-size: clamp(34px, 11vw, 48px);
+        line-height: 1.02;
+        overflow-wrap: anywhere;
+      }
+
+      .input-panel,
+      .result-panel {
+        padding: 22px;
+        border-radius: 18px;
+      }
+
+      .field-grid {
+        grid-template-columns: minmax(0, 1fr) !important;
+      }
+
+      .input-control,
+      select.input-control {
+        width: 100%;
+        max-width: 100%;
+        min-width: 0;
+      }
+
+      .actions {
+        flex-direction: column;
+      }
+
+      .button,
+      .button-secondary {
+        width: 100%;
+        min-width: 0;
+      }
+
+      .result-row {
+        min-width: 0;
+      }
+
+      .result-row span,
+      .result-row strong {
+        min-width: 0;
+        overflow-wrap: anywhere;
+      }
+
+      .related-tools {
+        grid-template-columns: minmax(0, 1fr);
+      }
+
+      .main-result {
+        font-size: 48px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <header class="site-header">
+    <a class="brand" href="/">toolbox</a>
+
+    <div class="apps-wrap">
+      <button
+        class="apps-button"
+        id="appsButton"
+        type="button"
+        aria-label="Abrir categorías"
+        aria-expanded="false"
+        aria-controls="appsMenu"
+      >
+        <span class="dots" aria-hidden="true">
+          <span></span><span></span><span></span>
+          <span></span><span></span><span></span>
+          <span></span><span></span><span></span>
+        </span>
+      </button>
+
+      <div class="apps-menu" id="appsMenu">
+        <nav class="category-list" aria-label="Categorías de herramientas">
+          <a class="category-link" href="/es/calculator/categories/money-investing/">Dinero e inversión</a>
+          <a class="category-link" href="/es/calculator/categories/taxes-insurance-benefits/">Impuestos, seguros y prestaciones</a>
+          <a class="category-link" href="/es/calculator/categories/business-operations/">Negocios y operaciones</a>
+          <a class="category-link" href="/es/calculator/categories/startups-digital-business/">Startups y negocios digitales</a>
+          <a class="category-link" href="/es/calculator/categories/sales-marketing-audience/">Ventas, marketing y audiencia</a>
+          <a class="category-link" href="/es/calculator/categories/online-selling-retail/">Venta online y comercio minorista</a>
+          <a class="category-link" href="/es/calculator/categories/jobs-pay-workforce/">Empleo, salarios y personal</a>
+          <a class="category-link" href="/es/calculator/categories/time-productivity/">Tiempo y productividad</a>
+          <a class="category-link" href="/es/calculator/categories/property-construction/">Inmuebles y construcción</a>
+          <a class="category-link" href="/es/calculator/categories/manufacturing-production/">Fabricación y producción</a>
+          <a class="category-link" href="/es/calculator/categories/shipping-supply-chain/">Envíos y cadena de suministro</a>
+          <a class="category-link" href="/es/calculator/categories/health-body-fitness/">Salud, cuerpo y ejercicio</a>
+          <a class="category-link" href="/es/calculator/categories/food-cooking-hospitality/">Alimentación, cocina y hostelería</a>
+          <a class="category-link" href="/es/calculator/categories/home-everyday-life/">Hogar y vida cotidiana</a>
+          <a class="category-link" href="/es/calculator/categories/learning-grades/">Aprendizaje y calificaciones</a>
+          <a class="category-link" href="/es/calculator/categories/science-math-engineering/">Ciencia, matemáticas e ingeniería</a>
+          <a class="category-link" href="/es/calculator/categories/ai-data-technology/">IA, datos y tecnología</a>
+          <a class="category-link" href="/es/calculator/categories/energy-sustainability/">Energía y sostenibilidad</a>
+          <a class="category-link" href="/es/calculator/categories/farming-animals-pets/">Agricultura, animales y mascotas</a>
+          <a class="category-link" href="/es/calculator/categories/travel-events-recreation/">Viajes, eventos y ocio</a>
+          <a class="category-link" href="/es/calculator/categories/legal-safety-compliance/">Asuntos legales, seguridad y cumplimiento</a>
+        </nav>
+      </div>
+    </div>
+  </header>
+
+  <main class="page">
+    <div class="breadcrumb">
+      <a href="/">Inicio</a> / <a href="/es/calculator/categories/property-construction/">Inmuebles y construcción</a> / Estimador de precio de vivienda asequible
+    </div>
+
+    <div class="title-row">
+      <h1 class="page-title">Estimador de precio de vivienda asequible</h1>
+      <button class="favorite-button" id="favoriteButton" type="button" aria-label="Añadir Estimador de precio de vivienda asequible a favoritos" aria-pressed="false">☆</button>
+    </div>
+    <p class="intro">
+      Este estimador convierte un <strong>presupuesto mensual de vivienda</strong> en un precio de compra orientativo. Parte de los ingresos brutos y del porcentaje máximo que decides destinar al conjunto de deudas, resta las deudas mensuales ya existentes y reserva una cantidad para impuestos, seguros y otros gastos de la vivienda.<br><br>La cifra no es una aprobación hipotecaria. Cada entidad aplica criterios propios de solvencia, documentación, tipos y gastos; además, la cuota total de una vivienda puede incluir principal, intereses, impuestos, seguros y cuotas comunitarias.
+    </p>
+    <noscript>
+      <p class="noscript-notice">Esta calculadora necesita JavaScript para actualizar los resultados. Activa JavaScript en tu navegador y vuelve a cargar esta página.</p>
+    </noscript>
+
+    <section class="calculator" aria-label="Estimador de precio de vivienda asequible">
+      <div class="panel input-panel">
+        <h2 class="panel-title">Ingresos, deudas y financiación</h2>
+
+        <!-- Every number input in INPUTS_HTML must have a unique id, label, default value, min, max and step. Optional blank values must be treated as 0 or not applied, never as an error. -->
+        <div class="field-grid"><div class="field"><label for="income">Ingresos brutos mensuales</label><div class="input-wrap"><input class="input-control" id="income" type="number" value="4500" min="1" max="1000000" step="50" /><span class="suffix">€</span></div></div><div class="field"><label for="debts">Otras deudas mensuales</label><div class="input-wrap"><input class="input-control" id="debts" type="number" value="450" min="0" max="1000000" step="10" /><span class="suffix">€</span></div></div><div class="field"><label for="ratio">Límite total de deuda sobre ingresos</label><div class="input-wrap"><input class="input-control" id="ratio" type="number" value="35" min="1" max="80" step="0.1" /><span class="suffix">%</span></div></div><div class="field"><label for="nonMortgage">Impuestos, seguros y otros costes/mes</label><div class="input-wrap"><input class="input-control" id="nonMortgage" type="number" value="300" min="0" max="100000" step="10" /><span class="suffix">€</span></div></div><div class="field"><label for="rate">Interés hipotecario anual</label><div class="input-wrap"><input class="input-control" id="rate" type="number" value="3.5" min="0" max="30" step="0.01" /><span class="suffix">%</span></div></div><div class="field"><label for="term">Plazo de la hipoteca</label><div class="input-wrap"><input class="input-control" id="term" type="number" value="30" min="1" max="50" step="1" /><span class="suffix">años</span></div></div><div class="field"><label for="downPct">Entrada</label><div class="input-wrap"><input class="input-control" id="downPct" type="number" value="20" min="0" max="99" step="0.1" /><span class="suffix">%</span></div></div></div>
+
+        <div class="actions">
+<button class="button button-secondary" id="resetButton" type="button">Restablecer</button>
+        </div>
+
+        <p class="error" id="errorMessage" role="alert"></p>
+      </div>
+
+      <aside class="ad-panel ad-one" aria-label="Publicidad">
+        <div class="ad-slot"></div>
+      </aside>
+
+      <div class="panel result-panel" aria-live="polite">
+        <div class="result-layout">
+          <div class="result-main">
+          <div class="result-eyebrow">Resultado</div>
+          <div class="main-result" id="mainResult">—</div>
+          <div class="result-label" id="resultLabel">precio orientativo de vivienda</div>
+            
+          </div>
+          <div class="result-details">
+            <div class="result-breakdown"><div class="result-row"><span>Presupuesto mensual total de deuda</span><strong id="housingBudget">—</strong></div><div class="result-row"><span>Cuota disponible para hipoteca</span><strong id="mortgageBudget">—</strong></div><div class="result-row"><span>Principal hipotecario estimado</span><strong id="loanAmount">—</strong></div><div class="result-row"><span>Entrada estimada</span><strong id="downAmount">—</strong></div></div>
+          </div>
+        </div>
+      </div>
+
+      <aside class="ad-panel ad-two" aria-label="Publicidad">
+        <div class="ad-slot"></div>
+      </aside>
+    </section>
+
+    <section class="details" aria-label="Información de la calculadora">
+      <article class="accordion">
+        <button class="accordion-button" type="button" aria-expanded="false">
+          <span class="accordion-title">Cómo usarla</span>
+          <span class="accordion-icon" aria-hidden="true">+</span>
+        </button>
+        <div class="accordion-content">
+          <div class="accordion-content-inner">
+            <h3>1. Indica los ingresos brutos</h3><p>Introduce el ingreso mensual antes de impuestos que quieras usar como base del cálculo.</p><h3>2. Añade las deudas actuales</h3><p>Incluye pagos mensuales de préstamos, tarjetas u otras obligaciones que seguirían existiendo después de comprar.</p><h3>3. Elige un límite de endeudamiento</h3><p>Define el porcentaje máximo de ingresos que quieres dedicar al total de deudas. Es una hipótesis personal, no un umbral universal de aprobación.</p><h3>4. Reserva los costes de vivienda no hipotecarios</h3><p>Añade una estimación mensual de impuestos, seguros, comunidad u otros costes recurrentes para no asignar todo el presupuesto a principal e intereses.</p><h3>5. Introduce el préstamo esperado</h3><p>Selecciona el interés anual, el plazo y el porcentaje de entrada.</p><h3>6. Revisa el precio orientativo</h3><p>La herramienta convierte la cuota disponible en principal hipotecario y suma la entrada estimada para obtener un precio aproximado.</p>
+          </div>
+        </div>
+      </article>
+
+      <article class="accordion">
+        <button class="accordion-button" type="button" aria-expanded="false">
+          <span class="accordion-title">Fórmula</span>
+          <span class="accordion-icon" aria-hidden="true">+</span>
+        </button>
+        <div class="accordion-content">
+          <div class="accordion-content-inner">
+            <span class="formula">Presupuesto total de deuda = Ingresos brutos × ratio elegido
+Cuota hipotecaria disponible = Presupuesto total − otras deudas − otros costes de vivienda
+Principal = Cuota × ((1+i)^n − 1) / (i × (1+i)^n)
+Precio estimado = Principal / (1 − Entrada %)</span><p><strong>i</strong> es el tipo mensual y <strong>n</strong> el número de cuotas. Con un interés del 0 %, el principal es cuota × número de meses. El resultado presupone una hipoteca amortizable de cuota constante.</p>
+            <h3>Qué significa el resultado</h3>
+            <p>El resultado es el precio aproximado compatible con el límite de deuda que tú has elegido y con los costes introducidos. Cambiar el tipo, el plazo o los costes mensuales puede alterar de forma importante la cifra.</p>
+            <p>Una entidad financiera puede valorar ingresos, activos, historial crediticio, otras obligaciones y características concretas del préstamo de forma distinta.</p>
+          </div>
+        </div>
+      </article>
+
+      <article class="accordion">
+        <button class="accordion-button" type="button" aria-expanded="false">
+          <span class="accordion-title">Ejemplo de cálculo</span>
+          <span class="accordion-icon" aria-hidden="true">+</span>
+        </button>
+        <div class="accordion-content">
+          <div class="accordion-content-inner">
+            <p><strong>Datos:</strong> ingresos brutos de 4.500 €/mes, otras deudas de 450 €, límite del 35 %, 300 € de costes de vivienda no hipotecarios, hipoteca al 3,5 % a 30 años y entrada del 20 %.</p><p><strong>Cálculo:</strong> presupuesto total de deuda = 4.500 × 35 % = 1.575 €/mes. Cuota disponible para principal e intereses = 1.575 − 450 − 300 = 825 €/mes. Esa cuota se convierte en un principal hipotecario mediante la fórmula de anualidad y posteriormente se divide entre 80 % para estimar el precio de compra.</p><p><strong>Resultado:</strong> se obtiene un precio orientativo, junto con el principal y la entrada correspondientes.</p><p><strong>Interpretación:</strong> si el presupuesto real para impuestos, seguros o comunidad es mayor, reduce el precio máximo en lugar de ocultar esos costes dentro de la hipoteca.</p>
+          </div>
+        </div>
+      </article>
+
+      <article class="accordion">
+        <button class="accordion-button" type="button" aria-expanded="false">
+          <span class="accordion-title">Preguntas frecuentes</span>
+          <span class="accordion-icon" aria-hidden="true">+</span>
+        </button>
+        <div class="accordion-content">
+          <div class="accordion-content-inner">
+            <div class="faq-item"><h3 class="faq-question">¿El porcentaje de endeudamiento es una regla oficial?</h3><p>No. Es un supuesto editable para construir un presupuesto. Los criterios de concesión y las métricas de capacidad de pago varían por entidad, producto y jurisdicción.</p></div><div class="faq-item"><h3 class="faq-question">¿Debo usar ingresos brutos o netos?</h3><p>Este modelo usa ingresos brutos porque así está definida la variable del cálculo. Para un presupuesto doméstico también conviene comprobar por separado cuánto queda del ingreso neto tras impuestos y gastos esenciales.</p></div><div class="faq-item"><h3 class="faq-question">¿Qué pongo en otros costes de vivienda?</h3><p>Puedes agrupar impuestos sobre la propiedad, seguros, cuotas de comunidad y otros costes mensuales previsibles. Es preferible una estimación conservadora a dejar esa partida en cero si sabes que existirá.</p></div><div class="faq-item"><h3 class="faq-question">¿Por qué sube el precio asequible si alargo el plazo?</h3><p>Porque una misma cuota mensual puede amortizar un principal mayor cuando se reparte en más pagos. A cambio, un plazo más largo puede aumentar los intereses pagados durante la vida del préstamo.</p></div><div class="faq-item"><h3 class="faq-question">¿Puedo usar el resultado como presupuesto final de compra?</h3><p>Úsalo como primera aproximación. Antes de comprar, añade costes de cierre, mantenimiento, reservas de emergencia y una oferta hipotecaria real.</p></div>
+          </div>
+        </div>
+      </article>
+
+      <article class="accordion">
+        <button class="accordion-button" type="button" aria-expanded="false">
+          <span class="accordion-title">Herramientas relacionadas</span>
+          <span class="accordion-icon" aria-hidden="true">+</span>
+        </button>
+        <div class="accordion-content">
+          <div class="accordion-content-inner">
+            <div class="related-tools"><a class="related-link" href="/es/calculator/mortgage_calculator/"><span>Mortgage Calculator</span><span aria-hidden="true">→</span></a><a class="related-link" href="/es/calculator/rent_vs_buy_calculator/"><span>Rent vs Buy Calculator</span><span aria-hidden="true">→</span></a><a class="related-link" href="/es/calculator/rental_yield_calculator/"><span>Rental Yield Calculator</span><span aria-hidden="true">→</span></a><a class="related-link" href="/es/calculator/real_estate_return_on_investment_calculator/"><span>Real Estate Return on Investment Calculator</span><span aria-hidden="true">→</span></a></div>
+          </div>
+        </div>
+      </article>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    © 2026 toolbox. Los resultados son estimaciones orientativas y no sustituyen asesoramiento financiero, fiscal, jurídico o profesional individualizado.
+  </footer>
+
+  <script>
+    const appsButton = document.getElementById("appsButton");
+    const appsMenu = document.getElementById("appsMenu");
+    const favoriteButton = document.getElementById("favoriteButton");
+    const FAVORITES_KEY = "toolboxapp-favorites-v1";
+    const currentTool = {
+      name: "Estimador de precio de vivienda asequible",
+      url: window.location.pathname
+    };
+
+    function readFavorites() {
+      try {
+        const saved = JSON.parse(localStorage.getItem(FAVORITES_KEY) || "[]");
+        return Array.isArray(saved) ? saved : [];
+      } catch (error) {
+        return [];
+      }
+    }
+
+    function updateFavoriteButton() {
+      const isFavorite = readFavorites().some(tool => tool.url === currentTool.url);
+      favoriteButton.classList.toggle("active", isFavorite);
+      favoriteButton.textContent = isFavorite ? "★" : "☆";
+      favoriteButton.setAttribute("aria-pressed", String(isFavorite));
+      favoriteButton.setAttribute("aria-label", `${isFavorite ? "Quitar" : "Añadir"} Estimador de precio de vivienda asequible ${isFavorite ? "de" : "a"} favoritos`);
+    }
+
+    favoriteButton.addEventListener("click", () => {
+      const saved = readFavorites();
+      const existingIndex = saved.findIndex(tool => tool.url === currentTool.url);
+
+      if (existingIndex >= 0) {
+        saved.splice(existingIndex, 1);
+      } else {
+        saved.push(currentTool);
+      }
+
+      localStorage.setItem(FAVORITES_KEY, JSON.stringify(saved));
+      updateFavoriteButton();
+    });
+
+    const resetButton = document.getElementById("resetButton");
+    const errorMessage = document.getElementById("errorMessage");
+    const byId = id => document.getElementById(id);
+    const finite = value => Number.isFinite(Number(value));
+    const optionalNumber = (id, fallback = 0) => {
+      const value = byId(id)?.value.trim();
+      return value === "" ? fallback : Number(value);
+    };
+    const formatNumber = (value, digits = 2) => Number(value).toLocaleString("es-ES", { maximumFractionDigits: digits });
+    const formatMoney = (value, currency = "USD", digits = 2) => new Intl.NumberFormat("es-ES", { style: "currency", currency, maximumFractionDigits: digits }).format(value);
+    const formatPercent = (value, digits = 2) => `${Number(value).toFixed(digits)}%`;
+    const setText = (id, value) => { const node = byId(id); if (node) node.textContent = value; };
+    const showError = message => { errorMessage.textContent = message; };
+    const clearError = () => { errorMessage.textContent = ""; document.querySelectorAll('[aria-invalid="true"]').forEach(node => node.setAttribute("aria-invalid", "false")); };
+    const invalidate = (id, message) => { const node = byId(id); if (node) node.setAttribute("aria-invalid", "true"); showError(message); return false; };
+
+    function calculate(){clearError();const inc=Number(byId("income").value),deb=Number(byId("debts").value),ratio=Number(byId("ratio").value)/100,other=Number(byId("nonMortgage").value),annual=Number(byId("rate").value)/100,term=Number(byId("term").value),down=Number(byId("downPct").value)/100;if(!(inc>0))return invalidate("income","Los ingresos deben ser mayores que cero.");const total=inc*ratio;const pay=total-deb-other;if(!(pay>0)){setText("mainResult","—");return invalidate("debts","Las deudas y costes consumen todo el presupuesto disponible.");}const n=term*12,i=annual/12;const principal=i===0?pay*n:pay*(Math.pow(1+i,n)-1)/(i*Math.pow(1+i,n));const price=principal/(1-down);const dp=price*down;setText("housingBudget",formatMoney(total,"EUR"));setText("mortgageBudget",formatMoney(pay,"EUR"));setText("loanAmount",formatMoney(principal,"EUR"));setText("downAmount",formatMoney(dp,"EUR"));setText("mainResult",formatMoney(price,"EUR",0));setText("resultLabel","precio orientativo de vivienda");}
+
+    resetButton.addEventListener("click", () => {
+      document.querySelectorAll(".input-control").forEach(input => { input.value = input.defaultValue; });
+      clearError();
+      calculate();
+    });
+    let autoTimer;
+    document.querySelectorAll(".input-control").forEach(input => {
+      input.addEventListener("input", () => {
+        clearTimeout(autoTimer);
+        autoTimer = setTimeout(calculate, 200);
+      });
+      input.addEventListener("change", calculate);
+    });
+
+
+    appsButton.addEventListener("click", () => {
+      const isOpen = appsMenu.classList.toggle("open");
+      appsButton.setAttribute("aria-expanded", String(isOpen));
+    });
+
+    document.addEventListener("click", event => {
+      if (!event.target.closest(".apps-wrap")) {
+        appsMenu.classList.remove("open");
+        appsButton.setAttribute("aria-expanded", "false");
+      }
+    });
+
+    document.querySelectorAll(".accordion-button").forEach(button => {
+      button.addEventListener("click", () => {
+        const accordion = button.closest(".accordion");
+        const content = accordion.querySelector(".accordion-content");
+        const isOpen = accordion.classList.toggle("open");
+
+        button.setAttribute("aria-expanded", String(isOpen));
+        content.style.maxHeight = isOpen ? content.scrollHeight + "px" : "0px";
+      });
+    });
+
+    calculate();
+    updateFavoriteButton();
+  </script>
+</body>
+</html>

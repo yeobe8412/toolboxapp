@@ -1,0 +1,163 @@
+/* Shared calculator layout contract. Keep page-specific colors and logic inline. */
+
+/* Normalize legacy unit-marker class names used by some calculator pages. */
+.input-wrap {
+  position: relative !important;
+}
+
+.input-prefix,
+.input-suffix {
+  position: absolute !important;
+  top: 50% !important;
+  transform: translateY(-50%) !important;
+  color: #767676 !important;
+  font-size: 13px !important;
+  line-height: 1 !important;
+  pointer-events: none !important;
+  z-index: 1 !important;
+}
+
+.input-prefix {
+  left: 16px !important;
+}
+
+.input-suffix {
+  right: 16px !important;
+}
+
+.has-prefix > .input-control {
+  padding-left: 52px !important;
+}
+
+.has-suffix > .input-control {
+  padding-right: 64px !important;
+}
+
+@media (min-width: 781px) {
+  .calculator {
+    display: grid !important;
+    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+    grid-template-areas:
+      "input input"
+      "ad-one ad-two"
+      "result result" !important;
+    gap: 18px !important;
+    align-items: stretch !important;
+    min-width: 0 !important;
+  }
+
+  .calculator > .input-panel {
+    grid-area: input !important;
+    min-width: 0 !important;
+  }
+
+  .calculator > .ad-one {
+    grid-area: ad-one !important;
+    min-width: 0 !important;
+  }
+
+  .calculator > .ad-two {
+    grid-area: ad-two !important;
+    min-width: 0 !important;
+  }
+
+  .calculator > .result-panel {
+    grid-area: result !important;
+    min-width: 0 !important;
+  }
+
+  .field-grid {
+    display: flex !important;
+    flex-wrap: wrap !important;
+    gap: 0 !important;
+    margin: -9px !important;
+    min-width: 0 !important;
+    font-size: 0 !important;
+  }
+
+  .field-grid > .field {
+    flex: 0 0 50% !important;
+    width: 50% !important;
+    max-width: 50% !important;
+    min-width: 0 !important;
+    padding: 9px !important;
+    font-size: 16px !important;
+  }
+
+  .field-grid > .field > label {
+    display: flex;
+    align-items: flex-end;
+    min-height: 42px;
+  }
+
+  .field-grid .input-wrap,
+  .field-grid .input-control,
+  .result-layout,
+  .result-main,
+  .result-details,
+  .result-breakdown,
+  .result-row {
+    min-width: 0 !important;
+    max-width: 100% !important;
+  }
+
+  .field-grid .input-control {
+    width: 100% !important;
+  }
+
+  .result-row span,
+  .result-row strong,
+  .main-result {
+    min-width: 0 !important;
+    overflow-wrap: anywhere !important;
+  }
+}
+
+@media (max-width: 780px) {
+  .calculator {
+    display: grid !important;
+    grid-template-columns: minmax(0, 1fr) !important;
+    grid-template-areas:
+      "input"
+      "ad-one"
+      "result"
+      "ad-two" !important;
+    gap: 18px !important;
+    min-width: 0 !important;
+  }
+
+  .calculator > .input-panel {
+    grid-area: input !important;
+  }
+
+  .calculator > .ad-one {
+    grid-area: ad-one !important;
+  }
+
+  .calculator > .ad-two {
+    grid-area: ad-two !important;
+  }
+
+  .calculator > .result-panel {
+    grid-area: result !important;
+  }
+
+  .field-grid {
+    display: grid !important;
+    grid-template-columns: minmax(0, 1fr) !important;
+    gap: 18px !important;
+    margin: 0 !important;
+    font-size: inherit !important;
+  }
+
+  .field-grid > .field {
+    width: auto !important;
+    max-width: 100% !important;
+    min-width: 0 !important;
+    padding: 0 !important;
+  }
+
+  .field-grid > .field > label {
+    min-height: 0;
+  }
+}

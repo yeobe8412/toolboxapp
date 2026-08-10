@@ -49,9 +49,104 @@
       display: flex;
       align-items: center;
       justify-content: flex-end;
+      gap: 8px;
       padding: 0 24px;
       z-index: 10;
       pointer-events: none;
+    }
+
+    .language-wrap {
+      position: relative;
+      pointer-events: auto;
+    }
+
+    .language-button {
+      min-width: 92px;
+      height: 38px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 7px;
+      padding: 0 12px;
+      border: 1px solid #292929;
+      border-radius: 999px;
+      background: rgba(10, 10, 10, 0.92);
+      color: #d7d7d7;
+      font-size: 13px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background 0.18s ease, border-color 0.18s ease, color 0.18s ease;
+    }
+
+    .language-button:hover,
+    .language-button:focus-visible {
+      background: #141414;
+      border-color: #454545;
+      color: #fff;
+      outline: none;
+    }
+
+    .language-chevron {
+      color: #777;
+      font-size: 10px;
+      transition: transform 0.18s ease;
+    }
+
+    .language-button[aria-expanded="true"] .language-chevron {
+      transform: rotate(180deg);
+    }
+
+    .language-menu {
+      position: absolute;
+      top: 46px;
+      right: 0;
+      width: 142px;
+      padding: 7px;
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      background: rgba(10, 10, 10, 0.98);
+      box-shadow: 0 18px 50px rgba(0, 0, 0, 0.52);
+      opacity: 0;
+      visibility: hidden;
+      transform: translateY(-7px);
+      transition: 0.18s ease;
+    }
+
+    .language-menu.open {
+      opacity: 1;
+      visibility: visible;
+      transform: translateY(0);
+    }
+
+    .language-option {
+      min-height: 38px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      padding: 0 11px;
+      border-radius: 9px;
+      color: #d0d0d0;
+      text-decoration: none;
+      font-size: 13px;
+      transition: background 0.16s ease, color 0.16s ease;
+    }
+
+    .language-option:hover,
+    .language-option:focus-visible {
+      background: #181818;
+      color: #fff;
+      outline: none;
+    }
+
+    .language-option.active {
+      color: #fff;
+      background: #111;
+    }
+
+    .language-check {
+      color: #8f8f8f;
+      font-size: 12px;
     }
 
     .apps-wrap {
@@ -434,6 +529,31 @@
 </head>
 <body>
   <header class="topbar">
+    <div class="language-wrap">
+      <button
+        class="language-button"
+        id="languageButton"
+        type="button"
+        aria-label="Select language"
+        aria-haspopup="true"
+        aria-expanded="false"
+        aria-controls="languageMenu"
+      >
+        <span>English</span>
+        <span class="language-chevron" aria-hidden="true">▼</span>
+      </button>
+
+      <div class="language-menu" id="languageMenu">
+        <a class="language-option active" href="/" lang="en" aria-current="page">
+          <span>English</span>
+          <span class="language-check" aria-hidden="true">✓</span>
+        </a>
+        <a class="language-option" href="https://www.toolboxapp.cc/es/" lang="es">
+          <span>Español</span>
+        </a>
+      </div>
+    </div>
+
     <div class="apps-wrap">
       <button
         class="apps-button"
@@ -524,6 +644,8 @@
     const hero = document.getElementById("hero");
     const appsButton = document.getElementById("appsButton");
     const appsMenu = document.getElementById("appsMenu");
+    const languageButton = document.getElementById("languageButton");
+    const languageMenu = document.getElementById("languageMenu");
     const favorites = document.getElementById("favorites");
     const favoritesList = document.getElementById("favoritesList");
     const FAVORITES_KEY = "toolboxapp-favorites-v1";
@@ -680,9 +802,18 @@
       searchInput.focus();
     });
 
+    languageButton.addEventListener("click", () => {
+      const isOpen = languageMenu.classList.toggle("open");
+      languageButton.setAttribute("aria-expanded", String(isOpen));
+      appsMenu.classList.remove("open");
+      appsButton.setAttribute("aria-expanded", "false");
+    });
+
     appsButton.addEventListener("click", () => {
       const isOpen = appsMenu.classList.toggle("open");
       appsButton.setAttribute("aria-expanded", String(isOpen));
+      languageMenu.classList.remove("open");
+      languageButton.setAttribute("aria-expanded", "false");
     });
 
     document.addEventListener("click", event => {
@@ -690,12 +821,19 @@
         appsMenu.classList.remove("open");
         appsButton.setAttribute("aria-expanded", "false");
       }
+
+      if (!event.target.closest(".language-wrap")) {
+        languageMenu.classList.remove("open");
+        languageButton.setAttribute("aria-expanded", "false");
+      }
     });
 
     document.addEventListener("keydown", event => {
       if (event.key === "Escape") {
         appsMenu.classList.remove("open");
         appsButton.setAttribute("aria-expanded", "false");
+        languageMenu.classList.remove("open");
+        languageButton.setAttribute("aria-expanded", "false");
 
         if (document.activeElement === searchInput && searchInput.value) {
           searchInput.value = "";
