@@ -5,6 +5,7 @@ on:
     branches: [main]
     paths:
       - scripts/fix_spanish_toolbox_home.py
+      - .github/workflows/fix-spanish-toolbox-home.yml
 
 permissions:
   contents: write
