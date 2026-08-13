@@ -1,0 +1,1025 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Calcula una necesidad orientativa de financiación seed a partir del burn mensual, runway objetivo, costes puntuales, colchón y caja disponible." />
+  <link rel="canonical" href="https://www.toolboxapp.cc/es/calculator/seed_stage_funding_calculator/" />
+  <link rel="alternate" hreflang="en" href="https://www.toolboxapp.cc/calculator/seed_stage_funding_calculator/" />
+  <link rel="alternate" hreflang="es" href="https://www.toolboxapp.cc/es/calculator/seed_stage_funding_calculator/" />
+  <link rel="alternate" hreflang="x-default" href="https://www.toolboxapp.cc/calculator/seed_stage_funding_calculator/" />
+  <title>Calculadora de financiación en fase seed | toolbox</title>
+  <meta property="og:site_name" content="toolbox" />
+  <meta property="og:title" content="Calculadora de financiación en fase seed | toolbox" />
+  <meta property="og:description" content="Calcula una necesidad orientativa de financiación seed a partir del burn mensual, runway objetivo, costes puntuales, colchón y caja disponible." />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://www.toolboxapp.cc/es/calculator/seed_stage_funding_calculator/" />
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Calculadora de financiación en fase seed | toolbox" />
+  <meta name="twitter:description" content="Calcula una necesidad orientativa de financiación seed a partir del burn mensual, runway objetivo, costes puntuales, colchón y caja disponible." />
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+          { "@type": "ListItem", "position": 1, "name": "Inicio", "item": "https://www.toolboxapp.cc/" },
+          { "@type": "ListItem", "position": 2, "name": "Startups y negocios digitales", "item": "https://www.toolboxapp.cc/es/calculator/categories/startups-digital-business/" },
+          { "@type": "ListItem", "position": 3, "name": "Calculadora de financiación en fase seed", "item": "https://www.toolboxapp.cc/es/calculator/seed_stage_funding_calculator/" }
+        ]
+      },
+      {
+        "@type": "WebApplication",
+        "name": "Calculadora de financiación en fase seed",
+        "url": "https://www.toolboxapp.cc/es/calculator/seed_stage_funding_calculator/",
+        "description": "Calcula una necesidad orientativa de financiación seed a partir del burn mensual, runway objetivo, costes puntuales, colchón y caja disponible.",
+        "applicationCategory": "UtilitiesApplication",
+        "operatingSystem": "Any",
+        "browserRequirements": "Requiere JavaScript"
+      }
+    ]
+  }
+  </script>
+  <script type="application/ld+json">{"@context": "https://schema.org", "@type": "FAQPage", "mainEntity": [{"@type": "Question", "name": "¿Debo usar burn bruto o burn neto?", "acceptedAnswer": {"@type": "Answer", "text": "Para esta fórmula usa burn neto, es decir, la pérdida mensual de caja después de las entradas operativas previstas. Si solo tienes gastos, calcula primero las entradas y salidas por separado."}}, {"@type": "Question", "name": "¿Los costes puntuales deben incluirse también en el burn?", "acceptedAnswer": {"@type": "Answer", "text": "No los dupliques. Si ya están prorrateados dentro del burn mensual, deja el campo de costes puntuales en cero para esos conceptos."}}, {"@type": "Question", "name": "¿Qué porcentaje de colchón debo poner?", "acceptedAnswer": {"@type": "Answer", "text": "No existe un porcentaje válido para todas las startups. Usa un supuesto que refleje la volatilidad de tus costes, ingresos y calendario, y prueba escenarios alternativos."}}, {"@type": "Question", "name": "¿La financiación calculada es el tamaño recomendado de la ronda?", "acceptedAnswer": {"@type": "Answer", "text": "No necesariamente. Es una necesidad de caja basada en el plan introducido; el tamaño final de una ronda también depende de hitos, dilución, instrumentos, negociación y disponibilidad de capital."}}, {"@type": "Question", "name": "¿Cómo afectan nuevos ingresos durante el runway?", "acceptedAnswer": {"@type": "Answer", "text": "Si ya están reflejados en un burn neto menor, quedan incorporados. Si esperas que cambien de forma importante mes a mes, un modelo mensual de caja será más adecuado que un burn constante."}}]}</script>
+
+  <style>
+    :root {
+      color-scheme: dark;
+      --bg: #000;
+      --panel: #0a0a0a;
+      --panel-hover: #111;
+      --border: #292929;
+      --border-strong: #454545;
+      --text: #fff;
+      --muted: #8d8d8d;
+      --soft: #bdbdbd;
+      --danger: #ff7d7d;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      background: var(--bg);
+      color: var(--text);
+      font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    button,
+    input,
+    select {
+      font: inherit;
+    }
+
+    a {
+      color: inherit;
+    }
+
+    .site-header {
+      position: sticky;
+      top: 0;
+      z-index: 30;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: 70px;
+      padding: 0 24px;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+      background: rgba(0, 0, 0, 0.88);
+      backdrop-filter: blur(18px);
+    }
+
+    .brand {
+      color: #fff;
+      text-decoration: none;
+      font-size: 24px;
+      font-weight: 600;
+      letter-spacing: -0.05em;
+    }
+
+    .apps-wrap {
+      position: relative;
+    }
+
+    .apps-button {
+      width: 44px;
+      height: 44px;
+      display: grid;
+      place-items: center;
+      border: 0;
+      border-radius: 50%;
+      background: transparent;
+      cursor: pointer;
+      transition: background 0.18s ease;
+    }
+
+    .apps-button:hover,
+    .apps-button:focus-visible {
+      background: #111;
+      outline: none;
+    }
+
+    .dots {
+      width: 20px;
+      height: 20px;
+      display: grid;
+      grid-template-columns: repeat(3, 4px);
+      grid-template-rows: repeat(3, 4px);
+      gap: 4px;
+    }
+
+    .dots span {
+      width: 4px;
+      height: 4px;
+      border-radius: 50%;
+      background: #fff;
+    }
+
+    .apps-menu {
+      position: absolute;
+      top: 52px;
+      right: 0;
+      width: min(310px, calc(100vw - 32px));
+      max-height: calc(100vh - 84px);
+      overflow-y: auto;
+      padding: 10px;
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      background: rgba(10, 10, 10, 0.98);
+      box-shadow: 0 22px 60px rgba(0, 0, 0, 0.6);
+      opacity: 0;
+      visibility: hidden;
+      transform: translateY(-8px);
+      transition: 0.18s ease;
+    }
+
+    .apps-menu.open {
+      opacity: 1;
+      visibility: visible;
+      transform: translateY(0);
+    }
+
+    .category-list {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+
+    .category-link {
+      min-height: 42px;
+      display: flex;
+      align-items: center;
+      padding: 0 14px;
+      border-radius: 10px;
+      color: #fff;
+      text-decoration: none;
+      font-size: 14px;
+      transition: background 0.16s ease;
+    }
+
+    .category-link:hover,
+    .category-link:focus-visible {
+      background: #181818;
+      outline: none;
+    }
+
+    .page {
+      width: min(1080px, calc(100% - 32px));
+      margin: 0 auto;
+      padding: 64px 0 90px;
+    }
+
+    .breadcrumb {
+      margin-bottom: 22px;
+      color: #737373;
+      font-size: 13px;
+    }
+
+    .breadcrumb a {
+      color: #9b9b9b;
+      text-decoration: none;
+    }
+
+    .breadcrumb a:hover {
+      color: #fff;
+    }
+
+    .page-title {
+      margin: 0;
+      font-size: clamp(36px, 6vw, 62px);
+      line-height: 1;
+      letter-spacing: -0.055em;
+      font-weight: 600;
+    }
+
+    .title-row {
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: flex-start;
+    }
+
+    .title-row .page-title {
+      padding-right: 48px;
+    }
+
+    .favorite-button {
+      position: absolute;
+      right: 0;
+      display: grid;
+      width: 42px;
+      height: 42px;
+      padding: 0;
+      place-items: center;
+      border: 0;
+      background: transparent;
+      color: #858585;
+      cursor: pointer;
+      font-size: 25px;
+      line-height: 1;
+      transition: color .16s ease;
+    }
+
+    .favorite-button:hover,
+    .favorite-button:focus-visible {
+      color: #fff;
+      outline: none;
+    }
+
+    .favorite-button.active {
+      color: #ffd34e;
+    }
+
+    .intro {
+      width: 100%;
+      max-width: none;
+      margin: 18px 0 0;
+      color: var(--muted);
+      font-size: 16px;
+      line-height: 1.7;
+    }
+
+    .noscript-notice {
+      margin: 18px 0 0;
+      padding: 14px 16px;
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      color: var(--soft);
+      background: var(--panel);
+      font-size: 14px;
+      line-height: 1.6;
+    }
+
+    .calculator {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      grid-template-areas:
+        "input input"
+        "ad-one ad-two"
+        "result result";
+      gap: 18px;
+      margin-top: 46px;
+      min-width: 0;
+    }
+
+    .input-panel {
+      grid-area: input;
+    }
+
+    .calculator > *,
+    .field-grid,
+    .field,
+    .input-wrap,
+    .result-panel,
+    .result-breakdown {
+      min-width: 0;
+    }
+
+    .panel {
+      border: 1px solid var(--border);
+      border-radius: 22px;
+      background: var(--panel);
+    }
+
+    .input-panel {
+      padding: 28px;
+    }
+
+    .panel-title {
+      margin: 0 0 24px;
+      font-size: 18px;
+      font-weight: 600;
+      letter-spacing: -0.02em;
+    }
+
+    .field-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 18px;
+    }
+
+    .field {
+      display: grid;
+      gap: 9px;
+    }
+
+    .field label {
+      color: var(--soft);
+      font-size: 13px;
+      font-weight: 500;
+    }
+
+    .input-wrap {
+      position: relative;
+    }
+
+    .input-control {
+      width: 100%;
+      height: 56px;
+      padding: 0 52px 0 16px;
+      border: 1px solid var(--border-strong);
+      border-radius: 13px;
+      background: #050505;
+      color: #fff;
+      outline: none;
+      transition: border-color 0.16s ease, box-shadow 0.16s ease;
+    }
+
+    .input-control:focus {
+      border-color: #777;
+      box-shadow: 0 0 0 4px rgba(255,255,255,0.035);
+    }
+
+    .suffix {
+      position: absolute;
+      top: 50%;
+      right: 16px;
+      transform: translateY(-50%);
+      color: #767676;
+      font-size: 13px;
+      pointer-events: none;
+    }
+
+    .actions {
+      display: flex;
+      gap: 10px;
+      margin-top: 24px;
+    }
+
+    .button {
+      min-height: 50px;
+      padding: 0 20px;
+      border-radius: 12px;
+      cursor: pointer;
+      transition: background 0.16s ease, border-color 0.16s ease, transform 0.16s ease;
+    }
+
+    .button:active {
+      transform: translateY(1px);
+    }
+
+    .button-primary {
+      flex: 1;
+      border: 1px solid #fff;
+      background:#242424;
+      color:#fff;
+      font-weight: 700;
+    }
+
+    .button-primary:hover {
+      background:#3a3a3a;
+      border-color:#4a4a4a;
+    }
+
+    .button-secondary {
+      border: 1px solid var(--border-strong);
+      background: transparent;
+      color: #fff;
+    }
+
+    .button-secondary:hover {
+      background: #151515;
+    }
+
+    .error {
+      min-height: 20px;
+      margin: 13px 0 0;
+      color: var(--danger);
+      font-size: 13px;
+    }
+
+
+    .ad-panel {
+      min-height:140px;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      padding:18px;
+      border:1px dashed #3b3b3b;
+      border-radius:22px;
+      background:#111;
+      color:#686868;
+      text-align:center;
+      font-size:12px;
+      letter-spacing:0.08em;
+      text-transform:uppercase;
+    }
+
+    .ad-one { grid-area: ad-one; }
+    .ad-two { grid-area: ad-two; }
+
+    .ad-slot {
+      width:100%;
+      min-height:104px;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+    }
+
+    .result-panel {
+      grid-area: result;
+      min-height: 360px;
+      padding: 28px;
+      background:#242424;
+      color:#fff;
+    }
+
+    .result-layout {
+      display: grid;
+      grid-template-columns: minmax(0, 1.08fr) minmax(320px, 0.92fr);
+      gap: 40px;
+      align-items: center;
+      min-height: 100%;
+      min-width: 0;
+    }
+
+    .result-main,
+    .result-details {
+      min-width: 0;
+    }
+
+    .result-eyebrow {
+      color:#a0a0a0;
+      font-size: 13px;
+      font-weight: 600;
+    }
+
+    .main-result {
+      margin: 18px 0 4px;
+      font-size: clamp(42px, 7vw, 70px);
+      line-height: 1;
+      letter-spacing: -0.06em;
+      font-weight: 700;
+      overflow-wrap: anywhere;
+    }
+
+    .result-label {
+      color:#9b9b9b;
+      font-size: 14px;
+    }
+
+    .result-breakdown {
+      display: grid;
+      gap: 0;
+      margin-top: 0;
+      border-top:1px solid #353535;
+    }
+
+    .result-row {
+      display: flex;
+      justify-content: space-between;
+      gap: 20px;
+      padding: 15px 0;
+      border-bottom:1px solid #353535;
+      font-size: 14px;
+    }
+
+    .result-row span:first-child {
+      color:#9b9b9b;
+    }
+
+    .result-row strong {
+      text-align: right;
+    }
+
+    .details {
+      display: grid;
+      gap: 10px;
+      margin-top: 22px;
+    }
+
+    .accordion {
+      overflow: hidden;
+      border: 1px solid var(--border);
+      border-radius: 15px;
+      background: #080808;
+    }
+
+    .accordion-button {
+      width: 100%;
+      min-height: 62px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 20px;
+      padding: 0 20px;
+      border: 0;
+      background: transparent;
+      color: #fff;
+      text-align: left;
+      cursor: pointer;
+    }
+
+    .accordion-button:hover {
+      background: #101010;
+    }
+
+    .accordion-title {
+      font-size: 15px;
+      font-weight: 600;
+    }
+
+    .accordion-icon {
+      color: #777;
+      font-size: 22px;
+      transition: transform 0.18s ease;
+    }
+
+    .accordion.open .accordion-icon {
+      transform: rotate(45deg);
+    }
+
+    .accordion-content {
+      max-height: 0;
+      overflow: hidden;
+      color: #aaa;
+      line-height: 1.75;
+      transition: max-height 0.25s ease;
+    }
+
+    .accordion-content-inner {
+      padding: 0 20px 22px;
+    }
+
+    .accordion-content p {
+      margin: 0 0 12px;
+    }
+
+    .accordion-content p:last-child {
+      margin-bottom: 0;
+    }
+
+    .formula {
+      display: block;
+      padding: 16px;
+      border: 1px solid #242424;
+      border-radius: 12px;
+      background: #030303;
+      color: #fff;
+      font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+      overflow-x: auto;
+    }
+
+    .faq-item + .faq-item {
+      margin-top: 18px;
+    }
+
+    .faq-question {
+      margin: 0 0 6px;
+      color: #fff;
+      font-size: 15px;
+    }
+
+    .related-tools {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 10px;
+    }
+
+    .related-link {
+      min-height: 54px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 14px;
+      padding: 0 16px;
+      border: 1px solid #242424;
+      border-radius: 12px;
+      color: #fff;
+      text-decoration: none;
+      background: #050505;
+    }
+
+    .related-link:hover {
+      background: #111;
+    }
+
+    .site-footer {
+      width: min(1080px, calc(100% - 32px));
+      margin: 0 auto;
+      padding: 26px 0 42px;
+      border-top: 1px solid #171717;
+      color: #686868;
+      font-size: 12px;
+    }
+
+    @media (max-width: 780px) {
+      .site-header {
+        height: 64px;
+        padding: 0 16px;
+      }
+
+      .page {
+        padding-top: 42px;
+      }
+
+      .calculator {
+        grid-template-columns: minmax(0, 1fr);
+        grid-template-areas:
+          "input"
+          "ad-one"
+          "result"
+          "ad-two";
+      }
+
+      .input-panel,
+      .field-grid,
+      .field,
+      .input-wrap,
+      .actions,
+      .result-panel {
+        width: 100%;
+        max-width: 100%;
+        min-width: 0;
+      }
+
+      .panel-title,
+      .field,
+      .actions,
+      .error,
+      .result-panel > * {
+        grid-column: 1 / -1;
+        grid-row: auto;
+      }
+
+      .result-panel {
+        min-height: 390px;
+      }
+
+      .field-grid {
+        grid-template-columns: minmax(0, 1fr);
+      }
+
+      .result-layout {
+        grid-template-columns: minmax(0, 1fr);
+        gap: 28px;
+        align-items: start;
+      }
+
+      .result-breakdown {
+        margin-top: 0;
+      }
+    }
+
+    @media (max-width: 520px) {
+      .page {
+        width: calc(100% - 24px);
+        padding-bottom: 60px;
+      }
+
+      .page-title {
+        font-size: clamp(34px, 11vw, 48px);
+        line-height: 1.02;
+        overflow-wrap: anywhere;
+      }
+
+      .input-panel,
+      .result-panel {
+        padding: 22px;
+        border-radius: 18px;
+      }
+
+      .field-grid {
+        grid-template-columns: minmax(0, 1fr) !important;
+      }
+
+      .input-control,
+      select.input-control {
+        width: 100%;
+        max-width: 100%;
+        min-width: 0;
+      }
+
+      .actions {
+        flex-direction: column;
+      }
+
+      .button,
+      .button-secondary {
+        width: 100%;
+        min-width: 0;
+      }
+
+      .result-row {
+        min-width: 0;
+      }
+
+      .result-row span,
+      .result-row strong {
+        min-width: 0;
+        overflow-wrap: anywhere;
+      }
+
+      .related-tools {
+        grid-template-columns: minmax(0, 1fr);
+      }
+
+      .main-result {
+        font-size: 48px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <header class="site-header">
+    <a class="brand" href="/es/">toolbox</a>
+
+    <div class="apps-wrap">
+      <button
+        class="apps-button"
+        id="appsButton"
+        type="button"
+        aria-label="Abrir categorías"
+        aria-expanded="false"
+        aria-controls="appsMenu"
+      >
+        <span class="dots" aria-hidden="true">
+          <span></span><span></span><span></span>
+          <span></span><span></span><span></span>
+          <span></span><span></span><span></span>
+        </span>
+      </button>
+
+      <div class="apps-menu" id="appsMenu">
+        <nav class="category-list" aria-label="Categorías de herramientas">
+          <a class="category-link" href="/es/calculator/categories/money-investing/">Dinero e inversión</a>
+          <a class="category-link" href="/es/calculator/categories/taxes-insurance-benefits/">Impuestos, seguros y prestaciones</a>
+          <a class="category-link" href="/es/calculator/categories/business-operations/">Negocios y operaciones</a>
+          <a class="category-link" href="/es/calculator/categories/startups-digital-business/">Startups y negocios digitales</a>
+          <a class="category-link" href="/es/calculator/categories/sales-marketing-audience/">Ventas, marketing y audiencia</a>
+          <a class="category-link" href="/es/calculator/categories/online-selling-retail/">Venta online y comercio minorista</a>
+          <a class="category-link" href="/es/calculator/categories/jobs-pay-workforce/">Empleo, salarios y personal</a>
+          <a class="category-link" href="/es/calculator/categories/time-productivity/">Tiempo y productividad</a>
+          <a class="category-link" href="/es/calculator/categories/property-construction/">Inmuebles y construcción</a>
+          <a class="category-link" href="/es/calculator/categories/manufacturing-production/">Fabricación y producción</a>
+          <a class="category-link" href="/es/calculator/categories/shipping-supply-chain/">Envíos y cadena de suministro</a>
+          <a class="category-link" href="/es/calculator/categories/health-body-fitness/">Salud, cuerpo y ejercicio</a>
+          <a class="category-link" href="/es/calculator/categories/food-cooking-hospitality/">Alimentación, cocina y hostelería</a>
+          <a class="category-link" href="/es/calculator/categories/home-everyday-life/">Hogar y vida cotidiana</a>
+          <a class="category-link" href="/es/calculator/categories/learning-grades/">Aprendizaje y calificaciones</a>
+          <a class="category-link" href="/es/calculator/categories/science-math-engineering/">Ciencia, matemáticas e ingeniería</a>
+          <a class="category-link" href="/es/calculator/categories/ai-data-technology/">IA, datos y tecnología</a>
+          <a class="category-link" href="/es/calculator/categories/energy-sustainability/">Energía y sostenibilidad</a>
+          <a class="category-link" href="/es/calculator/categories/farming-animals-pets/">Agricultura, animales y mascotas</a>
+          <a class="category-link" href="/es/calculator/categories/travel-events-recreation/">Viajes, eventos y ocio</a>
+          <a class="category-link" href="/es/calculator/categories/legal-safety-compliance/">Asuntos legales, seguridad y cumplimiento</a>
+        </nav>
+      </div>
+    </div>
+  </header>
+
+  <main class="page">
+    <div class="breadcrumb">
+      <a href="/">Inicio</a> / <a href="/es/calculator/categories/startups-digital-business/">Startups y negocios digitales</a> / Calculadora de financiación en fase seed
+    </div>
+
+    <div class="title-row">
+      <h1 class="page-title">Calculadora de financiación en fase seed</h1>
+      <button class="favorite-button" id="favoriteButton" type="button" aria-label="Añadir Calculadora de financiación en fase seed a favoritos" aria-pressed="false">☆</button>
+    </div>
+    <p class="intro">
+      Esta calculadora estima cuánto capital adicional podría necesitar una startup en fase seed para sostener un plan de operación durante un número determinado de meses. Parte del burn neto mensual, añade costes puntuales previstos, aplica un colchón porcentual y descuenta la caja ya disponible.<br><br>El resultado sirve para preparar escenarios de ronda y comprobar si una cantidad objetivo cubre el runway deseado bajo un conjunto concreto de supuestos. No estima valoración, dilución ni probabilidad de cerrar una ronda, y tampoco sustituye un modelo mensual de tesorería. Si el burn cambia con contrataciones, crecimiento de ingresos, hitos de producto o pagos anuales, conviene probar varios escenarios y revisar el cálculo con un forecast de caja más detallado.
+    </p>
+    <noscript>
+      <p class="noscript-notice">Esta calculadora necesita JavaScript para actualizar los resultados. Activa JavaScript en tu navegador y vuelve a cargar esta página.</p>
+    </noscript>
+
+    <section class="calculator" aria-label="Calculadora de financiación en fase seed">
+      <div class="panel input-panel">
+        <h2 class="panel-title">Necesidad de capital</h2>
+
+        <!-- Every number input in INPUTS_HTML must have a unique id, label, default value, min, max and step. Optional blank values must be treated as 0 or not applied, never as an error. -->
+        <div class="field-grid"><div class="field"><label for="monthlyBurn">Burn neto mensual</label><div class="input-wrap"><input class="input-control" id="monthlyBurn" type="number" value="70000" min="0" max="1000000000" step="0.01" inputmode="decimal" /><span class="suffix">€</span></div></div><div class="field"><label for="runwayMonths">Runway objetivo</label><div class="input-wrap"><input class="input-control" id="runwayMonths" type="number" value="18" min="1" max="120" step="1" inputmode="decimal" /><span class="suffix">meses</span></div></div><div class="field"><label for="oneTimeCosts">Costes puntuales previstos</label><div class="input-wrap"><input class="input-control" id="oneTimeCosts" type="number" value="120000" min="0" max="1000000000" step="0.01" inputmode="decimal" /><span class="suffix">€</span></div></div><div class="field"><label for="buffer">Colchón adicional</label><div class="input-wrap"><input class="input-control" id="buffer" type="number" value="10" min="0" max="100" step="0.1" inputmode="decimal" /><span class="suffix">%</span></div></div><div class="field"><label for="cash">Caja disponible</label><div class="input-wrap"><input class="input-control" id="cash" type="number" value="300000" min="0" max="1000000000" step="0.01" inputmode="decimal" /><span class="suffix">€</span></div></div></div>
+
+        <div class="actions">
+<button class="button button-secondary" id="resetButton" type="button">Restablecer</button>
+        </div>
+
+        <p class="error" id="errorMessage" role="alert"></p>
+      </div>
+
+      <aside class="ad-panel ad-one" aria-label="Publicidad">
+        <div class="ad-slot"><span>Espacio publicitario</span></div>
+      </aside>
+
+      <div class="panel result-panel" aria-live="polite">
+        <div class="result-layout">
+          <div class="result-main">
+          <div class="result-eyebrow">Resultado</div>
+          <div class="main-result" id="mainResult">—</div>
+          <div class="result-label" id="resultLabel">financiación adicional estimada</div>
+            
+          </div>
+          <div class="result-details">
+            <div class="result-breakdown"><div class="result-row"><span>Necesidad antes del colchón</span><strong id="baseNeed">—</strong></div><div class="result-row"><span>Colchón aplicado</span><strong id="bufferAmount">—</strong></div><div class="result-row"><span>Capital total del plan</span><strong id="totalPlan">—</strong></div></div>
+          </div>
+        </div>
+      </div>
+
+      <aside class="ad-panel ad-two" aria-label="Publicidad">
+        <div class="ad-slot"><span>Espacio publicitario</span></div>
+      </aside>
+    </section>
+
+    <section class="details" aria-label="Información de la calculadora">
+      <article class="accordion">
+        <button class="accordion-button" type="button" aria-expanded="false">
+          <span class="accordion-title">Cómo usarla</span>
+          <span class="accordion-icon" aria-hidden="true">+</span>
+        </button>
+        <div class="accordion-content">
+          <div class="accordion-content-inner">
+            <ol><li><strong>Introduce el burn neto mensual</strong><p>Usa la salida neta de caja mensual esperada durante el periodo que quieres financiar.</p></li><li><strong>Define el runway objetivo</strong><p>Indica cuántos meses deseas cubrir con la ronda y la caja existente.</p></li><li><strong>Añade costes puntuales</strong><p>Incluye desembolsos que no estén ya contenidos en el burn mensual, como equipamiento, migraciones o gastos excepcionales.</p></li><li><strong>Configura el colchón</strong><p>Aplica un porcentaje para absorber desviaciones del plan. No lo trates como una regla universal: ajusta el dato a tu escenario.</p></li><li><strong>Resta la caja disponible</strong><p>Introduce el efectivo utilizable al inicio. La cifra principal muestra el capital adicional que faltaría.</p></li></ol>
+          </div>
+        </div>
+      </article>
+
+      <article class="accordion">
+        <button class="accordion-button" type="button" aria-expanded="false">
+          <span class="accordion-title">Fórmula</span>
+          <span class="accordion-icon" aria-hidden="true">+</span>
+        </button>
+        <div class="accordion-content">
+          <div class="accordion-content-inner">
+            <span class="formula">Financiación adicional = max(0, [(burn mensual × meses) + costes puntuales] × (1 + colchón/100) − caja disponible)</span><p><strong>Variables:</strong></p><ul><li><strong>Burn mensual</strong>: salida neta de caja prevista por mes.</li><li><strong>Meses</strong>: runway que se desea financiar.</li><li><strong>Costes puntuales</strong>: desembolsos adicionales no incluidos en el burn.</li><li><strong>Colchón</strong>: porcentaje de contingencia aplicado al plan base.</li><li><strong>Caja disponible</strong>: efectivo que puede destinarse al mismo plan.</li></ul><p><strong>Supuestos:</strong> Se supone un burn mensual constante. La fórmula no incorpora automáticamente crecimiento de ingresos, cambios de plantilla, impuestos, deuda ni calendario de cobros y pagos.</p>
+            <h3>Qué significa el resultado</h3>
+            <p>La cifra principal representa el déficit de caja estimado para cubrir el plan definido. Si la caja disponible supera el capital requerido, la necesidad adicional se muestra como cero.</p>
+            <p>Una ronda real puede dimensionarse por hitos, condiciones de mercado y estrategia, no solo por runway. Utiliza el cálculo como escenario de tesorería.</p>
+          </div>
+        </div>
+      </article>
+
+      <article class="accordion">
+        <button class="accordion-button" type="button" aria-expanded="false">
+          <span class="accordion-title">Ejemplo de cálculo</span>
+          <span class="accordion-icon" aria-hidden="true">+</span>
+        </button>
+        <div class="accordion-content">
+          <div class="accordion-content-inner">
+            <p><strong>Datos:</strong></p><ul><li>Burn neto mensual: 70.000 €</li><li>Runway objetivo: 18 meses</li><li>Costes puntuales: 120.000 €</li><li>Colchón: 10 %</li><li>Caja disponible: 300.000 €</li></ul><p><strong>Cálculo:</strong><br>Plan base = 70.000 × 18 + 120.000 = 1.380.000 €.<br>Colchón = 1.380.000 × 0,10 = 138.000 €.<br>Capital total = 1.518.000 €.<br>Financiación adicional = 1.518.000 − 300.000 = 1.218.000 €.</p><p><strong>Resultado:</strong> 1.218.000 €</p><p><strong>Interpretación:</strong> Con estos supuestos, la startup necesitaría aproximadamente 1,218 millones de euros adicionales para financiar el plan completo.</p>
+          </div>
+        </div>
+      </article>
+
+      <article class="accordion">
+        <button class="accordion-button" type="button" aria-expanded="false">
+          <span class="accordion-title">Preguntas frecuentes</span>
+          <span class="accordion-icon" aria-hidden="true">+</span>
+        </button>
+        <div class="accordion-content">
+          <div class="accordion-content-inner">
+            <div class="faq-item"><h3 class="faq-question">¿Debo usar burn bruto o burn neto?</h3><p>Para esta fórmula usa burn neto, es decir, la pérdida mensual de caja después de las entradas operativas previstas. Si solo tienes gastos, calcula primero las entradas y salidas por separado.</p></div><div class="faq-item"><h3 class="faq-question">¿Los costes puntuales deben incluirse también en el burn?</h3><p>No los dupliques. Si ya están prorrateados dentro del burn mensual, deja el campo de costes puntuales en cero para esos conceptos.</p></div><div class="faq-item"><h3 class="faq-question">¿Qué porcentaje de colchón debo poner?</h3><p>No existe un porcentaje válido para todas las startups. Usa un supuesto que refleje la volatilidad de tus costes, ingresos y calendario, y prueba escenarios alternativos.</p></div><div class="faq-item"><h3 class="faq-question">¿La financiación calculada es el tamaño recomendado de la ronda?</h3><p>No necesariamente. Es una necesidad de caja basada en el plan introducido; el tamaño final de una ronda también depende de hitos, dilución, instrumentos, negociación y disponibilidad de capital.</p></div><div class="faq-item"><h3 class="faq-question">¿Cómo afectan nuevos ingresos durante el runway?</h3><p>Si ya están reflejados en un burn neto menor, quedan incorporados. Si esperas que cambien de forma importante mes a mes, un modelo mensual de caja será más adecuado que un burn constante.</p></div>
+          </div>
+        </div>
+      </article>
+
+      <article class="accordion">
+        <button class="accordion-button" type="button" aria-expanded="false">
+          <span class="accordion-title">Herramientas relacionadas</span>
+          <span class="accordion-icon" aria-hidden="true">+</span>
+        </button>
+        <div class="accordion-content">
+          <div class="accordion-content-inner">
+            <div class="related-tools"><a class="related-link" href="/es/calculator/seed_stage_payback_estimator/"><span><strong>Seed Stage Payback Estimator</strong><br><small>Ayuda a entender cuánto tarda la adquisición en devolver capital al negocio.</small></span><span aria-hidden="true">→</span></a><a class="related-link" href="/es/calculator/seed_stage_ownership_calculator/"><span><strong>Seed Stage Ownership Calculator</strong><br><small>Traduce inversión y valoración a participación del nuevo inversor.</small></span><span aria-hidden="true">→</span></a><a class="related-link" href="/es/calculator/pre_money_valuation_estimator/"><span><strong>Pre Money Valuation Estimator</strong><br><small>Permite explorar la valoración previa que se usa en una ronda de equity.</small></span><span aria-hidden="true">→</span></a><a class="related-link" href="/es/calculator/post_money_valuation_estimator/"><span><strong>Post Money Valuation Estimator</strong><br><small>Complementa el cálculo mostrando el valor posterior a incorporar la inversión.</small></span><span aria-hidden="true">→</span></a></div>
+          </div>
+        </div>
+      </article>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    © 2026 toolbox. Estimación de planificación financiera; no constituye asesoramiento de inversión, valoración ni captación de capital.
+  </footer>
+
+  <script>
+    const appsButton = document.getElementById("appsButton");
+    const appsMenu = document.getElementById("appsMenu");
+    const favoriteButton = document.getElementById("favoriteButton");
+    const FAVORITES_KEY = "toolboxapp-favorites-v1";
+    const currentTool = {
+      name: "Calculadora de financiación en fase seed",
+      url: window.location.pathname
+    };
+
+    function readFavorites() {
+      try {
+        const saved = JSON.parse(localStorage.getItem(FAVORITES_KEY) || "[]");
+        return Array.isArray(saved) ? saved : [];
+      } catch (error) {
+        return [];
+      }
+    }
+
+    function updateFavoriteButton() {
+      const isFavorite = readFavorites().some(tool => tool.url === currentTool.url);
+      favoriteButton.classList.toggle("active", isFavorite);
+      favoriteButton.textContent = isFavorite ? "★" : "☆";
+      favoriteButton.setAttribute("aria-pressed", String(isFavorite));
+      favoriteButton.setAttribute("aria-label", `${isFavorite ? "Quitar" : "Añadir"} Calculadora de financiación en fase seed ${isFavorite ? "de" : "a"} favoritos`);
+    }
+
+    favoriteButton.addEventListener("click", () => {
+      const saved = readFavorites();
+      const existingIndex = saved.findIndex(tool => tool.url === currentTool.url);
+
+      if (existingIndex >= 0) {
+        saved.splice(existingIndex, 1);
+      } else {
+        saved.push(currentTool);
+      }
+
+      localStorage.setItem(FAVORITES_KEY, JSON.stringify(saved));
+      updateFavoriteButton();
+    });
+
+    const resetButton = document.getElementById("resetButton");
+    const errorMessage = document.getElementById("errorMessage");
+    const byId = id => document.getElementById(id);
+    const finite = value => Number.isFinite(Number(value));
+    const optionalNumber = (id, fallback = 0) => {
+      const value = byId(id)?.value.trim();
+      return value === "" ? fallback : Number(value);
+    };
+    const formatNumber = (value, digits = 2) => Number(value).toLocaleString("es-ES", { maximumFractionDigits: digits });
+    const formatMoney = (value, currency = "USD", digits = 2) => new Intl.NumberFormat("es-ES", { style: "currency", currency, maximumFractionDigits: digits }).format(value);
+    const formatPercent = (value, digits = 2) => `${Number(value).toFixed(digits)}%`;
+    const setText = (id, value) => { const node = byId(id); if (node) node.textContent = value; };
+    const showError = message => { errorMessage.textContent = message; };
+    const clearError = () => { errorMessage.textContent = ""; document.querySelectorAll('[aria-invalid="true"]').forEach(node => node.setAttribute("aria-invalid", "false")); };
+    const invalidate = (id, message) => { const node = byId(id); if (node) node.setAttribute("aria-invalid", "true"); showError(message); return false; };
+
+    function calculate(){clearError();const burn=Number(byId("monthlyBurn").value),months=Number(byId("runwayMonths").value),one=Number(byId("oneTimeCosts").value),buf=Number(byId("buffer").value),cash=Number(byId("cash").value);if(!finite(burn)||burn<0)return invalidate("monthlyBurn","El burn no puede ser negativo.");if(!finite(months)||months<=0)return invalidate("runwayMonths","El runway debe ser mayor que 0.");if(!finite(one)||one<0)return invalidate("oneTimeCosts","Los costes puntuales no pueden ser negativos.");if(!finite(buf)||buf<0||buf>100)return invalidate("buffer","El colchón debe estar entre 0 y 100 %.");if(!finite(cash)||cash<0)return invalidate("cash","La caja no puede ser negativa.");const base=burn*months+one,ba=base*buf/100,total=base+ba,need=Math.max(0,total-cash);setText("mainResult",formatMoney(need,"EUR",0));setText("baseNeed",formatMoney(base,"EUR",0));setText("bufferAmount",formatMoney(ba,"EUR",0));setText("totalPlan",formatMoney(total,"EUR",0));}
+
+    resetButton.addEventListener("click", () => {
+      document.querySelectorAll(".input-control").forEach(input => { input.value = input.defaultValue; });
+      clearError();
+      calculate();
+    });
+    let autoTimer;
+    document.querySelectorAll(".input-control").forEach(input => {
+      input.addEventListener("input", () => {
+        clearTimeout(autoTimer);
+        autoTimer = setTimeout(calculate, 200);
+      });
+      input.addEventListener("change", calculate);
+    });
+
+
+    appsButton.addEventListener("click", () => {
+      const isOpen = appsMenu.classList.toggle("open");
+      appsButton.setAttribute("aria-expanded", String(isOpen));
+    });
+
+    document.addEventListener("click", event => {
+      if (!event.target.closest(".apps-wrap")) {
+        appsMenu.classList.remove("open");
+        appsButton.setAttribute("aria-expanded", "false");
+      }
+    });
+
+    document.querySelectorAll(".accordion-button").forEach(button => {
+      button.addEventListener("click", () => {
+        const accordion = button.closest(".accordion");
+        const content = accordion.querySelector(".accordion-content");
+        const isOpen = accordion.classList.toggle("open");
+
+        button.setAttribute("aria-expanded", String(isOpen));
+        content.style.maxHeight = isOpen ? content.scrollHeight + "px" : "0px";
+      });
+    });
+
+    calculate();
+    updateFavoriteButton();
+  </script>
+</body>
+</html>
