@@ -1,0 +1,109 @@
+name: Add Spanish hreflang to English pages
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/add-es-hreflang-to-english.yml'
+
+permissions:
+  contents: write
+
+jobs:
+  update-hreflang:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Update matching English calculator pages
+        shell: bash
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          import re
+
+          changed = 0
+          already = 0
+          missing_english = []
+
+          spanish_pages = sorted(Path('es/calculator').glob('*/index.html'))
+          if not spanish_pages:
+              raise SystemExit('No Spanish calculator pages found')
+
+          for spanish_path in spanish_pages:
+              slug = spanish_path.parent.name
+              english_path = Path('calculator') / slug / 'index.html'
+              if not english_path.exists():
+                  missing_english.append(slug)
+                  continue
+
+              text = english_path.read_text(encoding='utf-8')
+              canonical = f'<link rel="canonical" href="https://www.toolboxapp.cc/calculator/{slug}/" />'
+              en = f'<link rel="alternate" hreflang="en" href="https://www.toolboxapp.cc/calculator/{slug}/" />'
+              es = f'<link rel="alternate" hreflang="es" href="https://www.toolboxapp.cc/es/calculator/{slug}/" />'
+              xd = f'<link rel="alternate" hreflang="x-default" href="https://www.toolboxapp.cc/calculator/{slug}/" />'
+
+              if en in text and es in text and xd in text:
+                  already += 1
+                  continue
+              if canonical not in text:
+                  raise SystemExit(f'Canonical not found: {english_path}')
+
+              text = re.sub(r'\n\s*<link rel="alternate" hreflang="(?:en|es|x-default)"[^>]*\s*/>', '', text)
+              replacement = canonical + '\n  ' + en + '\n  ' + es + '\n  ' + xd
+              text = text.replace(canonical, replacement, 1)
+              english_path.write_text(text, encoding='utf-8')
+              changed += 1
+
+          print(f'Spanish pages: {len(spanish_pages)}')
+          print(f'Changed English pages: {changed}')
+          print(f'Already complete: {already}')
+          print(f'Missing English pages: {len(missing_english)}')
+          if missing_english:
+              print('Missing English slugs:', ', '.join(missing_english[:50]))
+              raise SystemExit(1)
+          PY
+
+      - name: Validate reciprocal hreflang
+        shell: bash
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+
+          errors = []
+          spanish_pages = sorted(Path('es/calculator').glob('*/index.html'))
+          for spanish_path in spanish_pages:
+              slug = spanish_path.parent.name
+              english_path = Path('calculator') / slug / 'index.html'
+              if not english_path.exists():
+                  errors.append(f'missing English page: {slug}')
+                  continue
+              text = english_path.read_text(encoding='utf-8')
+              expected = [
+                  f'<link rel="alternate" hreflang="en" href="https://www.toolboxapp.cc/calculator/{slug}/" />',
+                  f'<link rel="alternate" hreflang="es" href="https://www.toolboxapp.cc/es/calculator/{slug}/" />',
+                  f'<link rel="alternate" hreflang="x-default" href="https://www.toolboxapp.cc/calculator/{slug}/" />',
+              ]
+              for tag in expected:
+                  if text.count(tag) != 1:
+                      errors.append(f'{slug}: expected exactly one {tag}')
+          if errors:
+              raise SystemExit('\n'.join(errors[:100]))
+          print(f'Validated {len(spanish_pages)} English/Spanish calculator pairs')
+          PY
+
+      - name: Commit page changes once
+        shell: bash
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git rm .github/workflows/add-es-hreflang-to-english.yml
+          git add calculator
+          if git diff --cached --quiet; then
+            echo "No changes to commit"
+            exit 0
+          fi
+          git commit -m "Add Spanish hreflang to matching English calculators [skip ci]"
+          git push origin main
