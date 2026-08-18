@@ -1,0 +1,1079 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Este calculador proyecta un tiempo de carrera de ciclismo para una distancia objetivo usando como referencia un recorrido anterior y un exponente de fatiga. El…" />
+  <link rel="canonical" href="https://www.toolboxapp.cc/es/calculator/cycling_power_race_prediction_calculator/" />
+  <link rel="alternate" hreflang="en" href="https://www.toolboxapp.cc/calculator/cycling_power_race_prediction_calculator/" />
+  <link rel="alternate" hreflang="es" href="https://www.toolboxapp.cc/es/calculator/cycling_power_race_prediction_calculator/" />
+  <link rel="alternate" hreflang="x-default" href="https://www.toolboxapp.cc/calculator/cycling_power_race_prediction_calculator/" />
+  <title>Cycling Power Race Prediction Calculator | toolbox</title>
+  <meta property="og:site_name" content="toolbox" />
+  <meta property="og:title" content="Cycling Power Race Prediction Calculator | toolbox" />
+  <meta property="og:description" content="Este calculador proyecta un tiempo de carrera de ciclismo para una distancia objetivo usando como referencia un recorrido anterior y un exponente de fatiga. El…" />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://www.toolboxapp.cc/es/calculator/cycling_power_race_prediction_calculator/" />
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Cycling Power Race Prediction Calculator | toolbox" />
+  <meta name="twitter:description" content="Este calculador proyecta un tiempo de carrera de ciclismo para una distancia objetivo usando como referencia un recorrido anterior y un exponente de fatiga. El…" />
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+          { "@type": "ListItem", "position": 1, "name": "Inicio", "item": "https://www.toolboxapp.cc/" },
+          { "@type": "ListItem", "position": 2, "name": "Viajes, eventos y ocio", "item": "https://www.toolboxapp.cc/es/calculator/categories/travel-events-recreation/" },
+          { "@type": "ListItem", "position": 3, "name": "Cycling Power Race Prediction Calculator", "item": "https://www.toolboxapp.cc/es/calculator/cycling_power_race_prediction_calculator/" }
+        ]
+      },
+      {
+        "@type": "WebApplication",
+        "name": "Cycling Power Race Prediction Calculator",
+        "url": "https://www.toolboxapp.cc/es/calculator/cycling_power_race_prediction_calculator/",
+        "description": "Este calculador proyecta un tiempo de carrera de ciclismo para una distancia objetivo usando como referencia un recorrido anterior y un exponente de fatiga. El…",
+        "applicationCategory": "UtilitiesApplication",
+        "operatingSystem": "Any",
+        "browserRequirements": "Requiere JavaScript"
+      }
+    ]
+  }
+  </script>
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "¿Puedo usar una contrarreloj como referencia para una marcha con pelotón?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Puedes hacerlo, pero las condiciones no son equivalentes. El beneficio aerodinámico del grupo y los cambios de ritmo pueden hacer que la predicción se desvíe."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "¿Qué exponente debo elegir?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "El valor depende del deportista y del tipo de prueba. El valor predeterminado sirve como hipótesis inicial; si dispones de varias carreras reales, puedes ajustarlo para que reproduzca mejor tus resultados."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "¿Funciona si la distancia objetivo es menor que la de referencia?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Sí. La misma ecuación puede proyectar hacia una distancia menor, aunque la capacidad de producir más potencia durante un esfuerzo corto puede hacer que el modelo sea conservador."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "¿El desnivel está incluido?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "No. La calculadora solo utiliza distancia, tiempo y exponente; debes comparar recorridos de dificultad similar o añadir tu propio margen."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "¿Por qué no usa FTP o vatios?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Este enfoque se basa en rendimiento observado y evita modelar aerodinámica, masa, resistencia a la rodadura y pendiente. Una calculadora basada en potencia respondería a una pregunta distinta."
+      }
+    }
+  ]
+}
+</script>
+
+  <style>
+    :root {
+      color-scheme: dark;
+      --bg: #000;
+      --panel: #0a0a0a;
+      --panel-hover: #111;
+      --border: #292929;
+      --border-strong: #454545;
+      --text: #fff;
+      --muted: #8d8d8d;
+      --soft: #bdbdbd;
+      --danger: #ff7d7d;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      background: var(--bg);
+      color: var(--text);
+      font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    button,
+    input,
+    select {
+      font: inherit;
+    }
+
+    a {
+      color: inherit;
+    }
+
+    .site-header {
+      position: sticky;
+      top: 0;
+      z-index: 30;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: 70px;
+      padding: 0 24px;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+      background: rgba(0, 0, 0, 0.88);
+      backdrop-filter: blur(18px);
+    }
+
+    .brand {
+      color: #fff;
+      text-decoration: none;
+      font-size: 24px;
+      font-weight: 600;
+      letter-spacing: -0.05em;
+    }
+
+    .apps-wrap {
+      position: relative;
+    }
+
+    .apps-button {
+      width: 44px;
+      height: 44px;
+      display: grid;
+      place-items: center;
+      border: 0;
+      border-radius: 50%;
+      background: transparent;
+      cursor: pointer;
+      transition: background 0.18s ease;
+    }
+
+    .apps-button:hover,
+    .apps-button:focus-visible {
+      background: #111;
+      outline: none;
+    }
+
+    .dots {
+      width: 20px;
+      height: 20px;
+      display: grid;
+      grid-template-columns: repeat(3, 4px);
+      grid-template-rows: repeat(3, 4px);
+      gap: 4px;
+    }
+
+    .dots span {
+      width: 4px;
+      height: 4px;
+      border-radius: 50%;
+      background: #fff;
+    }
+
+    .apps-menu {
+      position: absolute;
+      top: 52px;
+      right: 0;
+      width: min(310px, calc(100vw - 32px));
+      max-height: calc(100vh - 84px);
+      overflow-y: auto;
+      padding: 10px;
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      background: rgba(10, 10, 10, 0.98);
+      box-shadow: 0 22px 60px rgba(0, 0, 0, 0.6);
+      opacity: 0;
+      visibility: hidden;
+      transform: translateY(-8px);
+      transition: 0.18s ease;
+    }
+
+    .apps-menu.open {
+      opacity: 1;
+      visibility: visible;
+      transform: translateY(0);
+    }
+
+    .category-list {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+
+    .category-link {
+      min-height: 42px;
+      display: flex;
+      align-items: center;
+      padding: 0 14px;
+      border-radius: 10px;
+      color: #fff;
+      text-decoration: none;
+      font-size: 14px;
+      transition: background 0.16s ease;
+    }
+
+    .category-link:hover,
+    .category-link:focus-visible {
+      background: #181818;
+      outline: none;
+    }
+
+    .page {
+      width: min(1080px, calc(100% - 32px));
+      margin: 0 auto;
+      padding: 64px 0 90px;
+    }
+
+    .breadcrumb {
+      margin-bottom: 22px;
+      color: #737373;
+      font-size: 13px;
+    }
+
+    .breadcrumb a {
+      color: #9b9b9b;
+      text-decoration: none;
+    }
+
+    .breadcrumb a:hover {
+      color: #fff;
+    }
+
+    .page-title {
+      margin: 0;
+      font-size: clamp(36px, 6vw, 62px);
+      line-height: 1;
+      letter-spacing: -0.055em;
+      font-weight: 600;
+    }
+
+    .title-row {
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: flex-start;
+    }
+
+    .title-row .page-title {
+      padding-right: 48px;
+    }
+
+    .favorite-button {
+      position: absolute;
+      right: 0;
+      display: grid;
+      width: 42px;
+      height: 42px;
+      padding: 0;
+      place-items: center;
+      border: 0;
+      background: transparent;
+      color: #858585;
+      cursor: pointer;
+      font-size: 25px;
+      line-height: 1;
+      transition: color .16s ease;
+    }
+
+    .favorite-button:hover,
+    .favorite-button:focus-visible {
+      color: #fff;
+      outline: none;
+    }
+
+    .favorite-button.active {
+      color: #ffd34e;
+    }
+
+    .intro {
+      width: 100%;
+      max-width: none;
+      margin: 18px 0 0;
+      color: var(--muted);
+      font-size: 16px;
+      line-height: 1.7;
+    }
+
+    .noscript-notice {
+      margin: 18px 0 0;
+      padding: 14px 16px;
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      color: var(--soft);
+      background: var(--panel);
+      font-size: 14px;
+      line-height: 1.6;
+    }
+
+    .calculator {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      grid-template-areas:
+        "input input"
+        "ad-one ad-two"
+        "result result";
+      gap: 18px;
+      margin-top: 46px;
+      min-width: 0;
+    }
+
+    .input-panel {
+      grid-area: input;
+    }
+
+    .calculator > *,
+    .field-grid,
+    .field,
+    .input-wrap,
+    .result-panel,
+    .result-breakdown {
+      min-width: 0;
+    }
+
+    .panel {
+      border: 1px solid var(--border);
+      border-radius: 22px;
+      background: var(--panel);
+    }
+
+    .input-panel {
+      padding: 28px;
+    }
+
+    .panel-title {
+      margin: 0 0 24px;
+      font-size: 18px;
+      font-weight: 600;
+      letter-spacing: -0.02em;
+    }
+
+    .field-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 18px;
+    }
+
+    .field {
+      display: grid;
+      gap: 9px;
+    }
+
+    .field label {
+      color: var(--soft);
+      font-size: 13px;
+      font-weight: 500;
+    }
+
+    .input-wrap {
+      position: relative;
+    }
+
+    .input-control {
+      width: 100%;
+      height: 56px;
+      padding: 0 52px 0 16px;
+      border: 1px solid var(--border-strong);
+      border-radius: 13px;
+      background: #050505;
+      color: #fff;
+      outline: none;
+      transition: border-color 0.16s ease, box-shadow 0.16s ease;
+    }
+
+    .input-control:focus {
+      border-color: #777;
+      box-shadow: 0 0 0 4px rgba(255,255,255,0.035);
+    }
+
+    .suffix {
+      position: absolute;
+      top: 50%;
+      right: 16px;
+      transform: translateY(-50%);
+      color: #767676;
+      font-size: 13px;
+      pointer-events: none;
+    }
+
+    .actions {
+      display: flex;
+      gap: 10px;
+      margin-top: 24px;
+    }
+
+    .button {
+      min-height: 50px;
+      padding: 0 20px;
+      border-radius: 12px;
+      cursor: pointer;
+      transition: background 0.16s ease, border-color 0.16s ease, transform 0.16s ease;
+    }
+
+    .button:active {
+      transform: translateY(1px);
+    }
+
+    .button-primary {
+      flex: 1;
+      border: 1px solid #fff;
+      background:#242424;
+      color:#fff;
+      font-weight: 700;
+    }
+
+    .button-primary:hover {
+      background:#3a3a3a;
+      border-color:#4a4a4a;
+    }
+
+    .button-secondary {
+      border: 1px solid var(--border-strong);
+      background: transparent;
+      color: #fff;
+    }
+
+    .button-secondary:hover {
+      background: #151515;
+    }
+
+    .error {
+      min-height: 20px;
+      margin: 13px 0 0;
+      color: var(--danger);
+      font-size: 13px;
+    }
+
+
+    .ad-panel {
+      min-height:140px;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      padding:18px;
+      border:1px dashed #3b3b3b;
+      border-radius:22px;
+      background:#111;
+      color:#686868;
+      text-align:center;
+      font-size:12px;
+      letter-spacing:0.08em;
+      text-transform:uppercase;
+    }
+
+    .ad-one { grid-area: ad-one; }
+    .ad-two { grid-area: ad-two; }
+
+    .ad-slot {
+      width:100%;
+      min-height:104px;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+    }
+
+    .result-panel {
+      grid-area: result;
+      min-height: 360px;
+      padding: 28px;
+      background:#242424;
+      color:#fff;
+    }
+
+    .result-layout {
+      display: grid;
+      grid-template-columns: minmax(0, 1.08fr) minmax(320px, 0.92fr);
+      gap: 40px;
+      align-items: center;
+      min-height: 100%;
+      min-width: 0;
+    }
+
+    .result-main,
+    .result-details {
+      min-width: 0;
+    }
+
+    .result-eyebrow {
+      color:#a0a0a0;
+      font-size: 13px;
+      font-weight: 600;
+    }
+
+    .main-result {
+      margin: 18px 0 4px;
+      font-size: clamp(42px, 7vw, 70px);
+      line-height: 1;
+      letter-spacing: -0.06em;
+      font-weight: 700;
+      overflow-wrap: anywhere;
+    }
+
+    .result-label {
+      color:#9b9b9b;
+      font-size: 14px;
+    }
+
+    .result-breakdown {
+      display: grid;
+      gap: 0;
+      margin-top: 0;
+      border-top:1px solid #353535;
+    }
+
+    .result-row {
+      display: flex;
+      justify-content: space-between;
+      gap: 20px;
+      padding: 15px 0;
+      border-bottom:1px solid #353535;
+      font-size: 14px;
+    }
+
+    .result-row span:first-child {
+      color:#9b9b9b;
+    }
+
+    .result-row strong {
+      text-align: right;
+    }
+
+    .details {
+      display: grid;
+      gap: 10px;
+      margin-top: 22px;
+    }
+
+    .accordion {
+      overflow: hidden;
+      border: 1px solid var(--border);
+      border-radius: 15px;
+      background: #080808;
+    }
+
+    .accordion-button {
+      width: 100%;
+      min-height: 62px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 20px;
+      padding: 0 20px;
+      border: 0;
+      background: transparent;
+      color: #fff;
+      text-align: left;
+      cursor: pointer;
+    }
+
+    .accordion-button:hover {
+      background: #101010;
+    }
+
+    .accordion-title {
+      font-size: 15px;
+      font-weight: 600;
+    }
+
+    .accordion-icon {
+      color: #777;
+      font-size: 22px;
+      transition: transform 0.18s ease;
+    }
+
+    .accordion.open .accordion-icon {
+      transform: rotate(45deg);
+    }
+
+    .accordion-content {
+      max-height: 0;
+      overflow: hidden;
+      color: #aaa;
+      line-height: 1.75;
+      transition: max-height 0.25s ease;
+    }
+
+    .accordion-content-inner {
+      padding: 0 20px 22px;
+    }
+
+    .accordion-content p {
+      margin: 0 0 12px;
+    }
+
+    .accordion-content p:last-child {
+      margin-bottom: 0;
+    }
+
+    .formula {
+      display: block;
+      padding: 16px;
+      border: 1px solid #242424;
+      border-radius: 12px;
+      background: #030303;
+      color: #fff;
+      font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+      overflow-x: auto;
+    }
+
+    .faq-item + .faq-item {
+      margin-top: 18px;
+    }
+
+    .faq-question {
+      margin: 0 0 6px;
+      color: #fff;
+      font-size: 15px;
+    }
+
+    .related-tools {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 10px;
+    }
+
+    .related-link {
+      min-height: 54px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 14px;
+      padding: 0 16px;
+      border: 1px solid #242424;
+      border-radius: 12px;
+      color: #fff;
+      text-decoration: none;
+      background: #050505;
+    }
+
+    .related-link:hover {
+      background: #111;
+    }
+
+    .site-footer {
+      width: min(1080px, calc(100% - 32px));
+      margin: 0 auto;
+      padding: 26px 0 42px;
+      border-top: 1px solid #171717;
+      color: #686868;
+      font-size: 12px;
+    }
+
+    @media (max-width: 780px) {
+      .site-header {
+        height: 64px;
+        padding: 0 16px;
+      }
+
+      .page {
+        padding-top: 42px;
+      }
+
+      .calculator {
+        grid-template-columns: minmax(0, 1fr);
+        grid-template-areas:
+          "input"
+          "ad-one"
+          "result"
+          "ad-two";
+      }
+
+      .input-panel,
+      .field-grid,
+      .field,
+      .input-wrap,
+      .actions,
+      .result-panel {
+        width: 100%;
+        max-width: 100%;
+        min-width: 0;
+      }
+
+      .panel-title,
+      .field,
+      .actions,
+      .error,
+      .result-panel > * {
+        grid-column: 1 / -1;
+        grid-row: auto;
+      }
+
+      .result-panel {
+        min-height: 390px;
+      }
+
+      .field-grid {
+        grid-template-columns: minmax(0, 1fr);
+      }
+
+      .result-layout {
+        grid-template-columns: minmax(0, 1fr);
+        gap: 28px;
+        align-items: start;
+      }
+
+      .result-breakdown {
+        margin-top: 0;
+      }
+    }
+
+    @media (max-width: 520px) {
+      .page {
+        width: calc(100% - 24px);
+        padding-bottom: 60px;
+      }
+
+      .page-title {
+        font-size: clamp(34px, 11vw, 48px);
+        line-height: 1.02;
+        overflow-wrap: anywhere;
+      }
+
+      .input-panel,
+      .result-panel {
+        padding: 22px;
+        border-radius: 18px;
+      }
+
+      .field-grid {
+        grid-template-columns: minmax(0, 1fr) !important;
+      }
+
+      .input-control,
+      select.input-control {
+        width: 100%;
+        max-width: 100%;
+        min-width: 0;
+      }
+
+      .actions {
+        flex-direction: column;
+      }
+
+      .button,
+      .button-secondary {
+        width: 100%;
+        min-width: 0;
+      }
+
+      .result-row {
+        min-width: 0;
+      }
+
+      .result-row span,
+      .result-row strong {
+        min-width: 0;
+        overflow-wrap: anywhere;
+      }
+
+      .related-tools {
+        grid-template-columns: minmax(0, 1fr);
+      }
+
+      .main-result {
+        font-size: 48px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <header class="site-header">
+    <a class="brand" href="/es/">toolbox</a>
+
+    <div class="apps-wrap">
+      <button
+        class="apps-button"
+        id="appsButton"
+        type="button"
+        aria-label="Abrir categorías"
+        aria-expanded="false"
+        aria-controls="appsMenu"
+      >
+        <span class="dots" aria-hidden="true">
+          <span></span><span></span><span></span>
+          <span></span><span></span><span></span>
+          <span></span><span></span><span></span>
+        </span>
+      </button>
+
+      <div class="apps-menu" id="appsMenu">
+        <nav class="category-list" aria-label="Categorías de herramientas">
+          <a class="category-link" href="/es/calculator/categories/money-investing/">Dinero e inversión</a>
+          <a class="category-link" href="/es/calculator/categories/taxes-insurance-benefits/">Impuestos, seguros y prestaciones</a>
+          <a class="category-link" href="/es/calculator/categories/business-operations/">Negocios y operaciones</a>
+          <a class="category-link" href="/es/calculator/categories/startups-digital-business/">Startups y negocios digitales</a>
+          <a class="category-link" href="/es/calculator/categories/sales-marketing-audience/">Ventas, marketing y audiencia</a>
+          <a class="category-link" href="/es/calculator/categories/online-selling-retail/">Venta online y comercio minorista</a>
+          <a class="category-link" href="/es/calculator/categories/jobs-pay-workforce/">Empleo, salarios y personal</a>
+          <a class="category-link" href="/es/calculator/categories/time-productivity/">Tiempo y productividad</a>
+          <a class="category-link" href="/es/calculator/categories/property-construction/">Inmuebles y construcción</a>
+          <a class="category-link" href="/es/calculator/categories/manufacturing-production/">Fabricación y producción</a>
+          <a class="category-link" href="/es/calculator/categories/shipping-supply-chain/">Envíos y cadena de suministro</a>
+          <a class="category-link" href="/es/calculator/categories/health-body-fitness/">Salud, cuerpo y ejercicio</a>
+          <a class="category-link" href="/es/calculator/categories/food-cooking-hospitality/">Alimentación, cocina y hostelería</a>
+          <a class="category-link" href="/es/calculator/categories/home-everyday-life/">Hogar y vida cotidiana</a>
+          <a class="category-link" href="/es/calculator/categories/learning-grades/">Aprendizaje y calificaciones</a>
+          <a class="category-link" href="/es/calculator/categories/science-math-engineering/">Ciencia, matemáticas e ingeniería</a>
+          <a class="category-link" href="/es/calculator/categories/ai-data-technology/">IA, datos y tecnología</a>
+          <a class="category-link" href="/es/calculator/categories/energy-sustainability/">Energía y sostenibilidad</a>
+          <a class="category-link" href="/es/calculator/categories/farming-animals-pets/">Agricultura, animales y mascotas</a>
+          <a class="category-link" href="/es/calculator/categories/travel-events-recreation/">Viajes, eventos y ocio</a>
+          <a class="category-link" href="/es/calculator/categories/legal-safety-compliance/">Asuntos legales, seguridad y cumplimiento</a>
+        </nav>
+      </div>
+    </div>
+  </header>
+
+  <main class="page">
+    <div class="breadcrumb">
+      <a href="/">Inicio</a> / <a href="/es/calculator/categories/travel-events-recreation/">Viajes, eventos y ocio</a> / Cycling Power Race Prediction Calculator
+    </div>
+
+    <div class="title-row">
+      <h1 class="page-title">Cycling Power Race Prediction Calculator</h1>
+      <button class="favorite-button" id="favoriteButton" type="button" aria-label="Añadir Cycling Power Race Prediction Calculator a favoritos" aria-pressed="false">☆</button>
+    </div>
+    <p class="intro">
+      Este calculador proyecta un tiempo de carrera de ciclismo para una distancia objetivo usando como referencia un recorrido anterior y un exponente de fatiga. El método parte de la idea de que el tiempo no aumenta de forma perfectamente proporcional con la distancia: cuanto más larga es la prueba, mayor suele ser el efecto acumulado de la fatiga.</p><p>Es especialmente útil para obtener una primera referencia cuando el recorrido objetivo tiene un perfil, superficie y condiciones parecidos al esfuerzo de referencia. No incorpora viento, desnivel, aerodinámica, estrategia de grupo ni cambios de material, por lo que el resultado funciona mejor como escenario base que como pronóstico exacto.
+    </p>
+    <noscript>
+      <p class="noscript-notice">Esta calculadora necesita JavaScript para actualizar los resultados. Activa JavaScript en tu navegador y vuelve a cargar esta página.</p>
+    </noscript>
+
+    <section class="calculator" aria-label="Cycling Power Race Prediction Calculator">
+      <div class="panel input-panel">
+        <h2 class="panel-title">Referencia y objetivo</h2>
+
+        <!-- Every number input in INPUTS_HTML must have a unique id, label, default value, min, max and step. Optional blank values must be treated as 0 or not applied, never as an error. -->
+        <div class="field-grid"><div class="field"><label for="refDistance">Distancia de referencia</label><div class="input-wrap"><input class="input-control" id="refDistance" type="number" value="40" min="1" max="1000" step="0.1" /><span class="suffix">km</span></div></div><div class="field"><label for="refTime">Tiempo de referencia</label><div class="input-wrap"><input class="input-control" id="refTime" type="number" value="75" min="1" max="2000" step="0.1" /><span class="suffix">min</span></div></div><div class="field"><label for="targetDistance">Distancia objetivo</label><div class="input-wrap"><input class="input-control" id="targetDistance" type="number" value="100" min="1" max="2000" step="0.1" /><span class="suffix">km</span></div></div><div class="field"><label for="exponent">Exponente de fatiga</label><div class="input-wrap"><input class="input-control" id="exponent" type="number" value="1.06" min="1" max="1.2" step="0.01" /></div></div></div>
+
+        <div class="actions">
+<button class="button button-secondary" id="resetButton" type="button">Restablecer</button>
+        </div>
+
+        <p class="error" id="errorMessage" role="alert"></p>
+      </div>
+
+      <aside class="ad-panel ad-one" aria-label="Publicidad">
+        <div class="ad-slot">Espacio publicitario</div>
+      </aside>
+
+      <div class="panel result-panel" aria-live="polite">
+        <div class="result-layout">
+          <div class="result-main">
+          <div class="result-eyebrow">Resultado</div>
+          <div class="main-result" id="mainResult">—</div>
+          <div class="result-label" id="resultLabel">Tiempo previsto</div>
+            
+          </div>
+          <div class="result-details">
+            <div class="result-breakdown"><div class="result-row"><span>Velocidad media prevista</span><strong id="speedResult">—</strong></div><div class="result-row"><span>Ritmo equivalente</span><strong id="paceResult">—</strong></div><div class="result-row"><span>Factor de distancia</span><strong id="factorResult">—</strong></div></div>
+          </div>
+        </div>
+      </div>
+
+      <aside class="ad-panel ad-two" aria-label="Publicidad">
+        <div class="ad-slot">Espacio publicitario</div>
+      </aside>
+    </section>
+
+    <section class="details" aria-label="Información de la calculadora">
+      <article class="accordion">
+        <button class="accordion-button" type="button" aria-expanded="false">
+          <span class="accordion-title">Cómo usarla</span>
+          <span class="accordion-icon" aria-hidden="true">+</span>
+        </button>
+        <div class="accordion-content">
+          <div class="accordion-content-inner">
+            <p><strong>1. Elige una salida de referencia.</strong> Usa una distancia y un tiempo representativos de tu nivel actual.</p><p><strong>2. Introduce ambos datos.</strong> La distancia y el tiempo deben corresponder al mismo esfuerzo.</p><p><strong>3. Escribe la distancia objetivo.</strong> Mantén kilómetros como unidad en todos los campos.</p><p><strong>4. Ajusta el exponente si lo necesitas.</strong> Un valor mayor aumenta la penalización por fatiga en distancias largas.</p><p><strong>5. Compara el resultado con el perfil real.</strong> Si la prueba objetivo es mucho más dura o más rápida por condiciones externas, interpreta la cifra con cautela.</p>
+          </div>
+        </div>
+      </article>
+
+      <article class="accordion">
+        <button class="accordion-button" type="button" aria-expanded="false">
+          <span class="accordion-title">Fórmula</span>
+          <span class="accordion-icon" aria-hidden="true">+</span>
+        </button>
+        <div class="accordion-content">
+          <div class="accordion-content-inner">
+            <span class="formula">Tiempo objetivo = Tiempo de referencia × (Distancia objetivo / Distancia de referencia)^k</span><p><strong>k</strong> es el exponente de fatiga. Un valor de 1 implicaría una extrapolación totalmente proporcional; valores superiores penalizan progresivamente las distancias más largas. El valor inicial 1,06 es solo un punto de partida y puede modificarse.</p>
+            <h3>Qué significa el resultado</h3>
+            <p>El tiempo previsto expresa cuánto tardarías en la distancia objetivo si tu resistencia relativa se comportara de acuerdo con el exponente elegido y las condiciones fueran comparables.</p>
+            <p>En ciclismo, factores externos como desnivel, viento, densidad del tráfico, rodar en grupo o posición aerodinámica pueden alterar mucho el tiempo real.</p>
+          </div>
+        </div>
+      </article>
+
+      <article class="accordion">
+        <button class="accordion-button" type="button" aria-expanded="false">
+          <span class="accordion-title">Ejemplo de cálculo</span>
+          <span class="accordion-icon" aria-hidden="true">+</span>
+        </button>
+        <div class="accordion-content">
+          <div class="accordion-content-inner">
+            <p><strong>Datos:</strong> 40 km en 75 min; objetivo de 100 km; k = 1,06.</p><p><strong>Cálculo:</strong> 75 × (100/40)^1,06 = 198,20 min.</p><p><strong>Resultado:</strong> aproximadamente 3 h 18 min.</p><p><strong>Interpretación:</strong> es una referencia para un recorrido comparable; una prueba con mucho más desnivel o viento puede requerir más tiempo.</p>
+          </div>
+        </div>
+      </article>
+
+      <article class="accordion">
+        <button class="accordion-button" type="button" aria-expanded="false">
+          <span class="accordion-title">Preguntas frecuentes</span>
+          <span class="accordion-icon" aria-hidden="true">+</span>
+        </button>
+        <div class="accordion-content">
+          <div class="accordion-content-inner">
+            <div class="faq-item"><h3 class="faq-question">¿Puedo usar una contrarreloj como referencia para una marcha con pelotón?</h3><p>Puedes hacerlo, pero las condiciones no son equivalentes. El beneficio aerodinámico del grupo y los cambios de ritmo pueden hacer que la predicción se desvíe.</p></div>
+<div class="faq-item"><h3 class="faq-question">¿Qué exponente debo elegir?</h3><p>El valor depende del deportista y del tipo de prueba. El valor predeterminado sirve como hipótesis inicial; si dispones de varias carreras reales, puedes ajustarlo para que reproduzca mejor tus resultados.</p></div>
+<div class="faq-item"><h3 class="faq-question">¿Funciona si la distancia objetivo es menor que la de referencia?</h3><p>Sí. La misma ecuación puede proyectar hacia una distancia menor, aunque la capacidad de producir más potencia durante un esfuerzo corto puede hacer que el modelo sea conservador.</p></div>
+<div class="faq-item"><h3 class="faq-question">¿El desnivel está incluido?</h3><p>No. La calculadora solo utiliza distancia, tiempo y exponente; debes comparar recorridos de dificultad similar o añadir tu propio margen.</p></div>
+<div class="faq-item"><h3 class="faq-question">¿Por qué no usa FTP o vatios?</h3><p>Este enfoque se basa en rendimiento observado y evita modelar aerodinámica, masa, resistencia a la rodadura y pendiente. Una calculadora basada en potencia respondería a una pregunta distinta.</p></div>
+          </div>
+        </div>
+      </article>
+
+      <article class="accordion">
+        <button class="accordion-button" type="button" aria-expanded="false">
+          <span class="accordion-title">Herramientas relacionadas</span>
+          <span class="accordion-icon" aria-hidden="true">+</span>
+        </button>
+        <div class="accordion-content">
+          <div class="accordion-content-inner">
+            <div class="related-tools"><a class="related-link" href="/es/calculator/cycling_power_performance_score_estimator/"><span><strong>Cycling Power Performance Score Estimator</strong><br><small>Compara el rendimiento relativo de potencia antes de estimar la recuperación.</small></span><span aria-hidden="true">→</span></a>
+<a class="related-link" href="/es/calculator/cycling_power_training_load_calculator/"><span><strong>Cycling Power Training Load Calculator</strong><br><small>Permite cuantificar la carga de una sesión de ciclismo con un enfoque complementario.</small></span><span aria-hidden="true">→</span></a>
+<a class="related-link" href="/es/calculator/cycling_power_recovery_needs_estimator/"><span><strong>Cycling Power Recovery Needs Estimator</strong><br><small>Ayuda a traducir la carga de ciclismo en una estimación práctica de recuperación.</small></span><span aria-hidden="true">→</span></a>
+<a class="related-link" href="/es/calculator/cycling_power_power_to_weight_estimator/"><span><strong>Cycling Power Power to Weight Estimator</strong><br><small>Relaciona la potencia producida con la masa corporal para comparar esfuerzos relativos.</small></span><span aria-hidden="true">→</span></a></div>
+          </div>
+        </div>
+      </article>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    © 2026 toolbox. Los resultados son orientativos y dependen de los datos y supuestos introducidos.
+  </footer>
+
+  <script>
+    const appsButton = document.getElementById("appsButton");
+    const appsMenu = document.getElementById("appsMenu");
+    const favoriteButton = document.getElementById("favoriteButton");
+    const FAVORITES_KEY = "toolboxapp-favorites-v1";
+    const currentTool = {
+      name: "Cycling Power Race Prediction Calculator",
+      url: window.location.pathname
+    };
+
+    function readFavorites() {
+      try {
+        const saved = JSON.parse(localStorage.getItem(FAVORITES_KEY) || "[]");
+        return Array.isArray(saved) ? saved : [];
+      } catch (error) {
+        return [];
+      }
+    }
+
+    function updateFavoriteButton() {
+      const isFavorite = readFavorites().some(tool => tool.url === currentTool.url);
+      favoriteButton.classList.toggle("active", isFavorite);
+      favoriteButton.textContent = isFavorite ? "★" : "☆";
+      favoriteButton.setAttribute("aria-pressed", String(isFavorite));
+      favoriteButton.setAttribute("aria-label", `${isFavorite ? "Quitar" : "Añadir"} Cycling Power Race Prediction Calculator ${isFavorite ? "de" : "a"} favoritos`);
+    }
+
+    favoriteButton.addEventListener("click", () => {
+      const saved = readFavorites();
+      const existingIndex = saved.findIndex(tool => tool.url === currentTool.url);
+
+      if (existingIndex >= 0) {
+        saved.splice(existingIndex, 1);
+      } else {
+        saved.push(currentTool);
+      }
+
+      localStorage.setItem(FAVORITES_KEY, JSON.stringify(saved));
+      updateFavoriteButton();
+    });
+
+    const resetButton = document.getElementById("resetButton");
+    const errorMessage = document.getElementById("errorMessage");
+    const byId = id => document.getElementById(id);
+    const finite = value => Number.isFinite(Number(value));
+    const optionalNumber = (id, fallback = 0) => {
+      const value = byId(id)?.value.trim();
+      return value === "" ? fallback : Number(value);
+    };
+    const formatNumber = (value, digits = 2) => Number(value).toLocaleString("es-ES", { maximumFractionDigits: digits });
+    const formatMoney = (value, currency = "USD", digits = 2) => new Intl.NumberFormat("es-ES", { style: "currency", currency, maximumFractionDigits: digits }).format(value);
+    const formatPercent = (value, digits = 2) => `${Number(value).toFixed(digits)}%`;
+    const setText = (id, value) => { const node = byId(id); if (node) node.textContent = value; };
+    const showError = message => { errorMessage.textContent = message; };
+    const clearError = () => { errorMessage.textContent = ""; document.querySelectorAll('[aria-invalid="true"]').forEach(node => node.setAttribute("aria-invalid", "false")); };
+    const invalidate = (id, message) => { const node = byId(id); if (node) node.setAttribute("aria-invalid", "true"); showError(message); return false; };
+
+    function calculate(){ clearError(); const rd=Number(byId("refDistance").value), rt=Number(byId("refTime").value), td=Number(byId("targetDistance").value), k=Number(byId("exponent").value); if(!(rd>0)) return invalidate("refDistance","La distancia de referencia debe ser mayor que 0."); if(!(rt>0)) return invalidate("refTime","El tiempo de referencia debe ser mayor que 0."); if(!(td>0)) return invalidate("targetDistance","La distancia objetivo debe ser mayor que 0."); if(!(k>=1&&k<=1.2)) return invalidate("exponent","Usa un exponente entre 1,00 y 1,20."); const t=rt*Math.pow(td/rd,k), hours=Math.floor(t/60), mins=Math.round(t-hours*60), speed=td/(t/60), pace=t/td; setText("mainResult",hours+" h "+String(mins).padStart(2,"0")+" min"); setText("speedResult",formatNumber(speed,1)+" km/h"); setText("paceResult",formatNumber(pace,2)+" min/km"); setText("factorResult",formatNumber(td/rd,2)+"×"); }
+
+    resetButton.addEventListener("click", () => {
+      document.querySelectorAll(".input-control").forEach(input => { input.value = input.defaultValue; });
+      clearError();
+      calculate();
+    });
+    let autoTimer;
+    document.querySelectorAll(".input-control").forEach(input => {
+      input.addEventListener("input", () => {
+        clearTimeout(autoTimer);
+        autoTimer = setTimeout(calculate, 200);
+      });
+      input.addEventListener("change", calculate);
+    });
+
+
+    appsButton.addEventListener("click", () => {
+      const isOpen = appsMenu.classList.toggle("open");
+      appsButton.setAttribute("aria-expanded", String(isOpen));
+    });
+
+    document.addEventListener("click", event => {
+      if (!event.target.closest(".apps-wrap")) {
+        appsMenu.classList.remove("open");
+        appsButton.setAttribute("aria-expanded", "false");
+      }
+    });
+
+    document.querySelectorAll(".accordion-button").forEach(button => {
+      button.addEventListener("click", () => {
+        const accordion = button.closest(".accordion");
+        const content = accordion.querySelector(".accordion-content");
+        const isOpen = accordion.classList.toggle("open");
+
+        button.setAttribute("aria-expanded", String(isOpen));
+        content.style.maxHeight = isOpen ? content.scrollHeight + "px" : "0px";
+      });
+    });
+
+    calculate();
+    updateFavoriteButton();
+  </script>
+</body>
+</html>
