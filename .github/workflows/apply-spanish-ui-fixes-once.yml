@@ -1,5 +1,6 @@
 name: Apply Spanish breadcrumb and favorites fixes once
 
+# one-time trigger via contents API
 on:
   push:
     branches: [main]
