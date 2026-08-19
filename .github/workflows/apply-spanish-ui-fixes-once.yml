@@ -65,8 +65,7 @@ jobs:
       }).join("");'''
           if old not in text:
               raise SystemExit('Spanish favorites render block did not match expected source; refusing unrelated edits')
-          text = text.replace(old, new, 1)
-          home.write_text(text, encoding='utf-8')
+          home.write_text(text.replace(old, new, 1), encoding='utf-8')
 
           remaining_visible = 0
           remaining_schema = 0
@@ -84,7 +83,7 @@ jobs:
           print(f'Breadcrumb pages changed: {breadcrumb_changed}')
           print('Favorites localization changed: es/index.html')
           PY
-      - name: Amend triggering commit with final changes
+      - name: Commit final changes and remove one-time workflow
         shell: bash
         run: |
           rm -f .github/workflows/apply-spanish-ui-fixes-once.yml
@@ -92,5 +91,5 @@ jobs:
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git add es/calculator es/index.html .github/workflows/apply-spanish-ui-fixes-once.yml
           git diff --cached --quiet && { echo "No changes to commit"; exit 1; }
-          git commit --amend --no-edit
-          git push --force-with-lease origin HEAD:main
+          git commit -m "Apply Spanish breadcrumb and favorite localization"
+          git push origin HEAD:main
