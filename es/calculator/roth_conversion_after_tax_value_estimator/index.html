@@ -1,0 +1,1073 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Estima el valor futuro después de impuestos de una conversión Roth comparando el saldo convertido y el coste fiscal pagado hoy." />
+  <link rel="canonical" href="https://www.toolboxapp.cc/es/calculator/roth_conversion_after_tax_value_estimator/" />
+  <link rel="alternate" hreflang="en" href="https://www.toolboxapp.cc/calculator/roth_conversion_after_tax_value_estimator/" />
+  <link rel="alternate" hreflang="es" href="https://www.toolboxapp.cc/es/calculator/roth_conversion_after_tax_value_estimator/" />
+  <link rel="alternate" hreflang="x-default" href="https://www.toolboxapp.cc/calculator/roth_conversion_after_tax_value_estimator/" />
+  <title>Estimador de valor después de impuestos de conversión Roth | toolbox</title>
+  <meta property="og:site_name" content="toolbox" />
+  <meta property="og:title" content="Estimador de valor después de impuestos de conversión Roth | toolbox" />
+  <meta property="og:description" content="Estima el valor futuro después de impuestos de una conversión Roth comparando el saldo convertido y el coste fiscal pagado hoy." />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://www.toolboxapp.cc/es/calculator/roth_conversion_after_tax_value_estimator/" />
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Estimador de valor después de impuestos de conversión Roth | toolbox" />
+  <meta name="twitter:description" content="Estima el valor futuro después de impuestos de una conversión Roth comparando el saldo convertido y el coste fiscal pagado hoy." />
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+          { "@type": "ListItem", "position": 1, "name": "Inicio", "item": "https://www.toolboxapp.cc/" },
+          { "@type": "ListItem", "position": 2, "name": "Dinero e inversión", "item": "https://www.toolboxapp.cc/es/calculator/categories/money-investing/" },
+          { "@type": "ListItem", "position": 3, "name": "Estimador de valor después de impuestos de conversión Roth", "item": "https://www.toolboxapp.cc/es/calculator/roth_conversion_after_tax_value_estimator/" }
+        ]
+      },
+      {
+        "@type": "WebApplication",
+        "name": "Estimador de valor después de impuestos de conversión Roth",
+        "url": "https://www.toolboxapp.cc/es/calculator/roth_conversion_after_tax_value_estimator/",
+        "description": "Estima el valor futuro después de impuestos de una conversión Roth comparando el saldo convertido y el coste fiscal pagado hoy.",
+        "applicationCategory": "UtilitiesApplication",
+        "operatingSystem": "Any",
+        "browserRequirements": "Requiere JavaScript"
+      }
+    ]
+  }
+  </script>
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "¿Toda conversión Roth es 100 % imponible?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "No necesariamente. Si tienes base de aportaciones no deducibles en IRAs tradicionales, SEP o SIMPLE, Form 8606 puede determinar una parte no imponible."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "¿Puedo deshacer una conversión si cambia el mercado?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Las conversiones de IRA tradicional a Roth realizadas en años fiscales posteriores a 2017 no pueden recharacterizarse como si hubieran vuelto a ser tradicionales."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "¿Por qué importa pagar el impuesto con dinero externo?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Porque permite mantener más capital dentro de la cuenta Roth. Si se retienen fondos de la distribución para pagar impuestos, el importe que continúa invertido puede ser menor y pueden existir otras consecuencias según la edad y el tipo de distribución."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "¿El resultado ya descuenta impuestos futuros de la Roth?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "No. El modelo muestra crecimiento dentro de la Roth y supone que se cumplen las condiciones aplicables para el tratamiento favorable de las distribuciones; no determina si una retirada concreta será cualificada."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "¿La conversión tiene límite de ingresos?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "El IRS permite conversiones a Roth con independencia del importe del ingreso bruto ajustado, aunque la conversión puede aumentar la renta imponible y afectar otras partidas fiscales."
+      }
+    }
+  ]
+}
+</script>
+
+  <style>
+    :root {
+      color-scheme: dark;
+      --bg: #000;
+      --panel: #0a0a0a;
+      --panel-hover: #111;
+      --border: #292929;
+      --border-strong: #454545;
+      --text: #fff;
+      --muted: #8d8d8d;
+      --soft: #bdbdbd;
+      --danger: #ff7d7d;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      background: var(--bg);
+      color: var(--text);
+      font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    button,
+    input,
+    select {
+      font: inherit;
+    }
+
+    a {
+      color: inherit;
+    }
+
+    .site-header {
+      position: sticky;
+      top: 0;
+      z-index: 30;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: 70px;
+      padding: 0 24px;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+      background: rgba(0, 0, 0, 0.88);
+      backdrop-filter: blur(18px);
+    }
+
+    .brand {
+      color: #fff;
+      text-decoration: none;
+      font-size: 24px;
+      font-weight: 600;
+      letter-spacing: -0.05em;
+    }
+
+    .apps-wrap {
+      position: relative;
+    }
+
+    .apps-button {
+      width: 44px;
+      height: 44px;
+      display: grid;
+      place-items: center;
+      border: 0;
+      border-radius: 50%;
+      background: transparent;
+      cursor: pointer;
+      transition: background 0.18s ease;
+    }
+
+    .apps-button:hover,
+    .apps-button:focus-visible {
+      background: #111;
+      outline: none;
+    }
+
+    .dots {
+      width: 20px;
+      height: 20px;
+      display: grid;
+      grid-template-columns: repeat(3, 4px);
+      grid-template-rows: repeat(3, 4px);
+      gap: 4px;
+    }
+
+    .dots span {
+      width: 4px;
+      height: 4px;
+      border-radius: 50%;
+      background: #fff;
+    }
+
+    .apps-menu {
+      position: absolute;
+      top: 52px;
+      right: 0;
+      width: min(310px, calc(100vw - 32px));
+      max-height: calc(100vh - 84px);
+      overflow-y: auto;
+      padding: 10px;
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      background: rgba(10, 10, 10, 0.98);
+      box-shadow: 0 22px 60px rgba(0, 0, 0, 0.6);
+      opacity: 0;
+      visibility: hidden;
+      transform: translateY(-8px);
+      transition: 0.18s ease;
+    }
+
+    .apps-menu.open {
+      opacity: 1;
+      visibility: visible;
+      transform: translateY(0);
+    }
+
+    .category-list {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+
+    .category-link {
+      min-height: 42px;
+      display: flex;
+      align-items: center;
+      padding: 0 14px;
+      border-radius: 10px;
+      color: #fff;
+      text-decoration: none;
+      font-size: 14px;
+      transition: background 0.16s ease;
+    }
+
+    .category-link:hover,
+    .category-link:focus-visible {
+      background: #181818;
+      outline: none;
+    }
+
+    .page {
+      width: min(1080px, calc(100% - 32px));
+      margin: 0 auto;
+      padding: 64px 0 90px;
+    }
+
+    .breadcrumb {
+      margin-bottom: 22px;
+      color: #737373;
+      font-size: 13px;
+    }
+
+    .breadcrumb a {
+      color: #9b9b9b;
+      text-decoration: none;
+    }
+
+    .breadcrumb a:hover {
+      color: #fff;
+    }
+
+    .page-title {
+      margin: 0;
+      font-size: clamp(36px, 6vw, 62px);
+      line-height: 1;
+      letter-spacing: -0.055em;
+      font-weight: 600;
+    }
+
+    .title-row {
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: flex-start;
+    }
+
+    .title-row .page-title {
+      padding-right: 48px;
+    }
+
+    .favorite-button {
+      position: absolute;
+      right: 0;
+      display: grid;
+      width: 42px;
+      height: 42px;
+      padding: 0;
+      place-items: center;
+      border: 0;
+      background: transparent;
+      color: #858585;
+      cursor: pointer;
+      font-size: 25px;
+      line-height: 1;
+      transition: color .16s ease;
+    }
+
+    .favorite-button:hover,
+    .favorite-button:focus-visible {
+      color: #fff;
+      outline: none;
+    }
+
+    .favorite-button.active {
+      color: #ffd34e;
+    }
+
+    .intro {
+      width: 100%;
+      max-width: none;
+      margin: 18px 0 0;
+      color: var(--muted);
+      font-size: 16px;
+      line-height: 1.7;
+    }
+
+    .noscript-notice {
+      margin: 18px 0 0;
+      padding: 14px 16px;
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      color: var(--soft);
+      background: var(--panel);
+      font-size: 14px;
+      line-height: 1.6;
+    }
+
+    .calculator {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      grid-template-areas:
+        "input input"
+        "ad-one ad-two"
+        "result result";
+      gap: 18px;
+      margin-top: 46px;
+      min-width: 0;
+    }
+
+    .input-panel {
+      grid-area: input;
+    }
+
+    .calculator > *,
+    .field-grid,
+    .field,
+    .input-wrap,
+    .result-panel,
+    .result-breakdown {
+      min-width: 0;
+    }
+
+    .panel {
+      border: 1px solid var(--border);
+      border-radius: 22px;
+      background: var(--panel);
+    }
+
+    .input-panel {
+      padding: 28px;
+    }
+
+    .panel-title {
+      margin: 0 0 24px;
+      font-size: 18px;
+      font-weight: 600;
+      letter-spacing: -0.02em;
+    }
+
+    .field-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 18px;
+    }
+
+    .field {
+      display: grid;
+      gap: 9px;
+    }
+
+    .field label {
+      color: var(--soft);
+      font-size: 13px;
+      font-weight: 500;
+    }
+
+    .input-wrap {
+      position: relative;
+    }
+
+    .input-control {
+      width: 100%;
+      height: 56px;
+      padding: 0 52px 0 16px;
+      border: 1px solid var(--border-strong);
+      border-radius: 13px;
+      background: #050505;
+      color: #fff;
+      outline: none;
+      transition: border-color 0.16s ease, box-shadow 0.16s ease;
+    }
+
+    .input-control:focus {
+      border-color: #777;
+      box-shadow: 0 0 0 4px rgba(255,255,255,0.035);
+    }
+
+    .suffix {
+      position: absolute;
+      top: 50%;
+      right: 16px;
+      transform: translateY(-50%);
+      color: #767676;
+      font-size: 13px;
+      pointer-events: none;
+    }
+
+    .actions {
+      display: flex;
+      gap: 10px;
+      margin-top: 24px;
+    }
+
+    .button {
+      min-height: 50px;
+      padding: 0 20px;
+      border-radius: 12px;
+      cursor: pointer;
+      transition: background 0.16s ease, border-color 0.16s ease, transform 0.16s ease;
+    }
+
+    .button:active {
+      transform: translateY(1px);
+    }
+
+    .button-primary {
+      flex: 1;
+      border: 1px solid #fff;
+      background:#242424;
+      color:#fff;
+      font-weight: 700;
+    }
+
+    .button-primary:hover {
+      background:#3a3a3a;
+      border-color:#4a4a4a;
+    }
+
+    .button-secondary {
+      border: 1px solid var(--border-strong);
+      background: transparent;
+      color: #fff;
+    }
+
+    .button-secondary:hover {
+      background: #151515;
+    }
+
+    .error {
+      min-height: 20px;
+      margin: 13px 0 0;
+      color: var(--danger);
+      font-size: 13px;
+    }
+
+
+    .ad-panel {
+      min-height:140px;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      padding:18px;
+      border:1px dashed #3b3b3b;
+      border-radius:22px;
+      background:#111;
+      color:#686868;
+      text-align:center;
+      font-size:12px;
+      letter-spacing:0.08em;
+      text-transform:uppercase;
+    }
+
+    .ad-one { grid-area: ad-one; }
+    .ad-two { grid-area: ad-two; }
+
+    .ad-slot {
+      width:100%;
+      min-height:104px;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+    }
+
+    .result-panel {
+      grid-area: result;
+      min-height: 360px;
+      padding: 28px;
+      background:#242424;
+      color:#fff;
+    }
+
+    .result-layout {
+      display: grid;
+      grid-template-columns: minmax(0, 1.08fr) minmax(320px, 0.92fr);
+      gap: 40px;
+      align-items: center;
+      min-height: 100%;
+      min-width: 0;
+    }
+
+    .result-main,
+    .result-details {
+      min-width: 0;
+    }
+
+    .result-eyebrow {
+      color:#a0a0a0;
+      font-size: 13px;
+      font-weight: 600;
+    }
+
+    .main-result {
+      margin: 18px 0 4px;
+      font-size: clamp(42px, 7vw, 70px);
+      line-height: 1;
+      letter-spacing: -0.06em;
+      font-weight: 700;
+      overflow-wrap: anywhere;
+    }
+
+    .result-label {
+      color:#9b9b9b;
+      font-size: 14px;
+    }
+
+    .result-breakdown {
+      display: grid;
+      gap: 0;
+      margin-top: 0;
+      border-top:1px solid #353535;
+    }
+
+    .result-row {
+      display: flex;
+      justify-content: space-between;
+      gap: 20px;
+      padding: 15px 0;
+      border-bottom:1px solid #353535;
+      font-size: 14px;
+    }
+
+    .result-row span:first-child {
+      color:#9b9b9b;
+    }
+
+    .result-row strong {
+      text-align: right;
+    }
+
+    .details {
+      display: grid;
+      gap: 10px;
+      margin-top: 22px;
+    }
+
+    .accordion {
+      overflow: hidden;
+      border: 1px solid var(--border);
+      border-radius: 15px;
+      background: #080808;
+    }
+
+    .accordion-button {
+      width: 100%;
+      min-height: 62px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 20px;
+      padding: 0 20px;
+      border: 0;
+      background: transparent;
+      color: #fff;
+      text-align: left;
+      cursor: pointer;
+    }
+
+    .accordion-button:hover {
+      background: #101010;
+    }
+
+    .accordion-title {
+      font-size: 15px;
+      font-weight: 600;
+    }
+
+    .accordion-icon {
+      color: #777;
+      font-size: 22px;
+      transition: transform 0.18s ease;
+    }
+
+    .accordion.open .accordion-icon {
+      transform: rotate(45deg);
+    }
+
+    .accordion-content {
+      max-height: 0;
+      overflow: hidden;
+      color: #aaa;
+      line-height: 1.75;
+      transition: max-height 0.25s ease;
+    }
+
+    .accordion-content-inner {
+      padding: 0 20px 22px;
+    }
+
+    .accordion-content p {
+      margin: 0 0 12px;
+    }
+
+    .accordion-content p:last-child {
+      margin-bottom: 0;
+    }
+
+    .formula {
+      display: block;
+      padding: 16px;
+      border: 1px solid #242424;
+      border-radius: 12px;
+      background: #030303;
+      color: #fff;
+      font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+      overflow-x: auto;
+    }
+
+    .faq-item + .faq-item {
+      margin-top: 18px;
+    }
+
+    .faq-question {
+      margin: 0 0 6px;
+      color: #fff;
+      font-size: 15px;
+    }
+
+    .related-tools {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 10px;
+    }
+
+    .related-link {
+      min-height: 54px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 14px;
+      padding: 0 16px;
+      border: 1px solid #242424;
+      border-radius: 12px;
+      color: #fff;
+      text-decoration: none;
+      background: #050505;
+    }
+
+    .related-link:hover {
+      background: #111;
+    }
+
+    .site-footer {
+      width: min(1080px, calc(100% - 32px));
+      margin: 0 auto;
+      padding: 26px 0 42px;
+      border-top: 1px solid #171717;
+      color: #686868;
+      font-size: 12px;
+    }
+
+    @media (max-width: 780px) {
+      .site-header {
+        height: 64px;
+        padding: 0 16px;
+      }
+
+      .page {
+        padding-top: 42px;
+      }
+
+      .calculator {
+        grid-template-columns: minmax(0, 1fr);
+        grid-template-areas:
+          "input"
+          "ad-one"
+          "result"
+          "ad-two";
+      }
+
+      .input-panel,
+      .field-grid,
+      .field,
+      .input-wrap,
+      .actions,
+      .result-panel {
+        width: 100%;
+        max-width: 100%;
+        min-width: 0;
+      }
+
+      .panel-title,
+      .field,
+      .actions,
+      .error,
+      .result-panel > * {
+        grid-column: 1 / -1;
+        grid-row: auto;
+      }
+
+      .result-panel {
+        min-height: 390px;
+      }
+
+      .field-grid {
+        grid-template-columns: minmax(0, 1fr);
+      }
+
+      .result-layout {
+        grid-template-columns: minmax(0, 1fr);
+        gap: 28px;
+        align-items: start;
+      }
+
+      .result-breakdown {
+        margin-top: 0;
+      }
+    }
+
+    @media (max-width: 520px) {
+      .page {
+        width: calc(100% - 24px);
+        padding-bottom: 60px;
+      }
+
+      .page-title {
+        font-size: clamp(34px, 11vw, 48px);
+        line-height: 1.02;
+        overflow-wrap: anywhere;
+      }
+
+      .input-panel,
+      .result-panel {
+        padding: 22px;
+        border-radius: 18px;
+      }
+
+      .field-grid {
+        grid-template-columns: minmax(0, 1fr) !important;
+      }
+
+      .input-control,
+      select.input-control {
+        width: 100%;
+        max-width: 100%;
+        min-width: 0;
+      }
+
+      .actions {
+        flex-direction: column;
+      }
+
+      .button,
+      .button-secondary {
+        width: 100%;
+        min-width: 0;
+      }
+
+      .result-row {
+        min-width: 0;
+      }
+
+      .result-row span,
+      .result-row strong {
+        min-width: 0;
+        overflow-wrap: anywhere;
+      }
+
+      .related-tools {
+        grid-template-columns: minmax(0, 1fr);
+      }
+
+      .main-result {
+        font-size: 48px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <header class="site-header">
+    <a class="brand" href="/es/">toolbox</a>
+
+    <div class="apps-wrap">
+      <button
+        class="apps-button"
+        id="appsButton"
+        type="button"
+        aria-label="Abrir categorías"
+        aria-expanded="false"
+        aria-controls="appsMenu"
+      >
+        <span class="dots" aria-hidden="true">
+          <span></span><span></span><span></span>
+          <span></span><span></span><span></span>
+          <span></span><span></span><span></span>
+        </span>
+      </button>
+
+      <div class="apps-menu" id="appsMenu">
+        <nav class="category-list" aria-label="Categorías de herramientas">
+          <a class="category-link" href="/es/calculator/categories/money-investing/">Dinero e inversión</a>
+          <a class="category-link" href="/es/calculator/categories/taxes-insurance-benefits/">Impuestos, seguros y prestaciones</a>
+          <a class="category-link" href="/es/calculator/categories/business-operations/">Negocios y operaciones</a>
+          <a class="category-link" href="/es/calculator/categories/startups-digital-business/">Startups y negocios digitales</a>
+          <a class="category-link" href="/es/calculator/categories/sales-marketing-audience/">Ventas, marketing y audiencia</a>
+          <a class="category-link" href="/es/calculator/categories/online-selling-retail/">Venta online y comercio minorista</a>
+          <a class="category-link" href="/es/calculator/categories/jobs-pay-workforce/">Empleo, salarios y personal</a>
+          <a class="category-link" href="/es/calculator/categories/time-productivity/">Tiempo y productividad</a>
+          <a class="category-link" href="/es/calculator/categories/property-construction/">Inmuebles y construcción</a>
+          <a class="category-link" href="/es/calculator/categories/manufacturing-production/">Fabricación y producción</a>
+          <a class="category-link" href="/es/calculator/categories/shipping-supply-chain/">Envíos y cadena de suministro</a>
+          <a class="category-link" href="/es/calculator/categories/health-body-fitness/">Salud, cuerpo y ejercicio</a>
+          <a class="category-link" href="/es/calculator/categories/food-cooking-hospitality/">Alimentación, cocina y hostelería</a>
+          <a class="category-link" href="/es/calculator/categories/home-everyday-life/">Hogar y vida cotidiana</a>
+          <a class="category-link" href="/es/calculator/categories/learning-grades/">Aprendizaje y calificaciones</a>
+          <a class="category-link" href="/es/calculator/categories/science-math-engineering/">Ciencia, matemáticas e ingeniería</a>
+          <a class="category-link" href="/es/calculator/categories/ai-data-technology/">IA, datos y tecnología</a>
+          <a class="category-link" href="/es/calculator/categories/energy-sustainability/">Energía y sostenibilidad</a>
+          <a class="category-link" href="/es/calculator/categories/farming-animals-pets/">Agricultura, animales y mascotas</a>
+          <a class="category-link" href="/es/calculator/categories/travel-events-recreation/">Viajes, eventos y ocio</a>
+          <a class="category-link" href="/es/calculator/categories/legal-safety-compliance/">Asuntos legales, seguridad y cumplimiento</a>
+        </nav>
+      </div>
+    </div>
+  </header>
+
+  <main class="page">
+    <div class="breadcrumb">
+      <a href="/">Inicio</a> / <a href="/es/calculator/categories/money-investing/">Dinero e inversión</a> / Estimador de valor después de impuestos de conversión Roth
+    </div>
+
+    <div class="title-row">
+      <h1 class="page-title">Estimador de valor después de impuestos de conversión Roth</h1>
+      <button class="favorite-button" id="favoriteButton" type="button" aria-label="Añadir Estimador de valor después de impuestos de conversión Roth a favoritos" aria-pressed="false">☆</button>
+    </div>
+    <p class="intro">Esta calculadora estima el valor futuro de una conversión de una IRA tradicional a una Roth IRA después de considerar el impuesto generado por la conversión. El usuario introduce cuánto se convierte, qué parte es imponible, el tipo fiscal actual, la rentabilidad esperada y el horizonte; además puede indicar si el impuesto se paga con dinero externo o se descuenta del importe que sigue invertido.</p><p class="intro">Una conversión Roth suele incluir en la renta bruta la parte imponible de la distribución de la IRA tradicional en el año de la conversión. La porción no imponible depende, entre otros factores, de la base de aportaciones no deducibles y del cálculo de Form 8606. Esta herramienta no calcula automáticamente esa base ni la obligación fiscal completa; su objetivo es mostrar la aritmética económica de un escenario definido por el usuario.</p>
+    <noscript>
+      <p class="noscript-notice">Esta calculadora necesita JavaScript para actualizar los resultados. Activa JavaScript en tu navegador y vuelve a cargar esta página.</p>
+    </noscript>
+
+    <section class="calculator" aria-label="Estimador de valor después de impuestos de conversión Roth">
+      <div class="panel input-panel">
+        <h2 class="panel-title">Importe convertido y coste fiscal</h2>
+
+        <!-- Every number input in INPUTS_HTML must have a unique id, label, default value, min, max and step. Optional blank values must be treated as 0 or not applied, never as an error. -->
+        <div class="field-grid"><div class="field"><label for="conversionAmount">Importe convertido</label><div class="input-wrap"><input class="input-control" id="conversionAmount" type="number" value="50000" min="0" max="1000000000.0" step="1" /><span class="suffix">USD</span></div></div><div class="field"><label for="taxablePercent">Porcentaje imponible de la conversión</label><div class="input-wrap"><input class="input-control" id="taxablePercent" type="number" value="100" min="0" max="100" step="0.1" /><span class="suffix">%</span></div></div><div class="field"><label for="taxRate">Tipo fiscal marginal estimado</label><div class="input-wrap"><input class="input-control" id="taxRate" type="number" value="24" min="0" max="60" step="0.1" /><span class="suffix">%</span></div></div><div class="field"><label for="annualReturn">Rentabilidad anual esperada</label><div class="input-wrap"><input class="input-control" id="annualReturn" type="number" value="6" min="-99" max="100" step="0.1" /><span class="suffix">%</span></div></div><div class="field"><label for="years">Horizonte</label><div class="input-wrap"><input class="input-control" id="years" type="number" value="15" min="0" max="80" step="1" /><span class="suffix">años</span></div></div><div class="field"><label for="externalTaxShare">Porcentaje del impuesto pagado con dinero externo</label><div class="input-wrap"><input class="input-control" id="externalTaxShare" type="number" value="100" min="0" max="100" step="1" /><span class="suffix">%</span></div></div></div>
+
+        <div class="actions">
+<button class="button button-secondary" id="resetButton" type="button">Restablecer</button>
+        </div>
+
+        <p class="error" id="errorMessage" role="alert"></p>
+      </div>
+
+      <aside class="ad-panel ad-one" aria-label="Publicidad">
+        <div class="ad-slot">Espacio publicitario</div>
+      </aside>
+
+      <div class="panel result-panel" aria-live="polite">
+        <div class="result-layout">
+          <div class="result-main">
+          <div class="result-eyebrow">Resultado</div>
+          <div class="main-result" id="mainResult">—</div>
+          <div class="result-label" id="resultLabel">valor futuro estimado en Roth</div>
+            
+          </div>
+          <div class="result-details">
+            <div class="result-breakdown"><div class="result-row"><span>Parte imponible</span><strong id="taxableAmount">—</strong></div><div class="result-row"><span>Impuesto estimado hoy</span><strong id="taxToday">—</strong></div><div class="result-row"><span>Capital que queda invertido</span><strong id="investedAmount">—</strong></div></div>
+          </div>
+        </div>
+      </div>
+
+      <aside class="ad-panel ad-two" aria-label="Publicidad">
+        <div class="ad-slot">Espacio publicitario</div>
+      </aside>
+    </section>
+
+    <section class="details" aria-label="Información de la calculadora">
+      <article class="accordion">
+        <button class="accordion-button" type="button" aria-expanded="false">
+          <span class="accordion-title">Cómo usarla</span>
+          <span class="accordion-icon" aria-hidden="true">+</span>
+        </button>
+        <div class="accordion-content">
+          <div class="accordion-content-inner">
+            <p><strong>1. Introduce el importe que quieres convertir</strong><br>Usa el importe bruto que pasa de la cuenta tradicional a la Roth.</p><p><strong>2. Indica qué porcentaje es imponible</strong><br>Si existe base después de impuestos, no toda la conversión tiene por qué ser imponible; usa tu estimación o el cálculo fiscal correspondiente.</p><p><strong>3. Añade el tipo marginal</strong><br>La herramienta multiplica la parte imponible por este tipo para estimar el coste fiscal actual.</p><p><strong>4. Define rentabilidad y horizonte</strong><br>El saldo que permanece invertido se capitaliza con una tasa anual constante.</p><p><strong>5. Indica cuánto impuesto se paga con dinero externo</strong><br>Con 100 % se mantiene todo el importe convertido invertido; con un porcentaje menor, el resto del impuesto reduce el capital que el modelo hace crecer.</p>
+          </div>
+        </div>
+      </article>
+
+      <article class="accordion">
+        <button class="accordion-button" type="button" aria-expanded="false">
+          <span class="accordion-title">Fórmula</span>
+          <span class="accordion-icon" aria-hidden="true">+</span>
+        </button>
+        <div class="accordion-content">
+          <div class="accordion-content-inner">
+            <span class="formula">Importe imponible = Conversión × % imponible
+Impuesto actual = Importe imponible × t_actual
+Capital invertido = Conversión (si el impuesto se paga fuera) o Conversión − Impuesto
+Valor futuro = Capital invertido × (1 + r)^n</span><p>El resultado supone que el crecimiento posterior dentro de la Roth cumple los requisitos para recibir el tratamiento fiscal previsto. No calcula penalizaciones de distribución ni la fiscalidad de otras cuentas.</p>
+            <h3>Qué significa el resultado</h3>
+            <p>El valor principal es el saldo futuro proyectado dentro de la Roth bajo la rentabilidad elegida. El impuesto actual se muestra por separado para que no se confunda con una rentabilidad negativa.</p>
+            <p>El IRS indica que una conversión puede incluir en ingresos las cantidades antes de impuestos y que las conversiones de 2018 o posteriores no pueden recharacterizarse de vuelta a una IRA tradicional.</p>
+          </div>
+        </div>
+      </article>
+
+      <article class="accordion">
+        <button class="accordion-button" type="button" aria-expanded="false">
+          <span class="accordion-title">Ejemplo de cálculo</span>
+          <span class="accordion-icon" aria-hidden="true">+</span>
+        </button>
+        <div class="accordion-content">
+          <div class="accordion-content-inner">
+            <p><strong>Datos:</strong> conversión de 40.000 USD, 100 % imponible, tipo del 22 %, rentabilidad del 6 %, 12 años y pago del impuesto con dinero externo.</p><p><strong>Cálculo:</strong> impuesto actual = 40.000 × 0,22 = 8.800 USD. Capital invertido = 40.000 USD. Valor futuro = 40.000 × 1,06¹² ≈ 80.487,86 USD.</p><p><strong>Resultado:</strong> saldo Roth proyectado ≈ 80.487,86 USD, con un coste fiscal actual estimado de 8.800 USD pagado fuera de la cuenta.</p>
+          </div>
+        </div>
+      </article>
+
+      <article class="accordion">
+        <button class="accordion-button" type="button" aria-expanded="false">
+          <span class="accordion-title">Preguntas frecuentes</span>
+          <span class="accordion-icon" aria-hidden="true">+</span>
+        </button>
+        <div class="accordion-content">
+          <div class="accordion-content-inner">
+            <div class="faq-item"><h3 class="faq-question">¿Toda conversión Roth es 100 % imponible?</h3><p>No necesariamente. Si tienes base de aportaciones no deducibles en IRAs tradicionales, SEP o SIMPLE, Form 8606 puede determinar una parte no imponible.</p></div><div class="faq-item"><h3 class="faq-question">¿Puedo deshacer una conversión si cambia el mercado?</h3><p>Las conversiones de IRA tradicional a Roth realizadas en años fiscales posteriores a 2017 no pueden recharacterizarse como si hubieran vuelto a ser tradicionales.</p></div><div class="faq-item"><h3 class="faq-question">¿Por qué importa pagar el impuesto con dinero externo?</h3><p>Porque permite mantener más capital dentro de la cuenta Roth. Si se retienen fondos de la distribución para pagar impuestos, el importe que continúa invertido puede ser menor y pueden existir otras consecuencias según la edad y el tipo de distribución.</p></div><div class="faq-item"><h3 class="faq-question">¿El resultado ya descuenta impuestos futuros de la Roth?</h3><p>No. El modelo muestra crecimiento dentro de la Roth y supone que se cumplen las condiciones aplicables para el tratamiento favorable de las distribuciones; no determina si una retirada concreta será cualificada.</p></div><div class="faq-item"><h3 class="faq-question">¿La conversión tiene límite de ingresos?</h3><p>El IRS permite conversiones a Roth con independencia del importe del ingreso bruto ajustado, aunque la conversión puede aumentar la renta imponible y afectar otras partidas fiscales.</p></div>
+          </div>
+        </div>
+      </article>
+
+      <article class="accordion">
+        <button class="accordion-button" type="button" aria-expanded="false">
+          <span class="accordion-title">Herramientas relacionadas</span>
+          <span class="accordion-icon" aria-hidden="true">+</span>
+        </button>
+        <div class="accordion-content">
+          <div class="accordion-content-inner">
+            <div class="related-tools"><a class="related-link" href="/es/calculator/roth_conversion_break_even_age_calculator/"><span>Roth Conversion Break-Even Age Calculator</span><span aria-hidden="true">→</span></a><a class="related-link" href="/es/calculator/roth_conversion_withdrawal_schedule_planner/"><span>Roth Conversion Withdrawal Schedule Planner</span><span aria-hidden="true">→</span></a><a class="related-link" href="/es/calculator/roth_conversion_income_forecast_estimator/"><span>Roth Conversion Income Forecast Estimator</span><span aria-hidden="true">→</span></a><a class="related-link" href="/es/calculator/roth_conversion_tax_impact_estimator/"><span>Roth Conversion Tax Impact Estimator</span><span aria-hidden="true">→</span></a></div>
+          </div>
+        </div>
+      </article>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    © 2026 toolbox. Estimación educativa sobre Roth IRA de EE. UU.; revisa Form 8606, las reglas de distribución y tu situación fiscal específica.
+  </footer>
+
+  <script>
+    const appsButton = document.getElementById("appsButton");
+    const appsMenu = document.getElementById("appsMenu");
+    const favoriteButton = document.getElementById("favoriteButton");
+    const FAVORITES_KEY = "toolboxapp-favorites-v1";
+    const currentTool = {
+      name: "Estimador de valor después de impuestos de conversión Roth",
+      url: window.location.pathname
+    };
+
+    function readFavorites() {
+      try {
+        const saved = JSON.parse(localStorage.getItem(FAVORITES_KEY) || "[]");
+        return Array.isArray(saved) ? saved : [];
+      } catch (error) {
+        return [];
+      }
+    }
+
+    function updateFavoriteButton() {
+      const isFavorite = readFavorites().some(tool => tool.url === currentTool.url);
+      favoriteButton.classList.toggle("active", isFavorite);
+      favoriteButton.textContent = isFavorite ? "★" : "☆";
+      favoriteButton.setAttribute("aria-pressed", String(isFavorite));
+      favoriteButton.setAttribute("aria-label", `${isFavorite ? "Quitar" : "Añadir"} Estimador de valor después de impuestos de conversión Roth ${isFavorite ? "de" : "a"} favoritos`);
+    }
+
+    favoriteButton.addEventListener("click", () => {
+      const saved = readFavorites();
+      const existingIndex = saved.findIndex(tool => tool.url === currentTool.url);
+
+      if (existingIndex >= 0) {
+        saved.splice(existingIndex, 1);
+      } else {
+        saved.push(currentTool);
+      }
+
+      localStorage.setItem(FAVORITES_KEY, JSON.stringify(saved));
+      updateFavoriteButton();
+    });
+
+    const resetButton = document.getElementById("resetButton");
+    const errorMessage = document.getElementById("errorMessage");
+    const byId = id => document.getElementById(id);
+    const finite = value => Number.isFinite(Number(value));
+    const optionalNumber = (id, fallback = 0) => {
+      const value = byId(id)?.value.trim();
+      return value === "" ? fallback : Number(value);
+    };
+    const formatNumber = (value, digits = 2) => Number(value).toLocaleString("es-ES", { maximumFractionDigits: digits });
+    const formatMoney = (value, currency = "USD", digits = 2) => new Intl.NumberFormat("es-ES", { style: "currency", currency, maximumFractionDigits: digits }).format(value);
+    const formatPercent = (value, digits = 2) => `${Number(value).toFixed(digits)}%`;
+    const setText = (id, value) => { const node = byId(id); if (node) node.textContent = value; };
+    const showError = message => { errorMessage.textContent = message; };
+    const clearError = () => { errorMessage.textContent = ""; document.querySelectorAll('[aria-invalid="true"]').forEach(node => node.setAttribute("aria-invalid", "false")); };
+    const invalidate = (id, message) => { const node = byId(id); if (node) node.setAttribute("aria-invalid", "true"); showError(message); return false; };
+
+    function calculate(){clearError();const A=optionalNumber("conversionAmount",0),p=optionalNumber("taxablePercent",0)/100,t=optionalNumber("taxRate",0)/100,r=optionalNumber("annualReturn",0)/100,n=optionalNumber("years",0),extShare=optionalNumber("externalTaxShare",0)/100;if(!finite(A)||A<0)return invalidate("conversionAmount","Introduce un importe válido.");if(!finite(p)||p<0||p>1)return invalidate("taxablePercent","El porcentaje imponible debe estar entre 0 y 100 %.");if(!finite(t)||t<0)return invalidate("taxRate","Introduce un tipo fiscal válido.");if(!finite(r)||r<=-1)return invalidate("annualReturn","La rentabilidad debe ser mayor que -100 %.");if(!finite(n)||n<0)return invalidate("years","El horizonte no puede ser negativo.");if(!finite(extShare)||extShare<0||extShare>1)return invalidate("externalTaxShare","El porcentaje debe estar entre 0 y 100 %.");const taxable=A*p,tax=taxable*t,invested=Math.max(0,A-tax*(1-extShare)),fv=invested*Math.pow(1+r,n);setText("mainResult",formatMoney(fv));setText("taxableAmount",formatMoney(taxable));setText("taxToday",formatMoney(tax));setText("investedAmount",formatMoney(invested));}
+
+    resetButton.addEventListener("click", () => {
+      document.querySelectorAll(".input-control").forEach(input => { input.value = input.defaultValue; });
+      clearError();
+      calculate();
+    });
+    let autoTimer;
+    document.querySelectorAll(".input-control").forEach(input => {
+      input.addEventListener("input", () => {
+        clearTimeout(autoTimer);
+        autoTimer = setTimeout(calculate, 200);
+      });
+      input.addEventListener("change", calculate);
+    });
+
+
+    appsButton.addEventListener("click", () => {
+      const isOpen = appsMenu.classList.toggle("open");
+      appsButton.setAttribute("aria-expanded", String(isOpen));
+    });
+
+    document.addEventListener("click", event => {
+      if (!event.target.closest(".apps-wrap")) {
+        appsMenu.classList.remove("open");
+        appsButton.setAttribute("aria-expanded", "false");
+      }
+    });
+
+    document.querySelectorAll(".accordion-button").forEach(button => {
+      button.addEventListener("click", () => {
+        const accordion = button.closest(".accordion");
+        const content = accordion.querySelector(".accordion-content");
+        const isOpen = accordion.classList.toggle("open");
+
+        button.setAttribute("aria-expanded", String(isOpen));
+        content.style.maxHeight = isOpen ? content.scrollHeight + "px" : "0px";
+      });
+    });
+
+    calculate();
+    updateFavoriteButton();
+  </script>
+</body>
+</html>

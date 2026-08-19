@@ -1,0 +1,1090 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Estima la potencia de una comparación bilateral entre dos medias de error de pronóstico con diferencia esperada, desviación estándar, muestra por grupo y alfa." />
+  <link rel="canonical" href="https://www.toolboxapp.cc/es/calculator/forecast_accuracy_statistical_power_calculator/" />
+  <link rel="alternate" hreflang="en" href="https://www.toolboxapp.cc/calculator/forecast_accuracy_statistical_power_calculator/" />
+  <link rel="alternate" hreflang="es" href="https://www.toolboxapp.cc/es/calculator/forecast_accuracy_statistical_power_calculator/" />
+  <link rel="alternate" hreflang="x-default" href="https://www.toolboxapp.cc/calculator/forecast_accuracy_statistical_power_calculator/" />
+  <title>Calculadora de potencia estadística para precisión de pronósticos | toolbox</title>
+  <meta property="og:site_name" content="toolbox" />
+  <meta property="og:title" content="Calculadora de potencia estadística para precisión de pronósticos | toolbox" />
+  <meta property="og:description" content="Estima la potencia de una comparación bilateral entre dos medias de error de pronóstico con diferencia esperada, desviación estándar, muestra por grupo y alfa." />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://www.toolboxapp.cc/es/calculator/forecast_accuracy_statistical_power_calculator/" />
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Calculadora de potencia estadística para precisión de pronósticos | toolbox" />
+  <meta name="twitter:description" content="Estima la potencia de una comparación bilateral entre dos medias de error de pronóstico con diferencia esperada, desviación estándar, muestra por grupo y alfa." />
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+          { "@type": "ListItem", "position": 1, "name": "Inicio", "item": "https://www.toolboxapp.cc/" },
+          { "@type": "ListItem", "position": 2, "name": "IA, datos y tecnología", "item": "https://www.toolboxapp.cc/es/calculator/categories/ai-data-technology/" },
+          { "@type": "ListItem", "position": 3, "name": "Calculadora de potencia estadística para precisión de pronósticos", "item": "https://www.toolboxapp.cc/es/calculator/forecast_accuracy_statistical_power_calculator/" }
+        ]
+      },
+      {
+        "@type": "WebApplication",
+        "name": "Calculadora de potencia estadística para precisión de pronósticos",
+        "url": "https://www.toolboxapp.cc/es/calculator/forecast_accuracy_statistical_power_calculator/",
+        "description": "Estima la potencia de una comparación bilateral entre dos medias de error de pronóstico con diferencia esperada, desviación estándar, muestra por grupo y alfa.",
+        "applicationCategory": "UtilitiesApplication",
+        "operatingSystem": "Any",
+        "browserRequirements": "Requiere JavaScript"
+      }
+    ]
+  }
+  </script>
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "¿Qué diferencia debo introducir?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Usa la mejora mínima que sería relevante para la decisión, no necesariamente la diferencia que esperas observar por optimismo."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "¿Puedo usar RMSE, MAE o MAPE?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Sí, siempre que la diferencia y la desviación estándar estén en la misma unidad de la métrica y tenga sentido comparar sus medias."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "¿Qué cambia si evalúo ambos modelos sobre los mismos periodos?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Entonces los resultados están emparejados y la correlación entre modelos importa. Una prueba pareada basada en las diferencias suele requerir menos muestra que el diseño independiente modelado aquí."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "¿Una potencia alta garantiza una diferencia significativa?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "No. La potencia es una probabilidad previa al resultado bajo un efecto supuesto; una realización concreta puede o no resultar significativa."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "¿Qué puedo hacer si la potencia es baja?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Aumentar la muestra, reducir la variabilidad mediante un diseño más controlado o replantear cuál es la diferencia mínima relevante. Relajar alfa también aumenta potencia, pero cambia el riesgo de falso positivo."
+      }
+    }
+  ]
+}
+  </script>
+
+  <style>
+    :root {
+      color-scheme: dark;
+      --bg: #000;
+      --panel: #0a0a0a;
+      --panel-hover: #111;
+      --border: #292929;
+      --border-strong: #454545;
+      --text: #fff;
+      --muted: #8d8d8d;
+      --soft: #bdbdbd;
+      --danger: #ff7d7d;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      background: var(--bg);
+      color: var(--text);
+      font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    button,
+    input,
+    select {
+      font: inherit;
+    }
+
+    a {
+      color: inherit;
+    }
+
+    .site-header {
+      position: sticky;
+      top: 0;
+      z-index: 30;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: 70px;
+      padding: 0 24px;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+      background: rgba(0, 0, 0, 0.88);
+      backdrop-filter: blur(18px);
+    }
+
+    .brand {
+      color: #fff;
+      text-decoration: none;
+      font-size: 24px;
+      font-weight: 600;
+      letter-spacing: -0.05em;
+    }
+
+    .apps-wrap {
+      position: relative;
+    }
+
+    .apps-button {
+      width: 44px;
+      height: 44px;
+      display: grid;
+      place-items: center;
+      border: 0;
+      border-radius: 50%;
+      background: transparent;
+      cursor: pointer;
+      transition: background 0.18s ease;
+    }
+
+    .apps-button:hover,
+    .apps-button:focus-visible {
+      background: #111;
+      outline: none;
+    }
+
+    .dots {
+      width: 20px;
+      height: 20px;
+      display: grid;
+      grid-template-columns: repeat(3, 4px);
+      grid-template-rows: repeat(3, 4px);
+      gap: 4px;
+    }
+
+    .dots span {
+      width: 4px;
+      height: 4px;
+      border-radius: 50%;
+      background: #fff;
+    }
+
+    .apps-menu {
+      position: absolute;
+      top: 52px;
+      right: 0;
+      width: min(310px, calc(100vw - 32px));
+      max-height: calc(100vh - 84px);
+      overflow-y: auto;
+      padding: 10px;
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      background: rgba(10, 10, 10, 0.98);
+      box-shadow: 0 22px 60px rgba(0, 0, 0, 0.6);
+      opacity: 0;
+      visibility: hidden;
+      transform: translateY(-8px);
+      transition: 0.18s ease;
+    }
+
+    .apps-menu.open {
+      opacity: 1;
+      visibility: visible;
+      transform: translateY(0);
+    }
+
+    .category-list {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+
+    .category-link {
+      min-height: 42px;
+      display: flex;
+      align-items: center;
+      padding: 0 14px;
+      border-radius: 10px;
+      color: #fff;
+      text-decoration: none;
+      font-size: 14px;
+      transition: background 0.16s ease;
+    }
+
+    .category-link:hover,
+    .category-link:focus-visible {
+      background: #181818;
+      outline: none;
+    }
+
+    .page {
+      width: min(1080px, calc(100% - 32px));
+      margin: 0 auto;
+      padding: 64px 0 90px;
+    }
+
+    .breadcrumb {
+      margin-bottom: 22px;
+      color: #737373;
+      font-size: 13px;
+    }
+
+    .breadcrumb a {
+      color: #9b9b9b;
+      text-decoration: none;
+    }
+
+    .breadcrumb a:hover {
+      color: #fff;
+    }
+
+    .page-title {
+      margin: 0;
+      font-size: clamp(36px, 6vw, 62px);
+      line-height: 1;
+      letter-spacing: -0.055em;
+      font-weight: 600;
+    }
+
+    .title-row {
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: flex-start;
+    }
+
+    .title-row .page-title {
+      padding-right: 48px;
+    }
+
+    .favorite-button {
+      position: absolute;
+      right: 0;
+      display: grid;
+      width: 42px;
+      height: 42px;
+      padding: 0;
+      place-items: center;
+      border: 0;
+      background: transparent;
+      color: #858585;
+      cursor: pointer;
+      font-size: 25px;
+      line-height: 1;
+      transition: color .16s ease;
+    }
+
+    .favorite-button:hover,
+    .favorite-button:focus-visible {
+      color: #fff;
+      outline: none;
+    }
+
+    .favorite-button.active {
+      color: #ffd34e;
+    }
+
+    .intro {
+      width: 100%;
+      max-width: none;
+      margin: 18px 0 0;
+      color: var(--muted);
+      font-size: 16px;
+      line-height: 1.7;
+    }
+
+    .noscript-notice {
+      margin: 18px 0 0;
+      padding: 14px 16px;
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      color: var(--soft);
+      background: var(--panel);
+      font-size: 14px;
+      line-height: 1.6;
+    }
+
+    .calculator {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      grid-template-areas:
+        "input input"
+        "ad-one ad-two"
+        "result result";
+      gap: 18px;
+      margin-top: 46px;
+      min-width: 0;
+    }
+
+    .input-panel {
+      grid-area: input;
+    }
+
+    .calculator > *,
+    .field-grid,
+    .field,
+    .input-wrap,
+    .result-panel,
+    .result-breakdown {
+      min-width: 0;
+    }
+
+    .panel {
+      border: 1px solid var(--border);
+      border-radius: 22px;
+      background: var(--panel);
+    }
+
+    .input-panel {
+      padding: 28px;
+    }
+
+    .panel-title {
+      margin: 0 0 24px;
+      font-size: 18px;
+      font-weight: 600;
+      letter-spacing: -0.02em;
+    }
+
+    .field-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 18px;
+    }
+
+    .field {
+      display: grid;
+      gap: 9px;
+    }
+
+    .field label {
+      color: var(--soft);
+      font-size: 13px;
+      font-weight: 500;
+    }
+
+    .input-wrap {
+      position: relative;
+    }
+
+    .input-control {
+      width: 100%;
+      height: 56px;
+      padding: 0 52px 0 16px;
+      border: 1px solid var(--border-strong);
+      border-radius: 13px;
+      background: #050505;
+      color: #fff;
+      outline: none;
+      transition: border-color 0.16s ease, box-shadow 0.16s ease;
+    }
+
+    .input-control:focus {
+      border-color: #777;
+      box-shadow: 0 0 0 4px rgba(255,255,255,0.035);
+    }
+
+    .suffix {
+      position: absolute;
+      top: 50%;
+      right: 16px;
+      transform: translateY(-50%);
+      color: #767676;
+      font-size: 13px;
+      pointer-events: none;
+    }
+
+    .actions {
+      display: flex;
+      gap: 10px;
+      margin-top: 24px;
+    }
+
+    .button {
+      min-height: 50px;
+      padding: 0 20px;
+      border-radius: 12px;
+      cursor: pointer;
+      transition: background 0.16s ease, border-color 0.16s ease, transform 0.16s ease;
+    }
+
+    .button:active {
+      transform: translateY(1px);
+    }
+
+    .button-primary {
+      flex: 1;
+      border: 1px solid #fff;
+      background:#242424;
+      color:#fff;
+      font-weight: 700;
+    }
+
+    .button-primary:hover {
+      background:#3a3a3a;
+      border-color:#4a4a4a;
+    }
+
+    .button-secondary {
+      border: 1px solid var(--border-strong);
+      background: transparent;
+      color: #fff;
+    }
+
+    .button-secondary:hover {
+      background: #151515;
+    }
+
+    .error {
+      min-height: 20px;
+      margin: 13px 0 0;
+      color: var(--danger);
+      font-size: 13px;
+    }
+
+
+    .ad-panel {
+      min-height:140px;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      padding:18px;
+      border:1px dashed #3b3b3b;
+      border-radius:22px;
+      background:#111;
+      color:#686868;
+      text-align:center;
+      font-size:12px;
+      letter-spacing:0.08em;
+      text-transform:uppercase;
+    }
+
+    .ad-one { grid-area: ad-one; }
+    .ad-two { grid-area: ad-two; }
+
+    .ad-slot {
+      width:100%;
+      min-height:104px;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+    }
+
+    .result-panel {
+      grid-area: result;
+      min-height: 360px;
+      padding: 28px;
+      background:#242424;
+      color:#fff;
+    }
+
+    .result-layout {
+      display: grid;
+      grid-template-columns: minmax(0, 1.08fr) minmax(320px, 0.92fr);
+      gap: 40px;
+      align-items: center;
+      min-height: 100%;
+      min-width: 0;
+    }
+
+    .result-main,
+    .result-details {
+      min-width: 0;
+    }
+
+    .result-eyebrow {
+      color:#a0a0a0;
+      font-size: 13px;
+      font-weight: 600;
+    }
+
+    .main-result {
+      margin: 18px 0 4px;
+      font-size: clamp(42px, 7vw, 70px);
+      line-height: 1;
+      letter-spacing: -0.06em;
+      font-weight: 700;
+      overflow-wrap: anywhere;
+    }
+
+    .result-label {
+      color:#9b9b9b;
+      font-size: 14px;
+    }
+
+    .result-breakdown {
+      display: grid;
+      gap: 0;
+      margin-top: 0;
+      border-top:1px solid #353535;
+    }
+
+    .result-row {
+      display: flex;
+      justify-content: space-between;
+      gap: 20px;
+      padding: 15px 0;
+      border-bottom:1px solid #353535;
+      font-size: 14px;
+    }
+
+    .result-row span:first-child {
+      color:#9b9b9b;
+    }
+
+    .result-row strong {
+      text-align: right;
+    }
+
+    .details {
+      display: grid;
+      gap: 10px;
+      margin-top: 22px;
+    }
+
+    .accordion {
+      overflow: hidden;
+      border: 1px solid var(--border);
+      border-radius: 15px;
+      background: #080808;
+    }
+
+    .accordion-button {
+      width: 100%;
+      min-height: 62px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 20px;
+      padding: 0 20px;
+      border: 0;
+      background: transparent;
+      color: #fff;
+      text-align: left;
+      cursor: pointer;
+    }
+
+    .accordion-button:hover {
+      background: #101010;
+    }
+
+    .accordion-title {
+      font-size: 15px;
+      font-weight: 600;
+    }
+
+    .accordion-icon {
+      color: #777;
+      font-size: 22px;
+      transition: transform 0.18s ease;
+    }
+
+    .accordion.open .accordion-icon {
+      transform: rotate(45deg);
+    }
+
+    .accordion-content {
+      max-height: 0;
+      overflow: hidden;
+      color: #aaa;
+      line-height: 1.75;
+      transition: max-height 0.25s ease;
+    }
+
+    .accordion-content-inner {
+      padding: 0 20px 22px;
+    }
+
+    .accordion-content p {
+      margin: 0 0 12px;
+    }
+
+    .accordion-content p:last-child {
+      margin-bottom: 0;
+    }
+
+    .formula {
+      display: block;
+      padding: 16px;
+      border: 1px solid #242424;
+      border-radius: 12px;
+      background: #030303;
+      color: #fff;
+      font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+      overflow-x: auto;
+    }
+
+    .faq-item + .faq-item {
+      margin-top: 18px;
+    }
+
+    .faq-question {
+      margin: 0 0 6px;
+      color: #fff;
+      font-size: 15px;
+    }
+
+    .related-tools {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 10px;
+    }
+
+    .related-link {
+      min-height: 54px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 14px;
+      padding: 0 16px;
+      border: 1px solid #242424;
+      border-radius: 12px;
+      color: #fff;
+      text-decoration: none;
+      background: #050505;
+    }
+
+    .related-link:hover {
+      background: #111;
+    }
+
+    .site-footer {
+      width: min(1080px, calc(100% - 32px));
+      margin: 0 auto;
+      padding: 26px 0 42px;
+      border-top: 1px solid #171717;
+      color: #686868;
+      font-size: 12px;
+    }
+
+    @media (max-width: 780px) {
+      .site-header {
+        height: 64px;
+        padding: 0 16px;
+      }
+
+      .page {
+        padding-top: 42px;
+      }
+
+      .calculator {
+        grid-template-columns: minmax(0, 1fr);
+        grid-template-areas:
+          "input"
+          "ad-one"
+          "result"
+          "ad-two";
+      }
+
+      .input-panel,
+      .field-grid,
+      .field,
+      .input-wrap,
+      .actions,
+      .result-panel {
+        width: 100%;
+        max-width: 100%;
+        min-width: 0;
+      }
+
+      .panel-title,
+      .field,
+      .actions,
+      .error,
+      .result-panel > * {
+        grid-column: 1 / -1;
+        grid-row: auto;
+      }
+
+      .result-panel {
+        min-height: 390px;
+      }
+
+      .field-grid {
+        grid-template-columns: minmax(0, 1fr);
+      }
+
+      .result-layout {
+        grid-template-columns: minmax(0, 1fr);
+        gap: 28px;
+        align-items: start;
+      }
+
+      .result-breakdown {
+        margin-top: 0;
+      }
+    }
+
+    @media (max-width: 520px) {
+      .page {
+        width: calc(100% - 24px);
+        padding-bottom: 60px;
+      }
+
+      .page-title {
+        font-size: clamp(34px, 11vw, 48px);
+        line-height: 1.02;
+        overflow-wrap: anywhere;
+      }
+
+      .input-panel,
+      .result-panel {
+        padding: 22px;
+        border-radius: 18px;
+      }
+
+      .field-grid {
+        grid-template-columns: minmax(0, 1fr) !important;
+      }
+
+      .input-control,
+      select.input-control {
+        width: 100%;
+        max-width: 100%;
+        min-width: 0;
+      }
+
+      .actions {
+        flex-direction: column;
+      }
+
+      .button,
+      .button-secondary {
+        width: 100%;
+        min-width: 0;
+      }
+
+      .result-row {
+        min-width: 0;
+      }
+
+      .result-row span,
+      .result-row strong {
+        min-width: 0;
+        overflow-wrap: anywhere;
+      }
+
+      .related-tools {
+        grid-template-columns: minmax(0, 1fr);
+      }
+
+      .main-result {
+        font-size: 48px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <header class="site-header">
+    <a class="brand" href="/es/">toolbox</a>
+
+    <div class="apps-wrap">
+      <button
+        class="apps-button"
+        id="appsButton"
+        type="button"
+        aria-label="Abrir categorías"
+        aria-expanded="false"
+        aria-controls="appsMenu"
+      >
+        <span class="dots" aria-hidden="true">
+          <span></span><span></span><span></span>
+          <span></span><span></span><span></span>
+          <span></span><span></span><span></span>
+        </span>
+      </button>
+
+      <div class="apps-menu" id="appsMenu">
+        <nav class="category-list" aria-label="Categorías de herramientas">
+          <a class="category-link" href="/es/calculator/categories/money-investing/">Dinero e inversión</a>
+          <a class="category-link" href="/es/calculator/categories/taxes-insurance-benefits/">Impuestos, seguros y prestaciones</a>
+          <a class="category-link" href="/es/calculator/categories/business-operations/">Negocios y operaciones</a>
+          <a class="category-link" href="/es/calculator/categories/startups-digital-business/">Startups y negocios digitales</a>
+          <a class="category-link" href="/es/calculator/categories/sales-marketing-audience/">Ventas, marketing y audiencia</a>
+          <a class="category-link" href="/es/calculator/categories/online-selling-retail/">Venta online y comercio minorista</a>
+          <a class="category-link" href="/es/calculator/categories/jobs-pay-workforce/">Empleo, salarios y personal</a>
+          <a class="category-link" href="/es/calculator/categories/time-productivity/">Tiempo y productividad</a>
+          <a class="category-link" href="/es/calculator/categories/property-construction/">Inmuebles y construcción</a>
+          <a class="category-link" href="/es/calculator/categories/manufacturing-production/">Fabricación y producción</a>
+          <a class="category-link" href="/es/calculator/categories/shipping-supply-chain/">Envíos y cadena de suministro</a>
+          <a class="category-link" href="/es/calculator/categories/health-body-fitness/">Salud, cuerpo y ejercicio</a>
+          <a class="category-link" href="/es/calculator/categories/food-cooking-hospitality/">Alimentación, cocina y hostelería</a>
+          <a class="category-link" href="/es/calculator/categories/home-everyday-life/">Hogar y vida cotidiana</a>
+          <a class="category-link" href="/es/calculator/categories/learning-grades/">Aprendizaje y calificaciones</a>
+          <a class="category-link" href="/es/calculator/categories/science-math-engineering/">Ciencia, matemáticas e ingeniería</a>
+          <a class="category-link" href="/es/calculator/categories/ai-data-technology/">IA, datos y tecnología</a>
+          <a class="category-link" href="/es/calculator/categories/energy-sustainability/">Energía y sostenibilidad</a>
+          <a class="category-link" href="/es/calculator/categories/farming-animals-pets/">Agricultura, animales y mascotas</a>
+          <a class="category-link" href="/es/calculator/categories/travel-events-recreation/">Viajes, eventos y ocio</a>
+          <a class="category-link" href="/es/calculator/categories/legal-safety-compliance/">Asuntos legales, seguridad y cumplimiento</a>
+        </nav>
+      </div>
+    </div>
+  </header>
+
+  <main class="page">
+    <div class="breadcrumb">
+      <a href="/">Inicio</a> / <a href="/es/calculator/categories/ai-data-technology/">IA, datos y tecnología</a> / Calculadora de potencia estadística para precisión de pronósticos
+    </div>
+
+    <div class="title-row">
+      <h1 class="page-title">Calculadora de potencia estadística para precisión de pronósticos</h1>
+      <button class="favorite-button" id="favoriteButton" type="button" aria-label="Añadir Calculadora de potencia estadística para precisión de pronósticos a favoritos" aria-pressed="false">☆</button>
+    </div>
+    <p class="intro">
+      <p>Esta calculadora estima la potencia estadística de una comparación bilateral entre dos medias de una métrica de error de pronóstico. Parte de una diferencia media que se considera relevante, una desviación estándar común aproximada y un mismo número de observaciones por grupo para calcular la probabilidad de detectar esa diferencia.</p><p>Puede ayudar a planificar evaluaciones entre modelos, versiones o procesos de forecasting cuando los casos se tratan como dos grupos independientes. La potencia aumenta al crecer la muestra o la diferencia esperada y disminuye cuando la variabilidad es mayor o el nivel alfa es más estricto. Si ambos modelos se evalúan exactamente sobre los mismos periodos, un análisis emparejado suele ser más eficiente; esta herramienta no explota esa correlación y debe interpretarse como una aproximación conservadora o de diseño independiente.</p>
+    </p>
+    <noscript>
+      <p class="noscript-notice">Esta calculadora necesita JavaScript para actualizar los resultados. Activa JavaScript en tu navegador y vuelve a cargar esta página.</p>
+    </noscript>
+
+    <section class="calculator" aria-label="Calculadora de potencia estadística para precisión de pronósticos">
+      <div class="panel input-panel">
+        <h2 class="panel-title">Diferencia, variabilidad y tamaño de evaluación</h2>
+
+        <!-- Every number input in INPUTS_HTML must have a unique id, label, default value, min, max and step. Optional blank values must be treated as 0 or not applied, never as an error. -->
+        <div class="field-grid"><div class="field"><label for="difference">Diferencia media esperada</label><div class="input-wrap"><input class="input-control" id="difference" type="number" value="3" min="0.0001" max="1000000" step="0.01" /><span class="suffix">p.p.</span></div></div><div class="field"><label for="sd">Desviación estándar común</label><div class="input-wrap"><input class="input-control" id="sd" type="number" value="10" min="0.0001" max="1000000" step="0.01" /><span class="suffix">p.p.</span></div></div><div class="field"><label for="nPerGroup">Observaciones por grupo</label><div class="input-wrap"><input class="input-control" id="nPerGroup" type="number" value="100" min="2" max="100000000" step="1" /></div></div><div class="field"><label for="alpha">Nivel alfa bilateral</label><div class="input-wrap"><select class="input-control" id="alpha"><option value="0.1">0,10</option><option value="0.05" selected>0,05</option><option value="0.01">0,01</option></select></div></div></div>
+
+        <div class="actions">
+<button class="button button-secondary" id="resetButton" type="button">Restablecer</button>
+        </div>
+
+        <p class="error" id="errorMessage" role="alert"></p>
+      </div>
+
+      <aside class="ad-panel ad-one" aria-label="Publicidad">
+        <div class="ad-slot"><!-- Espacio reservado para anuncio --></div>
+      </aside>
+
+      <div class="panel result-panel" aria-live="polite">
+        <div class="result-layout">
+          <div class="result-main">
+          <div class="result-eyebrow">Resultado</div>
+          <div class="main-result" id="mainResult">—</div>
+          <div class="result-label" id="resultLabel">potencia estadística aproximada</div>
+            
+          </div>
+          <div class="result-details">
+            <div class="result-breakdown"><div class="result-row"><span>Error estándar de la diferencia</span><strong id="standardError">—</strong></div><div class="result-row"><span>Diferencia estandarizada</span><strong id="effectZ">—</strong></div><div class="result-row"><span>z crítico</span><strong id="criticalZ">—</strong></div><div class="result-row"><span>Error tipo II aproximado</span><strong id="betaError">—</strong></div></div>
+          </div>
+        </div>
+      </div>
+
+      <aside class="ad-panel ad-two" aria-label="Publicidad">
+        <div class="ad-slot"><!-- Espacio reservado para anuncio --></div>
+      </aside>
+    </section>
+
+    <section class="details" aria-label="Información de la calculadora">
+      <article class="accordion">
+        <button class="accordion-button" type="button" aria-expanded="false">
+          <span class="accordion-title">Cómo usarla</span>
+          <span class="accordion-icon" aria-hidden="true">+</span>
+        </button>
+        <div class="accordion-content">
+          <div class="accordion-content-inner">
+            <p><strong>1. Define la mejora relevante</strong><br>Introduce la diferencia media, en puntos de la métrica, que quieres ser capaz de detectar.</p><p><strong>2. Estima la variabilidad</strong><br>Usa una desviación estándar común representativa de los errores individuales.</p><p><strong>3. Indica la muestra por grupo</strong><br>Introduce el número de observaciones independientes disponibles para cada modelo o escenario.</p><p><strong>4. Selecciona alfa</strong><br>El nivel bilateral determina el umbral crítico. Un alfa menor reduce falsos positivos, pero también la potencia para una muestra fija.</p><p><strong>5. Interpreta la potencia</strong><br>El resultado aproxima la probabilidad de detectar la diferencia especificada si realmente existe con esos parámetros.</p>
+          </div>
+        </div>
+      </article>
+
+      <article class="accordion">
+        <button class="accordion-button" type="button" aria-expanded="false">
+          <span class="accordion-title">Fórmula</span>
+          <span class="accordion-icon" aria-hidden="true">+</span>
+        </button>
+        <div class="accordion-content">
+          <div class="accordion-content-inner">
+            <p>Fórmula principal:</p><span class="formula">SE_dif = σ × √(2/n); δ = Δ / SE_dif; potencia ≈ P(|Z| > zα/2 | media de Z = δ)</span><p><strong>Variables:</strong></p><ul><li><strong>Δ</strong>: diferencia media esperada entre los grupos.</li><li><strong>σ</strong>: desviación estándar común de la métrica.</li><li><strong>n</strong>: observaciones por grupo, suponiendo tamaños iguales.</li><li><strong>δ</strong>: diferencia estandarizada en unidades del error estándar.</li></ul><p><strong>Supuestos:</strong> Se supone una comparación de dos grupos independientes, igual tamaño y desviación estándar común. Para datos emparejados debe utilizarse la desviación estándar de las diferencias.</p>
+            <h3>Qué significa el resultado</h3>
+            <p>La potencia expresa la probabilidad aproximada de superar el umbral estadístico bilateral cuando la diferencia verdadera coincide con la diferencia esperada introducida.</p>
+            <p>No interpreta si una mejora es útil para el negocio. La significación estadística y la relevancia práctica deben evaluarse por separado.</p>
+          </div>
+        </div>
+      </article>
+
+      <article class="accordion">
+        <button class="accordion-button" type="button" aria-expanded="false">
+          <span class="accordion-title">Ejemplo de cálculo</span>
+          <span class="accordion-icon" aria-hidden="true">+</span>
+        </button>
+        <div class="accordion-content">
+          <div class="accordion-content-inner">
+            <p><strong>Datos:</strong></p><ul><li>Diferencia esperada: 3 puntos</li><li>Desviación estándar: 10 puntos</li><li>100 observaciones por grupo</li><li>α = 0,05 bilateral</li></ul><p><strong>Cálculo:</strong><br>SE = 10 × √(2/100) ≈ 1,414. δ = 3 / 1,414 ≈ 2,121. Con z crítico 1,96, la potencia bilateral aproximada es cercana al 56 %.</p><p><strong>Resultado:</strong><br>Potencia aproximada ≈ 56 %.</p><p><strong>Interpretación:</strong><br>Con esta muestra y variabilidad, una mejora de 3 puntos todavía tiene una probabilidad moderada, no alta, de ser detectada al 5 % bilateral.</p>
+          </div>
+        </div>
+      </article>
+
+      <article class="accordion">
+        <button class="accordion-button" type="button" aria-expanded="false">
+          <span class="accordion-title">Preguntas frecuentes</span>
+          <span class="accordion-icon" aria-hidden="true">+</span>
+        </button>
+        <div class="accordion-content">
+          <div class="accordion-content-inner">
+            <div class="faq-item"><h3 class="faq-question">¿Qué diferencia debo introducir?</h3><p>Usa la mejora mínima que sería relevante para la decisión, no necesariamente la diferencia que esperas observar por optimismo.</p></div><div class="faq-item"><h3 class="faq-question">¿Puedo usar RMSE, MAE o MAPE?</h3><p>Sí, siempre que la diferencia y la desviación estándar estén en la misma unidad de la métrica y tenga sentido comparar sus medias.</p></div><div class="faq-item"><h3 class="faq-question">¿Qué cambia si evalúo ambos modelos sobre los mismos periodos?</h3><p>Entonces los resultados están emparejados y la correlación entre modelos importa. Una prueba pareada basada en las diferencias suele requerir menos muestra que el diseño independiente modelado aquí.</p></div><div class="faq-item"><h3 class="faq-question">¿Una potencia alta garantiza una diferencia significativa?</h3><p>No. La potencia es una probabilidad previa al resultado bajo un efecto supuesto; una realización concreta puede o no resultar significativa.</p></div><div class="faq-item"><h3 class="faq-question">¿Qué puedo hacer si la potencia es baja?</h3><p>Aumentar la muestra, reducir la variabilidad mediante un diseño más controlado o replantear cuál es la diferencia mínima relevante. Relajar alfa también aumenta potencia, pero cambia el riesgo de falso positivo.</p></div>
+          </div>
+        </div>
+      </article>
+
+      <article class="accordion">
+        <button class="accordion-button" type="button" aria-expanded="false">
+          <span class="accordion-title">Herramientas relacionadas</span>
+          <span class="accordion-icon" aria-hidden="true">+</span>
+        </button>
+        <div class="accordion-content">
+          <div class="accordion-content-inner">
+            <div class="related-tools"><a class="related-link" href="/es/calculator/forecast_accuracy_sample_size_estimator/"><span><strong>Forecast Accuracy Sample Size Estimator</strong><br><small style="color:#8d8d8d">Ayuda a dimensionar una evaluación cuando el objetivo es precisión de la media.</small></span><span aria-hidden="true">→</span></a><a class="related-link" href="/es/calculator/forecast_accuracy_confidence_interval_calculator/"><span><strong>Forecast Accuracy Confidence Interval Calculator</strong><br><small style="color:#8d8d8d">Permite cuantificar la incertidumbre de una métrica observada.</small></span><span aria-hidden="true">→</span></a><a class="related-link" href="/es/calculator/forecast_accuracy_error_rate_estimator/"><span><strong>Forecast Accuracy Error Rate Estimator</strong><br><small style="color:#8d8d8d">Complementa la comparación con un resumen del nivel de error.</small></span><span aria-hidden="true">→</span></a><a class="related-link" href="/es/calculator/data_pipeline_statistical_power_calculator/"><span><strong>Data Pipeline Statistical Power Calculator</strong><br><small style="color:#8d8d8d">Ofrece una referencia de potencia para otro contexto de análisis de datos.</small></span><span aria-hidden="true">→</span></a></div>
+          </div>
+        </div>
+      </article>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    © 2026 toolbox. Los resultados son estimaciones y deben interpretarse según los supuestos indicados en cada sección.
+  </footer>
+
+  <script>
+    const appsButton = document.getElementById("appsButton");
+    const appsMenu = document.getElementById("appsMenu");
+    const favoriteButton = document.getElementById("favoriteButton");
+    const FAVORITES_KEY = "toolboxapp-favorites-v1";
+    const currentTool = {
+      name: "Calculadora de potencia estadística para precisión de pronósticos",
+      url: window.location.pathname
+    };
+
+    function readFavorites() {
+      try {
+        const saved = JSON.parse(localStorage.getItem(FAVORITES_KEY) || "[]");
+        return Array.isArray(saved) ? saved : [];
+      } catch (error) {
+        return [];
+      }
+    }
+
+    function updateFavoriteButton() {
+      const isFavorite = readFavorites().some(tool => tool.url === currentTool.url);
+      favoriteButton.classList.toggle("active", isFavorite);
+      favoriteButton.textContent = isFavorite ? "★" : "☆";
+      favoriteButton.setAttribute("aria-pressed", String(isFavorite));
+      favoriteButton.setAttribute("aria-label", `${isFavorite ? "Quitar" : "Añadir"} Calculadora de potencia estadística para precisión de pronósticos ${isFavorite ? "de" : "a"} favoritos`);
+    }
+
+    favoriteButton.addEventListener("click", () => {
+      const saved = readFavorites();
+      const existingIndex = saved.findIndex(tool => tool.url === currentTool.url);
+
+      if (existingIndex >= 0) {
+        saved.splice(existingIndex, 1);
+      } else {
+        saved.push(currentTool);
+      }
+
+      localStorage.setItem(FAVORITES_KEY, JSON.stringify(saved));
+      updateFavoriteButton();
+    });
+
+    const resetButton = document.getElementById("resetButton");
+    const errorMessage = document.getElementById("errorMessage");
+    const byId = id => document.getElementById(id);
+    const finite = value => Number.isFinite(Number(value));
+    const optionalNumber = (id, fallback = 0) => {
+      const value = byId(id)?.value.trim();
+      return value === "" ? fallback : Number(value);
+    };
+    const formatNumber = (value, digits = 2) => Number(value).toLocaleString("es-ES", { maximumFractionDigits: digits });
+    const formatMoney = (value, currency = "USD", digits = 2) => new Intl.NumberFormat("es-ES", { style: "currency", currency, maximumFractionDigits: digits }).format(value);
+    const formatPercent = (value, digits = 2) => `${Number(value).toFixed(digits)}%`;
+    const setText = (id, value) => { const node = byId(id); if (node) node.textContent = value; };
+    const showError = message => { errorMessage.textContent = message; };
+    const clearError = () => { errorMessage.textContent = ""; document.querySelectorAll('[aria-invalid="true"]').forEach(node => node.setAttribute("aria-invalid", "false")); };
+    const invalidate = (id, message) => { const node = byId(id); if (node) node.setAttribute("aria-invalid", "true"); showError(message); return false; };
+
+    
+    const clamp = (value, min, max) => Math.min(max, Math.max(min, value));
+    const erfApprox = x => {
+      const sign = x < 0 ? -1 : 1;
+      const a = Math.abs(x);
+      const t = 1 / (1 + 0.3275911 * a);
+      const y = 1 - (((((1.061405429 * t - 1.453152027) * t) + 1.421413741) * t - 0.284496736) * t + 0.254829592) * t * Math.exp(-a * a);
+      return sign * y;
+    };
+    const normalCdf = x => 0.5 * (1 + erfApprox(x / Math.SQRT2));
+    const zForConfidence = level => ({90:1.64485362695147,95:1.95996398454005,99:2.57582930354890})[Number(level)] || 1.95996398454005;
+    const zForAlpha = alpha => {
+      const a = Number(alpha);
+      if (Math.abs(a - 0.10) < 1e-9) return 1.64485362695147;
+      if (Math.abs(a - 0.01) < 1e-9) return 2.57582930354890;
+      return 1.95996398454005;
+    };
+
+    function calculate(){clearError();const d=Number(byId("difference").value),sd=Number(byId("sd").value),n=Number(byId("nPerGroup").value),alpha=Number(byId("alpha").value);if(!(d>0))return invalidate("difference","La diferencia esperada debe ser mayor que cero.");if(!(sd>0))return invalidate("sd","La desviación estándar debe ser mayor que cero.");if(!(n>=2))return invalidate("nPerGroup","La muestra por grupo debe ser al menos 2.");const se=sd*Math.sqrt(2/n),delta=d/se,zc=zForAlpha(alpha),power=clamp((1-normalCdf(zc-delta))+normalCdf(-zc-delta),0,1);setText("mainResult",formatPercent(power*100,1));setText("standardError",`${formatNumber(se,3)} p.p.`);setText("effectZ",formatNumber(delta,3));setText("criticalZ",formatNumber(zc,3));setText("betaError",formatPercent((1-power)*100,1));}
+
+    resetButton.addEventListener("click", () => {
+      document.querySelectorAll(".input-control").forEach(input => { input.value = input.defaultValue; });
+      clearError();
+      calculate();
+    });
+    let autoTimer;
+    document.querySelectorAll(".input-control").forEach(input => {
+      input.addEventListener("input", () => {
+        clearTimeout(autoTimer);
+        autoTimer = setTimeout(calculate, 200);
+      });
+      input.addEventListener("change", calculate);
+    });
+
+
+    appsButton.addEventListener("click", () => {
+      const isOpen = appsMenu.classList.toggle("open");
+      appsButton.setAttribute("aria-expanded", String(isOpen));
+    });
+
+    document.addEventListener("click", event => {
+      if (!event.target.closest(".apps-wrap")) {
+        appsMenu.classList.remove("open");
+        appsButton.setAttribute("aria-expanded", "false");
+      }
+    });
+
+    document.querySelectorAll(".accordion-button").forEach(button => {
+      button.addEventListener("click", () => {
+        const accordion = button.closest(".accordion");
+        const content = accordion.querySelector(".accordion-content");
+        const isOpen = accordion.classList.toggle("open");
+
+        button.setAttribute("aria-expanded", String(isOpen));
+        content.style.maxHeight = isOpen ? content.scrollHeight + "px" : "0px";
+      });
+    });
+
+    calculate();
+    updateFavoriteButton();
+  </script>
+</body>
+</html>
