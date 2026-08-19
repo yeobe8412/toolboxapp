@@ -1,0 +1,96 @@
+name: Apply Spanish breadcrumb and favorites fixes once
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - .github/workflows/apply-spanish-ui-fixes-once.yml
+
+permissions:
+  contents: write
+
+jobs:
+  apply:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 2
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.x'
+      - name: Apply only the requested Spanish UI fixes
+        shell: bash
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+
+          calculator_root = Path('es/calculator')
+          pages = sorted(calculator_root.glob('*/index.html'))
+          if len(pages) != 3500:
+              raise SystemExit(f'Expected 3500 Spanish calculator pages, found {len(pages)}')
+
+          breadcrumb_changed = 0
+          for path in pages:
+              text = path.read_text(encoding='utf-8')
+              updated = text.replace(
+                  '"name": "Inicio", "item": "https://www.toolboxapp.cc/"',
+                  '"name": "Inicio", "item": "https://www.toolboxapp.cc/es/"'
+              )
+              updated = updated.replace(
+                  '<a href="/">Inicio</a>',
+                  '<a href="/es/">Inicio</a>'
+              )
+              if updated != text:
+                  path.write_text(updated, encoding='utf-8')
+                  breadcrumb_changed += 1
+
+          home = Path('es/index.html')
+          text = home.read_text(encoding='utf-8')
+          old = '''      favoritesList.innerHTML = saved.map(tool => `
+        <a class="favorite-card" href="${escapeHtml(tool.url)}">
+          <span class="favorite-name">${escapeHtml(tool.name)}</span>
+          <span class="favorite-star" aria-hidden="true">★</span>
+        </a>
+      `).join("");'''
+          new = '''      favoritesList.innerHTML = saved.map(tool => {
+        const localizedTool = tools.find(item => item.url === tool.url);
+        const displayName = localizedTool?.name || tool.name;
+        return `
+          <a class="favorite-card" href="${escapeHtml(tool.url)}">
+            <span class="favorite-name">${escapeHtml(displayName)}</span>
+            <span class="favorite-star" aria-hidden="true">★</span>
+          </a>
+        `;
+      }).join("");'''
+          if old not in text:
+              raise SystemExit('Spanish favorites render block did not match expected source; refusing unrelated edits')
+          text = text.replace(old, new, 1)
+          home.write_text(text, encoding='utf-8')
+
+          remaining_visible = 0
+          remaining_schema = 0
+          for path in pages:
+              current = path.read_text(encoding='utf-8')
+              remaining_visible += current.count('<a href="/">Inicio</a>')
+              remaining_schema += current.count('"name": "Inicio", "item": "https://www.toolboxapp.cc/"')
+
+          home_text = home.read_text(encoding='utf-8')
+          if remaining_visible or remaining_schema:
+              raise SystemExit(f'Breadcrumb validation failed: visible={remaining_visible}, schema={remaining_schema}')
+          if 'const localizedTool = tools.find(item => item.url === tool.url);' not in home_text:
+              raise SystemExit('Favorites localization validation failed')
+
+          print(f'Breadcrumb pages changed: {breadcrumb_changed}')
+          print('Favorites localization changed: es/index.html')
+          PY
+      - name: Amend triggering commit with final changes
+        shell: bash
+        run: |
+          rm -f .github/workflows/apply-spanish-ui-fixes-once.yml
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add es/calculator es/index.html .github/workflows/apply-spanish-ui-fixes-once.yml
+          git diff --cached --quiet && { echo "No changes to commit"; exit 1; }
+          git commit --amend --no-edit
+          git push --force-with-lease origin HEAD:main
