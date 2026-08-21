@@ -29,16 +29,14 @@ jobs:
               text = path.read_text(encoding='utf-8')
               de_tag = f'<link rel="alternate" hreflang="de" href="{href}" />'
               text2 = re.sub(r'\s*<link\b(?=[^>]*\bhreflang=["\']de["\'])[^>]*>\s*', '\n', text, flags=re.I)
-              m = re.search(r'(?m)^(\s*)<link\b(?=[^>]*\bhreflang=["\']x-default["\'])[^>]*>\s*$', text2, flags=re.I)
+              m = re.search(r'<link\b(?=[^>]*\bhreflang=["\']x-default["\'])[^>]*>', text2, flags=re.I)
               if m:
-                  indent = m.group(1)
-                  text2 = text2[:m.start()] + indent + de_tag + '\n' + text2[m.start():]
+                  text2 = text2[:m.start()] + de_tag + '\n' + text2[m.start():]
               else:
-                  m = re.search(r'(?m)^(\s*)<link\b(?=[^>]*\brel=["\']canonical["\'])[^>]*>\s*$', text2, flags=re.I)
+                  m = re.search(r'<link\b(?=[^>]*\brel=["\']canonical["\'])[^>]*>', text2, flags=re.I)
                   if not m:
                       raise RuntimeError(f'No canonical/x-default anchor in {path}')
-                  indent = m.group(1)
-                  text2 = text2[:m.end()] + '\n' + indent + de_tag + text2[m.end():]
+                  text2 = text2[:m.end()] + '\n' + de_tag + text2[m.end():]
               path.write_text(text2, encoding='utf-8')
 
           for slug in slugs:
@@ -68,7 +66,7 @@ jobs:
               expected = f'https://www.toolboxapp.cc/de/calculator/{slug}/'
               for path in [root/'calculator'/slug/'index.html', root/'es'/'calculator'/slug/'index.html']:
                   txt = path.read_text(encoding='utf-8')
-                  tags = re.findall(r'<link\b[^>]*\bhreflang=["\']de["\'][^>]*>', txt, flags=re.I)
+                  tags = re.findall(r'<link\b(?=[^>]*\bhreflang=["\']de["\'])[^>]*>', txt, flags=re.I)
                   if len(tags) != 1 or expected not in tags[0]:
                       raise SystemExit(f'Invalid de hreflang in {path}')
 
