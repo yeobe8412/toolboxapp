@@ -1,0 +1,50 @@
+name: temp-add-german-main-language-option
+
+on:
+  push:
+    branches:
+      - add-german-main-language-option
+
+permissions:
+  contents: write
+
+jobs:
+  patch:
+    if: github.actor != 'github-actions[bot]'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: add-german-main-language-option
+      - name: Add German option only to English and Spanish main dropdowns
+        shell: bash
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+
+          edits = {
+              Path('index.html'): (
+                  '''        <a class="language-option" href="https://www.toolboxapp.cc/es/" lang="es">\n          <span>Español</span>\n        </a>''',
+                  '''        <a class="language-option" href="https://www.toolboxapp.cc/es/" lang="es">\n          <span>Español</span>\n        </a>\n        <a class="language-option" href="https://www.toolboxapp.cc/de/" lang="de">\n          <span>Deutsch</span>\n        </a>'''
+              ),
+              Path('es/index.html'): (
+                  '''        <a class="language-option active" href="https://www.toolboxapp.cc/es/" lang="es" aria-current="page">\n          <span>Español</span>\n          <span class="language-check" aria-hidden="true">✓</span>\n        </a>''',
+                  '''        <a class="language-option active" href="https://www.toolboxapp.cc/es/" lang="es" aria-current="page">\n          <span>Español</span>\n          <span class="language-check" aria-hidden="true">✓</span>\n        </a>\n        <a class="language-option" href="https://www.toolboxapp.cc/de/" lang="de">\n          <span>Deutsch</span>\n        </a>'''
+              ),
+          }
+
+          for path, (old, new) in edits.items():
+              text = path.read_text(encoding='utf-8')
+              if text.count(old) != 1:
+                  raise SystemExit(f'{path}: expected exactly one dropdown block, found {text.count(old)}')
+              path.write_text(text.replace(old, new, 1), encoding='utf-8')
+          PY
+      - name: Commit only the two requested files
+        shell: bash
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -- index.html es/index.html
+          git diff --cached --check
+          git commit -m "Add German option to main language dropdowns"
+          git push origin HEAD:add-german-main-language-option
