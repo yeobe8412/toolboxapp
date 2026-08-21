@@ -1,0 +1,77 @@
+name: Add German category hreflang
+on:
+  pull_request:
+    branches: [main]
+permissions:
+  contents: write
+jobs:
+  update:
+    if: github.actor != 'github-actions[bot]'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.head_ref }}
+          fetch-depth: 0
+      - name: Update category hreflang
+        shell: python
+        run: |
+          from pathlib import Path
+          import re
+
+          slugs = [
+            'money-investing','taxes-insurance-benefits','business-operations','startups-digital-business',
+            'sales-marketing-audience','online-selling-retail','jobs-pay-workforce','time-productivity',
+            'property-construction','manufacturing-production','shipping-supply-chain','health-body-fitness',
+            'food-cooking-hospitality','home-everyday-life','learning-grades','science-math-engineering',
+            'ai-data-technology','energy-sustainability','farming-animals-pets','travel-events-recreation',
+            'legal-safety-compliance'
+          ]
+          root = Path('.')
+
+          def upsert_de(path: Path, href: str):
+              text = path.read_text(encoding='utf-8')
+              tag = f'<link rel="alternate" hreflang="de" href="{href}" />'
+              text = re.sub(r'\s*<link\b(?=[^>]*\bhreflang=["\']de["\'])[^>]*>\s*', '\n', text, flags=re.I)
+              m = re.search(r'<link\b(?=[^>]*\bhreflang=["\']x-default["\'])[^>]*>', text, flags=re.I)
+              if not m:
+                  m = re.search(r'<link\b(?=[^>]*\brel=["\']canonical["\'])[^>]*>', text, flags=re.I)
+                  if not m:
+                      raise SystemExit(f'No insertion anchor in {path}')
+                  pos = m.end()
+                  text = text[:pos] + '\n' + tag + text[pos:]
+              else:
+                  text = text[:m.start()] + tag + '\n' + text[m.start():]
+              path.write_text(text, encoding='utf-8')
+
+          changed = 0
+          for slug in slugs:
+              pairs = [
+                (root/'categories'/slug/'index.html', f'https://www.toolboxapp.cc/de/categories/{slug}/'),
+                (root/'es'/'calculator'/'categories'/slug/'index.html', f'https://www.toolboxapp.cc/de/categories/{slug}/'),
+              ]
+              for path, href in pairs:
+                  if not path.exists():
+                      raise SystemExit(f'Missing category page: {path}')
+                  upsert_de(path, href)
+                  changed += 1
+
+          for slug in slugs:
+              expected = f'https://www.toolboxapp.cc/de/categories/{slug}/'
+              for path in [root/'categories'/slug/'index.html', root/'es'/'calculator'/'categories'/slug/'index.html']:
+                  txt = path.read_text(encoding='utf-8')
+                  tags = re.findall(r'<link\b(?=[^>]*\bhreflang=["\']de["\'])[^>]*>', txt, flags=re.I)
+                  if len(tags) != 1 or expected not in tags[0]:
+                      raise SystemExit(f'Invalid de hreflang in {path}')
+
+          print(f'Updated category pages: {changed}')
+          wf = root/'.github'/'workflows'/'hreflang-de-categories.yml'
+          if wf.exists():
+              wf.unlink()
+      - name: Commit category edits
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -- categories es/calculator/categories .github/workflows/hreflang-de-categories.yml
+          git commit -m "Add German hreflang to English and Spanish categories"
+          git push origin HEAD:${{ github.head_ref }}
