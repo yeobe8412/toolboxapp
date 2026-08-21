@@ -1,6 +1,6 @@
 name: Apply German hreflang for first 500 tools
 on:
-  push:
+  pull_request:
     branches: [main]
 permissions:
   contents: write
@@ -11,7 +11,7 @@ jobs:
     steps:
       - uses: actions/checkout@v4
         with:
-          ref: main
+          ref: ${{ github.head_ref }}
           fetch-depth: 0
       - name: Update reciprocal hreflang
         shell: python
@@ -85,4 +85,4 @@ jobs:
             exit 0
           fi
           git commit -m "Add German hreflang to first 500 reciprocal pages"
-          git push origin HEAD:main
+          git push origin HEAD:${{ github.head_ref }}
