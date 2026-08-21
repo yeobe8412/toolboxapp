@@ -1,6 +1,6 @@
 name: Apply German hreflang for first 500 tools
 on:
-  push:
+  pull_request:
     branches: [main]
 permissions:
   contents: write
@@ -11,7 +11,7 @@ jobs:
     steps:
       - uses: actions/checkout@v4
         with:
-          ref: main
+          ref: ${{ github.head_ref }}
           fetch-depth: 0
       - name: Update reciprocal hreflang
         shell: python
@@ -54,6 +54,7 @@ jobs:
           upsert_de(root / 'es' / 'index.html', 'https://www.toolboxapp.cc/de/')
 
           de_categories = root / 'de' / 'calculator' / 'categories'
+          category_count = 0
           if de_categories.exists():
               for de_page in sorted(de_categories.glob('*/index.html')):
                   slug = de_page.parent.name
@@ -63,6 +64,7 @@ jobs:
                       href = f'https://www.toolboxapp.cc/de/calculator/categories/{slug}/'
                       upsert_de(en_page, href)
                       upsert_de(es_page, href)
+                      category_count += 1
 
           for slug in slugs:
               expected = f'https://www.toolboxapp.cc/de/calculator/{slug}/'
@@ -71,6 +73,9 @@ jobs:
                   tags = re.findall(r'<link\b[^>]*\bhreflang=["\']de["\'][^>]*>', txt, flags=re.I)
                   if len(tags) != 1 or expected not in tags[0]:
                       raise SystemExit(f'Invalid de hreflang in {path}')
+
+          print(f'Updated reciprocal calculator pages: {len(slugs) * 2}')
+          print(f'Updated German category counterparts: {category_count}')
 
           wf = root / '.github' / 'workflows' / 'hreflang-de-500.yml'
           if wf.exists():
@@ -85,4 +90,4 @@ jobs:
             exit 0
           fi
           git commit -m "Add German hreflang to first 500 reciprocal pages"
-          git push origin HEAD:main
+          git push origin HEAD:${{ github.head_ref }}
