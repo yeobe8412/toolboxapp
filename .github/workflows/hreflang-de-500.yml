@@ -1,0 +1,106 @@
+name: Apply German hreflang for first 500 tools
+on:
+  push:
+    branches: [hreflang-de-500]
+permissions:
+  contents: write
+jobs:
+  update:
+    if: github.actor != 'github-actions[bot]'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: hreflang-de-500
+          fetch-depth: 0
+      - name: Update reciprocal hreflang
+        shell: python
+        run: |
+          from pathlib import Path
+          import re
+
+          root = Path('.')
+          de_calc = root / 'de' / 'calculator'
+          slugs = sorted(p.name for p in de_calc.iterdir() if p.is_dir() and (p / 'index.html').exists())
+          if len(slugs) != 500:
+              raise SystemExit(f'Expected 500 German calculator pages, found {len(slugs)}')
+
+          def upsert_de(path: Path, href: str):
+              text = path.read_text(encoding='utf-8')
+              de_tag = f'<link rel="alternate" hreflang="de" href="{href}" />'
+              # Remove an existing de alternate in either attribute order/style so the result is unique.
+              text2 = re.sub(r'\s*<link\b(?=[^>]*\bhreflang=["\']de["\'])[^>]*>\s*', '\n', text, flags=re.I)
+              # Prefer insertion directly before x-default, preserving existing en/es tags.
+              m = re.search(r'(?m)^(\s*)<link\b(?=[^>]*\bhreflang=["\']x-default["\'])[^>]*>\s*$', text2, flags=re.I)
+              if m:
+                  indent = m.group(1)
+                  text2 = text2[:m.start()] + indent + de_tag + '\n' + text2[m.start():]
+              else:
+                  # Fallback: insert after canonical.
+                  m = re.search(r'(?m)^(\s*)<link\b(?=[^>]*\brel=["\']canonical["\'])[^>]*>\s*$', text2, flags=re.I)
+                  if not m:
+                      raise RuntimeError(f'No canonical/x-default anchor in {path}')
+                  indent = m.group(1)
+                  text2 = text2[:m.end()] + '\n' + indent + de_tag + text2[m.end():]
+              path.write_text(text2, encoding='utf-8')
+
+          touched = []
+          for slug in slugs:
+              for path, href in [
+                  (root / 'calculator' / slug / 'index.html', f'https://www.toolboxapp.cc/de/calculator/{slug}/'),
+                  (root / 'es' / 'calculator' / slug / 'index.html', f'https://www.toolboxapp.cc/de/calculator/{slug}/'),
+              ]:
+                  if not path.exists():
+                      raise SystemExit(f'Missing reciprocal page: {path}')
+                  upsert_de(path, href)
+                  touched.append(path)
+
+          # Main pages: German main already has the complete set; add de to EN and ES.
+          upsert_de(root / 'index.html', 'https://www.toolboxapp.cc/de/')
+          upsert_de(root / 'es' / 'index.html', 'https://www.toolboxapp.cc/de/')
+          touched += [root / 'index.html', root / 'es' / 'index.html']
+
+          # Category pages: only add de where a real German counterpart exists.
+          category_pairs = []
+          en_categories = root / 'categories'
+          es_categories = root / 'es' / 'calculator' / 'categories'
+          de_categories = root / 'de' / 'calculator' / 'categories'
+          if de_categories.exists():
+              for de_page in sorted(de_categories.glob('*/index.html')):
+                  slug = de_page.parent.name
+                  en_page = en_categories / slug / 'index.html'
+                  es_page = es_categories / slug / 'index.html'
+                  if en_page.exists() and es_page.exists():
+                      href = f'https://www.toolboxapp.cc/de/calculator/categories/{slug}/'
+                      upsert_de(en_page, href)
+                      upsert_de(es_page, href)
+                      category_pairs.append(slug)
+
+          # Validation: each of the 500 EN/ES pages has exactly one de alternate with matching slug.
+          for slug in slugs:
+              expected = f'https://www.toolboxapp.cc/de/calculator/{slug}/'
+              for path in [root/'calculator'/slug/'index.html', root/'es'/'calculator'/slug/'index.html']:
+                  txt = path.read_text(encoding='utf-8')
+                  tags = re.findall(r'<link\b[^>]*\bhreflang=["\']de["\'][^>]*>', txt, flags=re.I)
+                  if len(tags) != 1 or expected not in tags[0]:
+                      raise SystemExit(f'Invalid de hreflang in {path}')
+
+          print(f'German tool slugs: {len(slugs)}')
+          print(f'English/Spanish tool pages updated: {len(slugs)*2}')
+          print(f'German category counterparts found: {len(category_pairs)}')
+
+          # Remove this one-time workflow so final repository diff contains only requested page edits.
+          wf = root / '.github' / 'workflows' / 'hreflang-de-500.yml'
+          if wf.exists():
+              wf.unlink()
+      - name: Commit requested page edits
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -- calculator es/calculator index.html es/index.html de/calculator/categories .github/workflows/hreflang-de-500.yml 2>/dev/null || true
+          if git diff --cached --quiet; then
+            echo "No changes"
+            exit 0
+          fi
+          git commit -m "Add German hreflang to 500 reciprocal pages"
+          git push origin HEAD:hreflang-de-500
