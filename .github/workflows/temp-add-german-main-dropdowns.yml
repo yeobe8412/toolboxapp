@@ -32,8 +32,8 @@ jobs:
                   '''        <a class="language-option" href="https://www.toolboxapp.cc/es/" lang="es">\n          <span>Español</span>\n        </a>\n        <a class="language-option" href="https://www.toolboxapp.cc/de/" lang="de">\n          <span>Deutsch</span>\n        </a>'''
               ),
               Path('es/index.html'): (
-                  '''        <a class="language-option active" href="https://www.toolboxapp.cc/es/" lang="es" aria-current="page">\n          <span>Español</span>\n          <span class="language-check" aria-hidden="true">✓</span>\n        </a>''',
-                  '''        <a class="language-option active" href="https://www.toolboxapp.cc/es/" lang="es" aria-current="page">\n          <span>Español</span>\n          <span class="language-check" aria-hidden="true">✓</span>\n        </a>\n        <a class="language-option" href="https://www.toolboxapp.cc/de/" lang="de">\n          <span>Deutsch</span>\n        </a>'''
+                  '''<a aria-current="page" class="language-option active" href="/es/" lang="es">\n<span>Español</span>\n<span aria-hidden="true" class="language-check">✓</span>\n</a>''',
+                  '''<a aria-current="page" class="language-option active" href="/es/" lang="es">\n<span>Español</span>\n<span aria-hidden="true" class="language-check">✓</span>\n</a>\n<a class="language-option" href="https://www.toolboxapp.cc/de/" lang="de">\n<span>Deutsch</span>\n</a>'''
               ),
           }
 
