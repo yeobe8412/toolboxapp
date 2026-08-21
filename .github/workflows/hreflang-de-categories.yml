@@ -38,23 +38,16 @@ jobs:
                   m = re.search(r'<link\b(?=[^>]*\brel=["\']canonical["\'])[^>]*>', text, flags=re.I)
                   if not m:
                       raise SystemExit(f'No insertion anchor in {path}')
-                  pos = m.end()
-                  text = text[:pos] + '\n' + tag + text[pos:]
+                  text = text[:m.end()] + '\n' + tag + text[m.end():]
               else:
                   text = text[:m.start()] + tag + '\n' + text[m.start():]
               path.write_text(text, encoding='utf-8')
 
-          changed = 0
           for slug in slugs:
-              pairs = [
-                (root/'categories'/slug/'index.html', f'https://www.toolboxapp.cc/de/categories/{slug}/'),
-                (root/'es'/'calculator'/'categories'/slug/'index.html', f'https://www.toolboxapp.cc/de/categories/{slug}/'),
-              ]
-              for path, href in pairs:
+              for path in [root/'categories'/slug/'index.html', root/'es'/'calculator'/'categories'/slug/'index.html']:
                   if not path.exists():
                       raise SystemExit(f'Missing category page: {path}')
-                  upsert_de(path, href)
-                  changed += 1
+                  upsert_de(path, f'https://www.toolboxapp.cc/de/categories/{slug}/')
 
           for slug in slugs:
               expected = f'https://www.toolboxapp.cc/de/categories/{slug}/'
@@ -64,14 +57,15 @@ jobs:
                   if len(tags) != 1 or expected not in tags[0]:
                       raise SystemExit(f'Invalid de hreflang in {path}')
 
-          print(f'Updated category pages: {changed}')
-          wf = root/'.github'/'workflows'/'hreflang-de-categories.yml'
-          if wf.exists():
-              wf.unlink()
+          trigger = root/'.hreflang-de-categories-trigger'
+          if trigger.exists():
+              trigger.unlink()
+          print('Updated category pages: 42')
       - name: Commit category edits
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add -- categories es/calculator/categories .github/workflows/hreflang-de-categories.yml
+          git add -- categories es/calculator/categories
+          git add -u -- .hreflang-de-categories-trigger
           git commit -m "Add German hreflang to English and Spanish categories"
           git push origin HEAD:${{ github.head_ref }}
