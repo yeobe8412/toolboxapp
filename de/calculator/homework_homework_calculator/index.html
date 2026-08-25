@@ -1,0 +1,1034 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Der Hausaufgaben-Fortschrittsrechner misst, welcher Anteil aller zugewiesenen Aufgaben bereits erledigt wurde. Er ist für Lernpläne, Wochenpakete oder läng." />
+  <link rel="canonical" href="https://www.toolboxapp.cc/de/calculator/homework_homework_calculator/" />
+  <link rel="alternate" hreflang="de" href="https://www.toolboxapp.cc/de/calculator/homework_homework_calculator/" />
+  <link rel="alternate" hreflang="en" href="https://www.toolboxapp.cc/calculator/homework_homework_calculator/" />
+  <link rel="alternate" hreflang="es" href="https://www.toolboxapp.cc/es/calculator/homework_homework_calculator/" />
+  <link rel="alternate" hreflang="x-default" href="https://www.toolboxapp.cc/calculator/homework_homework_calculator/" />
+  <link rel="icon" href="/favicon.ico" sizes="any" />
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+  <title>Hausaufgaben-Fortschrittsrechner | toolbox</title>
+  <meta property="og:site_name" content="toolbox" />
+  <meta property="og:title" content="Hausaufgaben-Fortschrittsrechner | toolbox" />
+  <meta property="og:description" content="Der Hausaufgaben-Fortschrittsrechner misst, welcher Anteil aller zugewiesenen Aufgaben bereits erledigt wurde. Er ist für Lernpläne, Wochenpakete oder läng." />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://www.toolboxapp.cc/de/calculator/homework_homework_calculator/" />
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Hausaufgaben-Fortschrittsrechner | toolbox" />
+  <meta name="twitter:description" content="Der Hausaufgaben-Fortschrittsrechner misst, welcher Anteil aller zugewiesenen Aufgaben bereits erledigt wurde. Er ist für Lernpläne, Wochenpakete oder läng." />
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3030226322885854"
+     crossorigin="anonymous"></script>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+          { "@type": "ListItem", "position": 1, "name": "Startseite", "item": "https://www.toolboxapp.cc/de/" },
+          { "@type": "ListItem", "position": 2, "name": "Lernen &amp; Noten", "item": "https://www.toolboxapp.cc/de/categories/learning-grades/" },
+          { "@type": "ListItem", "position": 3, "name": "Hausaufgaben-Fortschrittsrechner", "item": "https://www.toolboxapp.cc/de/calculator/homework_homework_calculator/" }
+        ]
+      },
+      {
+        "@type": "WebApplication",
+        "name": "Hausaufgaben-Fortschrittsrechner",
+        "url": "https://www.toolboxapp.cc/de/calculator/homework_homework_calculator/",
+        "description": "Der Hausaufgaben-Fortschrittsrechner misst, welcher Anteil aller zugewiesenen Aufgaben bereits erledigt wurde. Er ist für Lernpläne, Wochenpakete oder läng.",
+        "applicationCategory": "UtilitiesApplication",
+        "operatingSystem": "Alle",
+        "browserRequirements": "JavaScript erforderlich"
+      }
+    ]
+  }
+  </script>
+  <script type="application/ld+json">
+{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"Soll ich teilweise bearbeitete Aufgaben als erledigt zählen?","acceptedAnswer":{"@type":"Answer","text":"Nur wenn Ihre eigene Definition das vorsieht. Für eine klare Quote ist es meist besser, nur vollständig abgeschlossene Aufgaben als erledigt zu zählen."}},{"@type":"Question","name":"Was ist bei unterschiedlich schwierigen Aufgaben?","acceptedAnswer":{"@type":"Answer","text":"Die einfache Erledigungsquote behandelt jede Aufgabe gleich. Bei stark unterschiedlichem Aufwand ist eine zeit- oder punktegewichtete Planung aussagekräftiger."}},{"@type":"Question","name":"Kann ich den Rechner täglich verwenden?","acceptedAnswer":{"@type":"Answer","text":"Ja. Verwenden Sie dabei stets dieselbe Aufgabenliste oder aktualisieren Sie die Gesamtzahl bewusst, damit Zeitreihen vergleichbar bleiben."}},{"@type":"Question","name":"Warum darf erledigt nicht größer als zugewiesen sein?","acceptedAnswer":{"@type":"Answer","text":"Beide Werte beziehen sich auf dieselbe Aufgabenmenge. Zusätzliche freiwillige Aufgaben sollten entweder separat erfasst oder zur Gesamtzahl hinzugefügt werden."}},{"@type":"Question","name":"Ist die Erledigungsquote dasselbe wie eine Hausaufgabennote?","acceptedAnswer":{"@type":"Answer","text":"Nein. Sie misst Vollständigkeit, nicht Richtigkeit oder Qualität. Eine Benotung benötigt zusätzliche Bewertungskriterien."}}]}
+</script>
+
+  <style>
+    :root {
+      color-scheme: dark;
+      --bg: #000;
+      --panel: #0a0a0a;
+      --panel-hover: #111;
+      --border: #292929;
+      --border-strong: #454545;
+      --text: #fff;
+      --muted: #8d8d8d;
+      --soft: #bdbdbd;
+      --danger: #ff7d7d;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      background: var(--bg);
+      color: var(--text);
+      font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    button,
+    input,
+    select {
+      font: inherit;
+    }
+
+    a {
+      color: inherit;
+    }
+
+    .site-header {
+      position: sticky;
+      top: 0;
+      z-index: 30;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: 70px;
+      padding: 0 24px;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+      background: rgba(0, 0, 0, 0.88);
+      backdrop-filter: blur(18px);
+    }
+
+    .brand {
+      color: #fff;
+      text-decoration: none;
+      font-size: 24px;
+      font-weight: 600;
+      letter-spacing: -0.05em;
+    }
+
+    .apps-wrap {
+      position: relative;
+    }
+
+    .apps-button {
+      width: 44px;
+      height: 44px;
+      display: grid;
+      place-items: center;
+      border: 0;
+      border-radius: 50%;
+      background: transparent;
+      cursor: pointer;
+      transition: background 0.18s ease;
+    }
+
+    .apps-button:hover,
+    .apps-button:focus-visible {
+      background: #111;
+      outline: none;
+    }
+
+    .dots {
+      width: 20px;
+      height: 20px;
+      display: grid;
+      grid-template-columns: repeat(3, 4px);
+      grid-template-rows: repeat(3, 4px);
+      gap: 4px;
+    }
+
+    .dots span {
+      width: 4px;
+      height: 4px;
+      border-radius: 50%;
+      background: #fff;
+    }
+
+    .apps-menu {
+      position: absolute;
+      top: 52px;
+      right: 0;
+      width: min(310px, calc(100vw - 32px));
+      max-height: calc(100vh - 84px);
+      overflow-y: auto;
+      padding: 10px;
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      background: rgba(10, 10, 10, 0.98);
+      box-shadow: 0 22px 60px rgba(0, 0, 0, 0.6);
+      opacity: 0;
+      visibility: hidden;
+      transform: translateY(-8px);
+      transition: 0.18s ease;
+    }
+
+    .apps-menu.open {
+      opacity: 1;
+      visibility: visible;
+      transform: translateY(0);
+    }
+
+    .category-list {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+
+    .category-link {
+      min-height: 42px;
+      display: flex;
+      align-items: center;
+      padding: 0 14px;
+      border-radius: 10px;
+      color: #fff;
+      text-decoration: none;
+      font-size: 14px;
+      transition: background 0.16s ease;
+    }
+
+    .category-link:hover,
+    .category-link:focus-visible {
+      background: #181818;
+      outline: none;
+    }
+
+    .page {
+      width: min(1080px, calc(100% - 32px));
+      margin: 0 auto;
+      padding: 64px 0 90px;
+    }
+
+    .breadcrumb {
+      margin-bottom: 22px;
+      color: #737373;
+      font-size: 13px;
+    }
+
+    .breadcrumb a {
+      color: #9b9b9b;
+      text-decoration: none;
+    }
+
+    .breadcrumb a:hover {
+      color: #fff;
+    }
+
+    .page-title {
+      margin: 0;
+      font-size: clamp(36px, 6vw, 62px);
+      line-height: 1;
+      letter-spacing: -0.055em;
+      font-weight: 600;
+    }
+
+    .title-row {
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: flex-start;
+    }
+
+    .title-row .page-title {
+      padding-right: 48px;
+    }
+
+    .favorite-button {
+      position: absolute;
+      right: 0;
+      display: grid;
+      width: 42px;
+      height: 42px;
+      padding: 0;
+      place-items: center;
+      border: 0;
+      background: transparent;
+      color: #858585;
+      cursor: pointer;
+      font-size: 25px;
+      line-height: 1;
+      transition: color .16s ease;
+    }
+
+    .favorite-button:hover,
+    .favorite-button:focus-visible {
+      color: #fff;
+      outline: none;
+    }
+
+    .favorite-button.active {
+      color: #ffd34e;
+    }
+
+    .intro {
+      width: 100%;
+      max-width: none;
+      margin: 18px 0 0;
+      color: var(--muted);
+      font-size: 16px;
+      line-height: 1.7;
+    }
+
+    .noscript-notice {
+      margin: 18px 0 0;
+      padding: 14px 16px;
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      color: var(--soft);
+      background: var(--panel);
+      font-size: 14px;
+      line-height: 1.6;
+    }
+
+    .calculator {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      grid-template-areas:
+        "input input"
+        "ad-one ad-two"
+        "result result";
+      gap: 18px;
+      margin-top: 46px;
+      min-width: 0;
+    }
+
+    .input-panel {
+      grid-area: input;
+    }
+
+    .calculator > *,
+    .field-grid,
+    .field,
+    .input-wrap,
+    .result-panel,
+    .result-breakdown {
+      min-width: 0;
+    }
+
+    .panel {
+      border: 1px solid var(--border);
+      border-radius: 22px;
+      background: var(--panel);
+    }
+
+    .input-panel {
+      padding: 28px;
+    }
+
+    .panel-title {
+      margin: 0 0 24px;
+      font-size: 18px;
+      font-weight: 600;
+      letter-spacing: -0.02em;
+    }
+
+    .field-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 18px;
+    }
+
+    .field {
+      display: grid;
+      gap: 9px;
+    }
+
+    .field label {
+      color: var(--soft);
+      font-size: 13px;
+      font-weight: 500;
+    }
+
+    .input-wrap {
+      position: relative;
+    }
+
+    .input-control {
+      width: 100%;
+      height: 56px;
+      padding: 0 52px 0 16px;
+      border: 1px solid var(--border-strong);
+      border-radius: 13px;
+      background: #050505;
+      color: #fff;
+      outline: none;
+      transition: border-color 0.16s ease, box-shadow 0.16s ease;
+    }
+
+    .input-control:focus {
+      border-color: #777;
+      box-shadow: 0 0 0 4px rgba(255,255,255,0.035);
+    }
+
+    .suffix {
+      position: absolute;
+      top: 50%;
+      right: 16px;
+      transform: translateY(-50%);
+      color: #767676;
+      font-size: 13px;
+      pointer-events: none;
+    }
+
+    .actions {
+      display: flex;
+      gap: 10px;
+      margin-top: 24px;
+    }
+
+    .button {
+      min-height: 50px;
+      padding: 0 20px;
+      border-radius: 12px;
+      cursor: pointer;
+      transition: background 0.16s ease, border-color 0.16s ease, transform 0.16s ease;
+    }
+
+    .button:active {
+      transform: translateY(1px);
+    }
+
+    .button-primary {
+      flex: 1;
+      border: 1px solid #fff;
+      background:#242424;
+      color:#fff;
+      font-weight: 700;
+    }
+
+    .button-primary:hover {
+      background:#3a3a3a;
+      border-color:#4a4a4a;
+    }
+
+    .button-secondary {
+      border: 1px solid var(--border-strong);
+      background: transparent;
+      color: #fff;
+    }
+
+    .button-secondary:hover {
+      background: #151515;
+    }
+
+    .error {
+      min-height: 20px;
+      margin: 13px 0 0;
+      color: var(--danger);
+      font-size: 13px;
+    }
+
+
+    .ad-panel {
+      min-height:140px;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      padding:18px;
+      border:1px dashed #3b3b3b;
+      border-radius:22px;
+      background:#111;
+      color:#686868;
+      text-align:center;
+      font-size:12px;
+      letter-spacing:0.08em;
+      text-transform:uppercase;
+    }
+
+    .ad-one { grid-area: ad-one; }
+    .ad-two { grid-area: ad-two; }
+
+    .ad-slot {
+      width:100%;
+      min-height:104px;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+    }
+
+    .result-panel {
+      grid-area: result;
+      min-height: 360px;
+      padding: 28px;
+      background:#242424;
+      color:#fff;
+    }
+
+    .result-layout {
+      display: grid;
+      grid-template-columns: minmax(0, 1.08fr) minmax(320px, 0.92fr);
+      gap: 40px;
+      align-items: center;
+      min-height: 100%;
+      min-width: 0;
+    }
+
+    .result-main,
+    .result-details {
+      min-width: 0;
+    }
+
+    .result-eyebrow {
+      color:#a0a0a0;
+      font-size: 13px;
+      font-weight: 600;
+    }
+
+    .main-result {
+      margin: 18px 0 4px;
+      font-size: clamp(42px, 7vw, 70px);
+      line-height: 1;
+      letter-spacing: -0.06em;
+      font-weight: 700;
+      overflow-wrap: anywhere;
+    }
+
+    .result-label {
+      color:#9b9b9b;
+      font-size: 14px;
+    }
+
+    .result-breakdown {
+      display: grid;
+      gap: 0;
+      margin-top: 0;
+      border-top:1px solid #353535;
+    }
+
+    .result-row {
+      display: flex;
+      justify-content: space-between;
+      gap: 20px;
+      padding: 15px 0;
+      border-bottom:1px solid #353535;
+      font-size: 14px;
+    }
+
+    .result-row span:first-child {
+      color:#9b9b9b;
+    }
+
+    .result-row strong {
+      text-align: right;
+    }
+
+    .details {
+      display: grid;
+      gap: 10px;
+      margin-top: 22px;
+    }
+
+    .accordion {
+      overflow: hidden;
+      border: 1px solid var(--border);
+      border-radius: 15px;
+      background: #080808;
+    }
+
+    .accordion-button {
+      width: 100%;
+      min-height: 62px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 20px;
+      padding: 0 20px;
+      border: 0;
+      background: transparent;
+      color: #fff;
+      text-align: left;
+      cursor: pointer;
+    }
+
+    .accordion-button:hover {
+      background: #101010;
+    }
+
+    .accordion-title {
+      font-size: 15px;
+      font-weight: 600;
+    }
+
+    .accordion-icon {
+      color: #777;
+      font-size: 22px;
+      transition: transform 0.18s ease;
+    }
+
+    .accordion.open .accordion-icon {
+      transform: rotate(45deg);
+    }
+
+    .accordion-content {
+      max-height: 0;
+      overflow: hidden;
+      color: #aaa;
+      line-height: 1.75;
+      transition: max-height 0.25s ease;
+    }
+
+    .accordion-content-inner {
+      padding: 0 20px 22px;
+    }
+
+    .accordion-content p {
+      margin: 0 0 12px;
+    }
+
+    .accordion-content p:last-child {
+      margin-bottom: 0;
+    }
+
+    .formula {
+      display: block;
+      padding: 16px;
+      border: 1px solid #242424;
+      border-radius: 12px;
+      background: #030303;
+      color: #fff;
+      font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+      overflow-x: auto;
+    }
+
+    .faq-item + .faq-item {
+      margin-top: 18px;
+    }
+
+    .faq-question {
+      margin: 0 0 6px;
+      color: #fff;
+      font-size: 15px;
+    }
+
+    .related-tools {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 10px;
+    }
+
+    .related-link {
+      min-height: 54px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 14px;
+      padding: 0 16px;
+      border: 1px solid #242424;
+      border-radius: 12px;
+      color: #fff;
+      text-decoration: none;
+      background: #050505;
+    }
+
+    .related-link:hover {
+      background: #111;
+    }
+
+    .site-footer {
+      width: min(1080px, calc(100% - 32px));
+      margin: 0 auto;
+      padding: 26px 0 42px;
+      border-top: 1px solid #171717;
+      color: #686868;
+      font-size: 12px;
+    }
+
+    @media (max-width: 780px) {
+      .site-header {
+        height: 64px;
+        padding: 0 16px;
+      }
+
+      .page {
+        padding-top: 42px;
+      }
+
+      .calculator {
+        grid-template-columns: minmax(0, 1fr);
+        grid-template-areas:
+          "input"
+          "ad-one"
+          "result"
+          "ad-two";
+      }
+
+      .input-panel,
+      .field-grid,
+      .field,
+      .input-wrap,
+      .actions,
+      .result-panel {
+        width: 100%;
+        max-width: 100%;
+        min-width: 0;
+      }
+
+      .panel-title,
+      .field,
+      .actions,
+      .error,
+      .result-panel > * {
+        grid-column: 1 / -1;
+        grid-row: auto;
+      }
+
+      .result-panel {
+        min-height: 390px;
+      }
+
+      .field-grid {
+        grid-template-columns: minmax(0, 1fr);
+      }
+
+      .result-layout {
+        grid-template-columns: minmax(0, 1fr);
+        gap: 28px;
+        align-items: start;
+      }
+
+      .result-breakdown {
+        margin-top: 0;
+      }
+    }
+
+    @media (max-width: 520px) {
+      .page {
+        width: calc(100% - 24px);
+        padding-bottom: 60px;
+      }
+
+      .page-title {
+        font-size: clamp(34px, 11vw, 48px);
+        line-height: 1.02;
+        overflow-wrap: anywhere;
+      }
+
+      .input-panel,
+      .result-panel {
+        padding: 22px;
+        border-radius: 18px;
+      }
+
+      .field-grid {
+        grid-template-columns: minmax(0, 1fr) !important;
+      }
+
+      .input-control,
+      select.input-control {
+        width: 100%;
+        max-width: 100%;
+        min-width: 0;
+      }
+
+      .actions {
+        flex-direction: column;
+      }
+
+      .button,
+      .button-secondary {
+        width: 100%;
+        min-width: 0;
+      }
+
+      .result-row {
+        min-width: 0;
+      }
+
+      .result-row span,
+      .result-row strong {
+        min-width: 0;
+        overflow-wrap: anywhere;
+      }
+
+      .related-tools {
+        grid-template-columns: minmax(0, 1fr);
+      }
+
+      .main-result {
+        font-size: 48px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <header class="site-header">
+    <a class="brand" href="/de/">toolbox</a>
+
+    <div class="apps-wrap">
+      <button
+        class="apps-button"
+        id="appsButton"
+        type="button"
+        aria-label="Kategorien öffnen"
+        aria-expanded="false"
+        aria-controls="appsMenu"
+      >
+        <span class="dots" aria-hidden="true">
+          <span></span><span></span><span></span>
+          <span></span><span></span><span></span>
+          <span></span><span></span><span></span>
+        </span>
+      </button>
+
+      <div class="apps-menu" id="appsMenu">
+        <nav class="category-list" aria-label="Tool-Kategorien">
+          <a class="category-link" href="/de/categories/money-investing/">Geld &amp; Investieren</a>
+          <a class="category-link" href="/de/categories/taxes-insurance-benefits/">Steuern, Versicherungen &amp; Leistungen</a>
+          <a class="category-link" href="/de/categories/business-operations/">Unternehmen &amp; Betrieb</a>
+          <a class="category-link" href="/de/categories/startups-digital-business/">Start-ups &amp; digitales Geschäft</a>
+          <a class="category-link" href="/de/categories/sales-marketing-audience/">Vertrieb, Marketing &amp; Zielgruppen</a>
+          <a class="category-link" href="/de/categories/online-selling-retail/">Onlinehandel &amp; Einzelhandel</a>
+          <a class="category-link" href="/de/categories/jobs-pay-workforce/">Jobs, Gehalt &amp; Personal</a>
+          <a class="category-link" href="/de/categories/time-productivity/">Zeit &amp; Produktivität</a>
+          <a class="category-link" href="/de/categories/property-construction/">Immobilien &amp; Bauwesen</a>
+          <a class="category-link" href="/de/categories/manufacturing-production/">Fertigung &amp; Produktion</a>
+          <a class="category-link" href="/de/categories/shipping-supply-chain/">Versand &amp; Lieferkette</a>
+          <a class="category-link" href="/de/categories/health-body-fitness/">Gesundheit, Körper &amp; Fitness</a>
+          <a class="category-link" href="/de/categories/food-cooking-hospitality/">Essen, Kochen &amp; Gastronomie</a>
+          <a class="category-link" href="/de/categories/home-everyday-life/">Haushalt &amp; Alltag</a>
+          <a class="category-link" href="/de/categories/learning-grades/">Lernen &amp; Noten</a>
+          <a class="category-link" href="/de/categories/science-math-engineering/">Wissenschaft, Mathematik &amp; Technik</a>
+          <a class="category-link" href="/de/categories/ai-data-technology/">KI, Daten &amp; Technologie</a>
+          <a class="category-link" href="/de/categories/energy-sustainability/">Energie &amp; Nachhaltigkeit</a>
+          <a class="category-link" href="/de/categories/farming-animals-pets/">Landwirtschaft, Tiere &amp; Haustiere</a>
+          <a class="category-link" href="/de/categories/travel-events-recreation/">Reisen, Veranstaltungen &amp; Freizeit</a>
+          <a class="category-link" href="/de/categories/legal-safety-compliance/">Recht, Sicherheit &amp; Compliance</a>
+        </nav>
+      </div>
+    </div>
+  </header>
+
+  <main class="page">
+    <div class="breadcrumb">
+      <a href="/de/">Startseite</a> / <a href="/de/categories/learning-grades/">Lernen &amp; Noten</a> / Hausaufgaben-Fortschrittsrechner
+    </div>
+
+    <div class="title-row">
+      <h1 class="page-title">Hausaufgaben-Fortschrittsrechner</h1>
+      <button class="favorite-button" id="favoriteButton" type="button" aria-label="Hausaufgaben-Fortschrittsrechner zu Favoriten hinzufügen" aria-pressed="false">☆</button>
+    </div>
+    <p class="intro">
+      Der Hausaufgaben-Fortschrittsrechner misst, welcher Anteil aller zugewiesenen Aufgaben bereits erledigt wurde. Er ist für Lernpläne, Wochenpakete oder längere Aufgabenlisten gedacht, bei denen eine einfache Fortschrittskennzahl hilfreicher ist als einzelne Noten. Zusätzlich zeigt das Tool, wie viele Aufgaben noch offen sind. Damit lässt sich der verbleibende Arbeitsumfang schnell abschätzen, ohne Qualität, Schwierigkeit oder Bearbeitungszeit der einzelnen Aufgaben gleichzusetzen.
+    </p>
+    <noscript>
+      <p class="noscript-notice">Dieser Rechner benötigt JavaScript, um die Ergebnisse zu aktualisieren. Aktivieren Sie JavaScript in Ihrem Browser und laden Sie die Seite anschließend neu.</p>
+    </noscript>
+
+    <section class="calculator" aria-label="Hausaufgaben-Fortschrittsrechner">
+      <div class="panel input-panel">
+        <h2 class="panel-title">Aufgabenfortschritt</h2>
+
+        <!-- Every number input in INPUTS_HTML must have a unique id, label, default value, min, max and step. Optional blank values must be treated as 0 or not applied, never as an error. -->
+        <div class="field-grid"><div class="field"><label for="assigned">Zugewiesene Aufgaben</label><div class="input-wrap"><input id="assigned" class="input-control" type="number" value="24" min="1" max="10000" step="1" inputmode="decimal" /></div></div><div class="field"><label for="completed">Erledigte Aufgaben</label><div class="input-wrap"><input id="completed" class="input-control" type="number" value="18" min="0" max="10000" step="1" inputmode="decimal" /></div></div></div>
+
+        <div class="actions">
+<button class="button button-secondary" id="resetButton" type="button">Zurücksetzen</button>
+        </div>
+
+        <p class="error" id="errorMessage" role="alert"></p>
+      </div>
+
+      <aside class="ad-panel ad-one" aria-label="Werbung">
+        <div class="ad-slot"><!-- Vollständigen AdSense-Anzeigenblock inkl. data-ad-client und data-ad-slot einsetzen --><span>Werbung</span></div>
+      </aside>
+
+      <div class="panel result-panel" aria-live="polite">
+        <div class="result-layout">
+          <div class="result-main">
+          <div class="result-eyebrow">Ergebnis</div>
+          <div class="main-result" id="mainResult">—</div>
+          <div class="result-label" id="resultLabel">Erledigungsquote</div>
+            
+          </div>
+          <div class="result-details">
+            <div class="result-breakdown"><div class="result-row"><span>Erledigt</span><strong id="stat1">—</strong></div><div class="result-row"><span>Noch offen</span><strong id="stat2">—</strong></div></div>
+          </div>
+        </div>
+      </div>
+
+      <aside class="ad-panel ad-two" aria-label="Werbung">
+        <div class="ad-slot"><!-- Vollständigen AdSense-Anzeigenblock inkl. data-ad-client und data-ad-slot einsetzen --><span>Werbung</span></div>
+      </aside>
+    </section>
+
+    <section class="details" aria-label="Informationen zum Rechner">
+      <article class="accordion">
+        <button class="accordion-button" type="button" aria-expanded="false">
+          <span class="accordion-title">So funktioniert der Rechner</span>
+          <span class="accordion-icon" aria-hidden="true">+</span>
+        </button>
+        <div class="accordion-content">
+          <div class="accordion-content-inner">
+            <p><strong>1. Gesamtliste bestimmen</strong><br>Zählen Sie alle Aufgaben, die zum betrachteten Paket oder Zeitraum gehören.</p><p><strong>2. Erledigte Aufgaben zählen</strong><br>Erfassen Sie nur Aufgaben, die nach Ihrer Definition wirklich abgeschlossen sind.</p><p><strong>3. Werte eingeben</strong><br>Tragen Sie Gesamtzahl und erledigte Zahl in die beiden Felder ein.</p><p><strong>4. Fortschritt prüfen</strong><br>Die Prozentanzeige zeigt den aktuellen Fertigstellungsgrad.</p><p><strong>5. Restbestand nutzen</strong><br>Die offene Anzahl hilft bei der weiteren Planung und Priorisierung.</p>
+          </div>
+        </div>
+      </article>
+
+      <article class="accordion">
+        <button class="accordion-button" type="button" aria-expanded="false">
+          <span class="accordion-title">Formel</span>
+          <span class="accordion-icon" aria-hidden="true">+</span>
+        </button>
+        <div class="accordion-content">
+          <div class="accordion-content-inner">
+            <span class="formula">Erledigungsquote = erledigte Aufgaben ÷ zugewiesene Aufgaben × 100</span><p>Die verwendeten Prozentanteile werden vor der Multiplikation als Dezimalzahlen eingesetzt, sofern die Formel Prozentwerte enthält.</p>
+            <h3>Was das Ergebnis bedeutet</h3>
+            <p>Eine Erledigungsquote von 75 % bedeutet, dass drei Viertel der erfassten Aufgaben abgeschlossen sind.</p>
+            <p>Die Formel gewichtet jede Aufgabe gleich; sehr unterschiedlich große Aufgaben werden nicht nach Aufwand angepasst.</p>
+          </div>
+        </div>
+      </article>
+
+      <article class="accordion">
+        <button class="accordion-button" type="button" aria-expanded="false">
+          <span class="accordion-title">Beispielrechnung</span>
+          <span class="accordion-icon" aria-hidden="true">+</span>
+        </button>
+        <div class="accordion-content">
+          <div class="accordion-content-inner">
+            <p><strong>Gegeben:</strong> Ein Wochenpaket enthält 28 Aufgaben. Bis Donnerstag sind 21 vollständig erledigt.</p><p><strong>Berechnung:</strong> 21 ÷ 28 × 100 = 75,00 %</p><p><strong>Ergebnis:</strong> Der Fortschritt liegt bei 75 %. Sieben Aufgaben bleiben offen.</p>
+          </div>
+        </div>
+      </article>
+
+      <article class="accordion">
+        <button class="accordion-button" type="button" aria-expanded="false">
+          <span class="accordion-title">FAQ</span>
+          <span class="accordion-icon" aria-hidden="true">+</span>
+        </button>
+        <div class="accordion-content">
+          <div class="accordion-content-inner">
+            <div class="faq-item"><h3 class="faq-question">Soll ich teilweise bearbeitete Aufgaben als erledigt zählen?</h3><p>Nur wenn Ihre eigene Definition das vorsieht. Für eine klare Quote ist es meist besser, nur vollständig abgeschlossene Aufgaben als erledigt zu zählen.</p></div><div class="faq-item"><h3 class="faq-question">Was ist bei unterschiedlich schwierigen Aufgaben?</h3><p>Die einfache Erledigungsquote behandelt jede Aufgabe gleich. Bei stark unterschiedlichem Aufwand ist eine zeit- oder punktegewichtete Planung aussagekräftiger.</p></div><div class="faq-item"><h3 class="faq-question">Kann ich den Rechner täglich verwenden?</h3><p>Ja. Verwenden Sie dabei stets dieselbe Aufgabenliste oder aktualisieren Sie die Gesamtzahl bewusst, damit Zeitreihen vergleichbar bleiben.</p></div><div class="faq-item"><h3 class="faq-question">Warum darf erledigt nicht größer als zugewiesen sein?</h3><p>Beide Werte beziehen sich auf dieselbe Aufgabenmenge. Zusätzliche freiwillige Aufgaben sollten entweder separat erfasst oder zur Gesamtzahl hinzugefügt werden.</p></div><div class="faq-item"><h3 class="faq-question">Ist die Erledigungsquote dasselbe wie eine Hausaufgabennote?</h3><p>Nein. Sie misst Vollständigkeit, nicht Richtigkeit oder Qualität. Eine Benotung benötigt zusätzliche Bewertungskriterien.</p></div>
+          </div>
+        </div>
+      </article>
+
+      <article class="accordion">
+        <button class="accordion-button" type="button" aria-expanded="false">
+          <span class="accordion-title">Ähnliche Tools</span>
+          <span class="accordion-icon" aria-hidden="true">+</span>
+        </button>
+        <div class="accordion-content">
+          <div class="accordion-content-inner">
+            <div class="related-tools"><a class="related-link" href="/de/calculator/homework_grade_calculator/"><span>Homework Grade Calculator</span><span aria-hidden="true">→</span></a><a class="related-link" href="/de/calculator/homework_score_estimator/"><span>Homework Score Estimator</span><span aria-hidden="true">→</span></a><a class="related-link" href="/de/calculator/homework_study_time_estimator/"><span>Homework Study Time Estimator</span><span aria-hidden="true">→</span></a><a class="related-link" href="/de/calculator/study_homework_calculator/"><span>Study Homework Calculator</span><span aria-hidden="true">→</span></a></div>
+          </div>
+        </div>
+      </article>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    © 2026 toolbox. Alle Berechnungen dienen der Orientierung und ersetzen keine verbindlichen Vorgaben Ihrer Bildungseinrichtung.
+  </footer>
+
+  <script>
+    const appsButton = document.getElementById("appsButton");
+    const appsMenu = document.getElementById("appsMenu");
+    const favoriteButton = document.getElementById("favoriteButton");
+    const FAVORITES_KEY = "toolboxapp-favorites-v1";
+    const currentTool = {
+      name: "Hausaufgaben-Fortschrittsrechner",
+      url: window.location.pathname
+    };
+
+    function readFavorites() {
+      try {
+        const saved = JSON.parse(localStorage.getItem(FAVORITES_KEY) || "[]");
+        return Array.isArray(saved) ? saved : [];
+      } catch (error) {
+        return [];
+      }
+    }
+
+    function updateFavoriteButton() {
+      const isFavorite = readFavorites().some(tool => tool.url === currentTool.url);
+      favoriteButton.classList.toggle("active", isFavorite);
+      favoriteButton.textContent = isFavorite ? "★" : "☆";
+      favoriteButton.setAttribute("aria-pressed", String(isFavorite));
+      favoriteButton.setAttribute("aria-label", isFavorite
+        ? `Hausaufgaben-Fortschrittsrechner aus Favoriten entfernen`
+        : `Hausaufgaben-Fortschrittsrechner zu Favoriten hinzufügen`);
+    }
+
+    favoriteButton.addEventListener("click", () => {
+      const saved = readFavorites();
+      const existingIndex = saved.findIndex(tool => tool.url === currentTool.url);
+
+      if (existingIndex >= 0) {
+        saved.splice(existingIndex, 1);
+      } else {
+        saved.push(currentTool);
+      }
+
+      localStorage.setItem(FAVORITES_KEY, JSON.stringify(saved));
+      updateFavoriteButton();
+    });
+
+    const resetButton = document.getElementById("resetButton");
+    const errorMessage = document.getElementById("errorMessage");
+    const byId = id => document.getElementById(id);
+    const finite = value => Number.isFinite(Number(value));
+    const optionalNumber = (id, fallback = 0) => {
+      const value = byId(id)?.value.trim();
+      return value === "" ? fallback : Number(value);
+    };
+    const formatNumber = (value, digits = 2) => Number(value).toLocaleString("de-DE", { maximumFractionDigits: digits });
+    const formatMoney = (value, currency = "EUR", digits = 2) => new Intl.NumberFormat("de-DE", { style: "currency", currency, maximumFractionDigits: digits }).format(value);
+    const formatPercent = (value, digits = 2) => new Intl.NumberFormat("de-DE", { minimumFractionDigits: digits, maximumFractionDigits: digits }).format(Number(value)) + " %";
+    const setText = (id, value) => { const node = byId(id); if (node) node.textContent = value; };
+    const showError = message => { errorMessage.textContent = message; };
+    const clearError = () => { errorMessage.textContent = ""; document.querySelectorAll('[aria-invalid="true"]').forEach(node => node.setAttribute("aria-invalid", "false")); };
+    const invalidate = (id, message) => { const node = byId(id); if (node) node.setAttribute("aria-invalid", "true"); showError(message); return false; };
+
+    function calculate(){ clearError(); const a=Number(byId('assigned').value), c=Number(byId('completed').value); if(!finite(a)||a<=0)return invalidate('assigned','Zugewiesene Aufgaben müssen größer als 0 sein.'); if(!finite(c)||c<0)return invalidate('completed','Erledigte Aufgaben dürfen nicht negativ sein.'); if(c>a)return invalidate('completed','Erledigte Aufgaben können die zugewiesenen Aufgaben nicht überschreiten.'); const r=c/a*100; setText('mainResult',formatPercent(r,1)); setText('resultLabel','Erledigungsquote'); setText('stat1',formatNumber(c,0)); setText('stat2',formatNumber(a-c,0)); }
+
+    resetButton.addEventListener("click", () => {
+      document.querySelectorAll(".input-control").forEach(input => { input.value = input.defaultValue; });
+      clearError();
+      calculate();
+    });
+    let autoTimer;
+    document.querySelectorAll(".input-control").forEach(input => {
+      input.addEventListener("input", () => {
+        clearTimeout(autoTimer);
+        autoTimer = setTimeout(calculate, 200);
+      });
+      input.addEventListener("change", calculate);
+    });
+
+
+    appsButton.addEventListener("click", () => {
+      const isOpen = appsMenu.classList.toggle("open");
+      appsButton.setAttribute("aria-expanded", String(isOpen));
+    });
+
+    document.addEventListener("click", event => {
+      if (!event.target.closest(".apps-wrap")) {
+        appsMenu.classList.remove("open");
+        appsButton.setAttribute("aria-expanded", "false");
+      }
+    });
+
+    document.querySelectorAll(".accordion-button").forEach(button => {
+      button.addEventListener("click", () => {
+        const accordion = button.closest(".accordion");
+        const content = accordion.querySelector(".accordion-content");
+        const isOpen = accordion.classList.toggle("open");
+
+        button.setAttribute("aria-expanded", String(isOpen));
+        content.style.maxHeight = isOpen ? content.scrollHeight + "px" : "0px";
+      });
+    });
+
+    calculate();
+    updateFavoriteButton();
+  </script>
+</body>
+</html>
