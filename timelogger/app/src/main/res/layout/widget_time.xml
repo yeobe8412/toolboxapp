@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="8dp"
+    android:background="#F4F4F4">
+
+    <TextView
+        android:id="@+id/widgetLast"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="마지막 기록 없음"
+        android:textColor="#222222"
+        android:textSize="12sp"
+        android:gravity="center"
+        android:paddingBottom="6dp" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/widgetStart"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:text="시작"
+            android:textSize="18sp" />
+
+        <Button
+            android:id="@+id/widgetEnd"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:text="끝"
+            android:textSize="18sp" />
+    </LinearLayout>
+</LinearLayout>
